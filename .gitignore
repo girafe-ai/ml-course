@@ -104,4 +104,4 @@ venv.bak/
 .mypy_cache/
 
 # cache from jupyter
-.DS_Store/
+.DS_Store

@@ -3,7 +3,9 @@ Main repository for machine learning course at MIPT
 
 All the learning materials are available here
 
-Docker:
+If conda/pip doesn't work, consider using Docker.
+Due to the root privileges in the docker contaner we do not recommend to use it in open networks, it may make your systerm vulnerable. The instructions will be updated in future.
+
 1. Install Docker CE from the [official site](https://www.docker.com/products/docker-desktop)
 2. In your command line run: 
 ```bash

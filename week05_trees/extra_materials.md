@@ -3,3 +3,4 @@
 3. [ru] ODS ML course lesson about kNN and Decision Trees: https://habr.com/ru/company/ods/blog/322534
 4. [ru] Habr post about entropy in trees: https://habr.com/ru/post/171759/
 5. [ru] Simply about bootstrapping on Habr: https://habr.com/ru/post/192000/
+6. [ru] Notes about Decision Trees: https://github.com/esokolov/ml-course-hse/blob/master/2018-fall/lecture-notes/lecture07-trees.pdf

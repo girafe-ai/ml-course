@@ -3,6 +3,10 @@
 Main repository for machine learning course at MIPT.
 All the learning materials are available here.
 
+## Video lectures
+
+are available on [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
+
 ## Prerequisites
 
 We are expecting our students to have a basic knowlege of:

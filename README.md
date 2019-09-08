@@ -3,6 +3,15 @@
 Main repository for machine learning course at MIPT.
 All the learning materials are available here.
 
+## `Important` current repository structure
+
+* on `master` branch previous term materials are stored
+    to give a quick and comprehensive overview
+* on `basic` and `advanced` branches materials for
+    current launches are being published
+
+Later (after the term ends) we will merge a new state to master as `fall_2019`.
+
 ## Video lectures
 
 are available on [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)

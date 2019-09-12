@@ -10,6 +10,12 @@ Also it's no good in spoilering solutions to your fellows - they lose an occasio
 
 It's good to have a repo with the task solved, so you could have a *private* repo either on GitHub with student account or on [GitLab](https://gitlab.com/) or anywhere else.
 
+## Academic Integrity
+
+* cheating, plagiarism, fabrication or falsification of data or results are prohibited
+* in case of copying, rewriting, paraphrasing, or summarizing of text (or code), discoveries, or insights please cite the source
+* allowing other students to copy one's own work, using another student’s solutions or code without specifying this are penalized
+
 ## Codestyle
 
 > Пишите код так, как будто сопровождать его будет склонный к насилию психопат, который знает, где вы живёте

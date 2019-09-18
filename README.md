@@ -7,9 +7,9 @@ All the learning materials are available here.
 
 * Previous term (__basic track__) lectures are available on [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
 
-* Current launch (__advanced track__) lectures (WIP): [youtube playlist](https://youtu.be/I9FF-3UAm4o)
+* Current launch (__advanced track__) lectures (WIP): [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM)
 
-* Current launch (__advanced track__) seminars (WIP): [youtube playlist](https://youtu.be/D14CEEjT1bc)
+* Current launch (__advanced track__) seminars (WIP): [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg)
 
 ## Prerequisites
 

@@ -29,3 +29,8 @@ In our case [__PEP 8__](https://www.python.org/dev/peps/pep-0008/) is a standard
 
 ### Also don't forget about _this_
 [Zen of Python, PEP 20](https://www.python.org/dev/peps/pep-0020/)
+
+### How to run your own notebook in Google Colab and attach Google Drive to it:
+* [en] [Medium post](https://towardsdatascience.com/downloading-datasets-into-google-drive-via-google-colab-bcb1b30b0166)
+
+* [ru] [Habr post](https://habr.com/ru/post/348058/)

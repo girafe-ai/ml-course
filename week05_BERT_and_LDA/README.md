@@ -17,3 +17,5 @@ and Their Implications (GPT-2)](https://openai.com/blog/better-language-models/)
 * [en] One more [blog post explaining BERT](https://yashuseth.blog/2019/06/12/bert-explained-faqs-understand-bert-working/)
 
 * [en] Great PyTorch library: [pytorch-transformers](https://github.com/huggingface/transformers)
+
+* [en] Most recent (for 04.10.2019) [post about GPT-2 in OpenAI blog](https://openai.com/blog/fine-tuning-gpt-2/)

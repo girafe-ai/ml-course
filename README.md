@@ -1,7 +1,7 @@
 # Machine Learning at MIPT
+This course aims to introduce students to contemporary state of Machine Learning and Artificial Intelligence. It is designed to take one year (two terms at MIPT) - approximately 2 * 15 lectures and seminars.
 
-Main repository for machine learning course at MIPT.
-All the learning materials are available here.
+All materials are available here, the complementary website available at [`ml-mipt.github.io`](https://ml-mipt.github.io/)
 
 ## `Important` current repository structure
 
@@ -12,9 +12,14 @@ All the learning materials are available here.
 
 Later (after the term ends) we will merge a new state to master as `fall_2019`.
 
+## Current launches
+
+As of Fall 2019 we have two tracks: [`basic`](basic.md) and [`advanced`](advanced.md).
+
 ## Video lectures
 
-are available on [youtube playlist](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
+* basic track (Spring 2019): [`youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
+* advanced track (Fall 2019, in progress): [`youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM)
 
 ## Prerequisites
 
@@ -25,7 +30,7 @@ We are expecting our students to have a basic knowlege of:
 
 Although if you don't have any of this, you could substitude it with your diligence because the course provides additional materials to study requirements yourself.
 
-## Theoretical materials
+## Theoretical and extra materials
 
 Informal "aggregation" of all topics by previous years students: [file](https://github.com/ml-mipt/ml-mipt/blob/master/ML_informal_notes.pdf) (in Russian).
 

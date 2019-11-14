@@ -9,4 +9,4 @@ Further readings:
 * On variance of policy gradient and optimal baselines: [article](https://papers.nips.cc/paper/4264-analysis-and-improvement-of-policy-gradient-estimation.pdf), another [article](https://arxiv.org/pdf/1301.2315.pdf)
 
 
-_Based on [Practical_RL week07](https://github.com/yandexdataschool/Practical_RL/tree/master/week07_seq2seq)
+_Based on [Practical_RL week07](https://github.com/yandexdataschool/Practical_RL/tree/master/week07_seq2seq)_

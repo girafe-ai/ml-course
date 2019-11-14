@@ -105,7 +105,7 @@ class BasicTranslationModel(nn.Module):
 
             logits_seq.append(logits)
             out_seq.append(y_t)
-            mask &= y_t != self.out_voc.eos_ix
+            mask *= y_t != self.out_voc.eos_ix
 
             if not mask.any(): break
             if max_len and len(out_seq) >= max_len: break

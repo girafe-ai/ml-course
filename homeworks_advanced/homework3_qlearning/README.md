@@ -1,0 +1,2 @@
+Homework 3:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/advanced/homeworks/homework3_qlearning/homework3_qlearning.ipynb)

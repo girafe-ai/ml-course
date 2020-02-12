@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.DS_Store
+
+#
+*__from_class*
+*__solved*
+*__draft*

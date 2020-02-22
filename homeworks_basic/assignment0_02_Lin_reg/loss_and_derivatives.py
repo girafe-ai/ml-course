@@ -41,9 +41,9 @@ class LossAndDerivatives:
         w : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Return: float
-            single number with L2 norm of the weighs matrix
+            single number with L2 norm of the weight matrix
 
-        Computes the L2 regularization term for the weights matrix w.
+        Computes the L2 regularization term for the weight matrix w.
         """
         
         # YOUR CODE HERE
@@ -55,9 +55,9 @@ class LossAndDerivatives:
         w : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Return : float
-            single number with L1 norm of the weighs matrix
+            single number with L1 norm of the weight matrix
         
-        Computes the L1 regularization term for the weights matrix w.
+        Computes the L1 regularization term for the weight matrix w.
         """
 
         # YOUR CODE HERE
@@ -73,7 +73,7 @@ class LossAndDerivatives:
         Return : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Computes the MSE derivative for linear regression (X.dot(w)) with no bias term
-        w.r.t w weights matrix.
+        w.r.t. w weight matrix.
         """
 
         # YOUR CODE HERE
@@ -89,7 +89,7 @@ class LossAndDerivatives:
         Return : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Computes the MAE derivative for linear regression (X.dot(w)) with no bias term
-        w.r.t w weights matrix.
+        w.r.t. w weight matrix.
         """
 
         # YOUR CODE HERE
@@ -102,7 +102,7 @@ class LossAndDerivatives:
 
         Return : numpy array of shape (`n_features`, `target_dimentionality`)
 
-        Computes the L2 regularization term derivative w.r.t the weights matrix w.
+        Computes the L2 regularization term derivative w.r.t. the weight matrix w.
         """
 
         # YOUR CODE HERE
@@ -115,7 +115,7 @@ class LossAndDerivatives:
 
         Return : numpy array of shape (`n_features`, `target_dimentionality`)
 
-        Computes the L1 regularization term derivative w.r.t the weights matrix w.
+        Computes the L1 regularization term derivative w.r.t. the weight matrix w.
         """
 
         # YOUR CODE HERE

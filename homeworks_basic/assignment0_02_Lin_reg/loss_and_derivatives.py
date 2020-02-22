@@ -62,6 +62,13 @@ class LossAndDerivatives:
 
         # YOUR CODE HERE
         return 
+
+    @staticmethod
+    def no_reg(w):
+        '''
+        Simply ignores the regularization
+        '''
+        return np.zeros_like(w)
     
     @staticmethod
     def mse_derivative(X, Y, w):
@@ -120,3 +127,10 @@ class LossAndDerivatives:
 
         # YOUR CODE HERE
         return 
+
+    @staticmethod
+    def no_reg_derivative(w):
+        '''
+        Simply ignores the derivative
+        '''
+        return np.zeros_like(w)

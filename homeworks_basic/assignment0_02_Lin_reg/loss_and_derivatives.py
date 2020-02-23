@@ -65,9 +65,9 @@ class LossAndDerivatives:
 
     @staticmethod
     def no_reg(w):
-        '''
+        """
         Simply ignores the regularization
-        '''
+        """
         return np.zeros_like(w)
     
     @staticmethod
@@ -130,7 +130,7 @@ class LossAndDerivatives:
 
     @staticmethod
     def no_reg_derivative(w):
-        '''
+        """
         Simply ignores the derivative
-        '''
+        """
         return np.zeros_like(w)

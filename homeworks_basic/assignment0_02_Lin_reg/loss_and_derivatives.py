@@ -81,6 +81,9 @@ class LossAndDerivatives:
 
         Computes the MSE derivative for linear regression (X.dot(w)) with no bias term
         w.r.t. w weight matrix.
+        
+        Please mention, that in case `target_dimentionality` > 1 the error is averaged along this
+        dimension as well, so you need to consider that fact in derivative implementation.
         """
 
         # YOUR CODE HERE
@@ -97,6 +100,9 @@ class LossAndDerivatives:
 
         Computes the MAE derivative for linear regression (X.dot(w)) with no bias term
         w.r.t. w weight matrix.
+        
+        Please mention, that in case `target_dimentionality` > 1 the error is averaged along this
+        dimension as well, so you need to consider that fact in derivative implementation.
         """
 
         # YOUR CODE HERE

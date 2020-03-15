@@ -68,7 +68,7 @@ class LossAndDerivatives:
         """
         Simply ignores the regularization
         """
-        return np.zeros_like(w)
+        return 0.
     
     @staticmethod
     def mse_derivative(X, Y, w):

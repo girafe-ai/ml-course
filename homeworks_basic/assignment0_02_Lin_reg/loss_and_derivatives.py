@@ -6,8 +6,8 @@ class LossAndDerivatives:
     def mse(X, Y, w):
         """
         X : numpy array of shape (`n_observations`, `n_features`)
-        Y : numpy array of shape (`n_observations`, `target_dimentionality`)
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
         Return : float
             single number with MSE value of linear model (X.dot(w)) with no bias term
@@ -22,8 +22,8 @@ class LossAndDerivatives:
     def mae(X, Y, w):
         """
         X : numpy array of shape (`n_observations`, `n_features`)
-        Y : numpy array of shape (`n_observations`, `target_dimentionality`)
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
                 
         Return: float
             single number with MAE value of linear model (X.dot(w)) with no bias term
@@ -38,10 +38,10 @@ class LossAndDerivatives:
     @staticmethod
     def l2_reg(w):
         """
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
         Return: float
-            single number with L2 norm of the weight matrix
+            single number with sum of squared elements of the weight matrix ( \sum_{ij} w_{ij}^2 )
 
         Computes the L2 regularization term for the weight matrix w.
         """
@@ -55,7 +55,7 @@ class LossAndDerivatives:
         w : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Return : float
-            single number with L1 norm of the weight matrix
+            single number with sum of the absolute values of the weight matrix ( \sum_{ij} |w_{ij}| )
         
         Computes the L1 regularization term for the weight matrix w.
         """
@@ -74,10 +74,10 @@ class LossAndDerivatives:
     def mse_derivative(X, Y, w):
         """
         X : numpy array of shape (`n_observations`, `n_features`)
-        Y : numpy array of shape (`n_observations`, `target_dimentionality`)
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
         
-        Return : numpy array of shape (`n_features`, `target_dimentionality`)
+        Return : numpy array of same shape as `w`
 
         Computes the MSE derivative for linear regression (X.dot(w)) with no bias term
         w.r.t. w weight matrix.
@@ -93,10 +93,10 @@ class LossAndDerivatives:
     def mae_derivative(X, Y, w):
         """
         X : numpy array of shape (`n_observations`, `n_features`)
-        Y : numpy array of shape (`n_observations`, `target_dimentionality`)
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
         
-        Return : numpy array of shape (`n_features`, `target_dimentionality`)
+        Return : numpy array of same shape as `w`
 
         Computes the MAE derivative for linear regression (X.dot(w)) with no bias term
         w.r.t. w weight matrix.
@@ -111,9 +111,9 @@ class LossAndDerivatives:
     @staticmethod
     def l2_reg_derivative(w):
         """
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
-        Return : numpy array of shape (`n_features`, `target_dimentionality`)
+        Return : numpy array of same shape as `w`
 
         Computes the L2 regularization term derivative w.r.t. the weight matrix w.
         """
@@ -124,9 +124,10 @@ class LossAndDerivatives:
     @staticmethod
     def l1_reg_derivative(w):
         """
-        w : numpy array of shape (`n_features`, `target_dimentionality`)
+        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
+        w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
-        Return : numpy array of shape (`n_features`, `target_dimentionality`)
+        Return : numpy array of same shape as `w`
 
         Computes the L1 regularization term derivative w.r.t. the weight matrix w.
         """

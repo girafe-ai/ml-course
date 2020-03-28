@@ -6,21 +6,19 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from scipy.spatial.distance import cdist # You can use this for rbf kernel
-
 
 def rbf(x_1, x_2, sigma=1.):
     '''Computes rbf kernel for batches of objects
 
     Args:
-        x_1: tensor shaped `(#samples_1, #features)`
-        x_2: tensor shaped `(#samples_2, #features)`
+        x_1: torch.tensor shaped `(#samples_1, #features)` of type torch.float32
+        x_2: torch.tensor shaped `(#samples_1, #features)` of type torch.float32
     Returns:
         kernel function values for all pairs of samples from x_1 and x_2
-        shaped `(#samples_1, #samples_2)`
+        torch.tensor of type torch.float32 shaped `(#samples_1, #samples_2)`
     '''
     distances = ### YOUR CODE HERE
-    return torch.Tensor(distances)
+    return torch.Tensor(distances).type(torch.float32)
 
 def hinge_loss(scores, labels):
     '''Mean loss for batch of objects
@@ -36,11 +34,11 @@ class SVM(BaseEstimator, ClassifierMixin):
         '''Computes linear kernel for batches of objects
         
         Args:
-            x_1: array shaped `(#samples_1, #features)`
-            x_2: array shaped `(#samples_2, #features)`
+            x_1: torch.tensor shaped `(#samples_1, #features)` of type torch.float32
+            x_2: torch.tensor shaped `(#samples_1, #features)` of type torch.float32
         Returns:
             kernel function values for all pairs of samples from x_1 and x_2
-            shaped `(#samples_1, #samples_2)`
+            torch.tensor shaped `(#samples_1, #samples_2)` of type torch.float32
         '''
         return ### YOUR CODE HERE
     
@@ -85,7 +83,7 @@ class SVM(BaseEstimator, ClassifierMixin):
                 
                 optimizer.zero_grad()     # Manually zero the gradient buffers of the optimizer
                 
-                preds = ### YOUR CODE HERE # Compute the output by doing a forward pass
+                preds = ### YOUR CODE HERE # get the matrix product using SVM parameters: self.betas and self.bias
                 preds = preds.flatten()
                 loss = self.lmbd * self.betas[batch_inds].T @ k_batch @ self.betas + hinge_loss(preds, y_batch)
                 loss.backward()           # Backpropagation
@@ -103,6 +101,7 @@ class SVM(BaseEstimator, ClassifierMixin):
         with torch.no_grad():
             batch = torch.from_numpy(batch).float()
             K = self.kernel_function(batch, self.X)
+            # compute the margin values for every object in the batch
             return ### YOUR CODE HERE
 
     def predict(self, batch):

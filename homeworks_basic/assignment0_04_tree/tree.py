@@ -92,6 +92,9 @@ def one_hot_decode(y_one_hot):
 
 
 class Node:
+    """
+    This class is provided "as is" and is not mandatory to use in your code.
+    """
     def __init__(self, feature_index, threshold, proba=0):
         self.feature_index = feature_index
         self.value = threshold

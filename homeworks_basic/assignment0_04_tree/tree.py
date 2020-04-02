@@ -258,7 +258,7 @@ class DecisionTree(BaseEstimator):
         self.criterion, self.classification = self.all_criterions[self.criterion_name]
         if self.classification:
             if self.n_classes is None:
-                self.n_classes = len(np.unique(ans))
+                self.n_classes = len(np.unique(y))
             y = one_hot_encode(self.n_classes, y)
 
         self.root = self.make_tree(X, y)

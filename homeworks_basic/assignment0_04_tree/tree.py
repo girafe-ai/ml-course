@@ -250,7 +250,7 @@ class DecisionTree(BaseEstimator):
             Feature matrix representing the data to train on
 
         y : np.array of type int with shape (n_objects, 1) in classification 
-                   (n_objects, 1) in regression 
+                   of type float with shape (n_objects, 1) in regression 
             Column vector of class labels in classification or target values in regression
         
         """

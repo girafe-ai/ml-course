@@ -93,14 +93,14 @@ def one_hot_decode(y_one_hot):
 
 class Node:
     """
-    This class is provided "as is" and is not mandatory to use in your code.
+    This class is provided "as is" and it is not mandatory to it use in your code.
     """
     def __init__(self, feature_index, threshold, proba=0):
         self.feature_index = feature_index
         self.value = threshold
         self.proba = proba
         self.left_child = None
-        self.righ_child = None
+        self.right_child = None
         
         
 class DecisionTree(BaseEstimator):

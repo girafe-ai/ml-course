@@ -4,7 +4,7 @@ Please, implement the modules (layers, loss functions, optimizers, etc.) in the 
 
 You can use the [test_modules.ipynb](https://github.com/ml-mipt/ml-mipt/blob/basic_s20/week0_08_Intro_to_DL/test_modules.ipynb) notebook to test your code locally.
 
-__To submit the assignment, convert your notebook with modules into `.py` file (File->Download as->.py file in Jupyter) and upload it to the contest.__
+__To submit the assignment, convert your notebook with modules into `.py` file (File->Download as->Python (.py) in Jupyter) and upload it to the contest.__
 
 P.s. You will need the implemented layers in the upcoming Lab 3 as well. 
 

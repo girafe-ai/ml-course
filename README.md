@@ -14,9 +14,9 @@ Organizational information about current launches available at [`ml-mipt.github.
 * tags (e.g. `spring_2019`) contain previous launches materials for convenience
 
 ## Video lectures
-
-* basic track (Spring 2019): [`youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
-* advanced track (Fall 2019): [`youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM)
+* basic track (Spring 2020, updated): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
+* advanced track (Fall 2019): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg)
+* basic track (Spring 2019): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
 
 ## Prerequisites
 

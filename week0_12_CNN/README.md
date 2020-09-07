@@ -1,5 +1,5 @@
 week12 practice on image classification:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/basic/week12_CNN/week12_cnn_seminar.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic/week12_CNN/week12_cnn_seminar.ipynb)
 
 
 __Further readings__:

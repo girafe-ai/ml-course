@@ -1,5 +1,5 @@
 Colab version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/advanced/week13_cnn_and_style_transfer/week13_style_transfer.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced/week13_cnn_and_style_transfer/week13_style_transfer.ipynb)
 
 
 

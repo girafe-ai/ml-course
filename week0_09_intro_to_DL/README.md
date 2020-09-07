@@ -1,5 +1,5 @@
 ﻿NN from scratch:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/basic/week09_intro_to_DL/week09_nn_from_scratch.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic/week09_intro_to_DL/week09_nn_from_scratch.ipynb)
 
 __Further readings__:
 * [en] Notes on vector and matrix derivatives: http://cs231n.stanford.edu/vecDerivs.pdf

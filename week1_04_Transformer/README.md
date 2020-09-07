@@ -1,11 +1,11 @@
 [recap] Attention basics:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/advanced/week03_NMT_and_attention/week03_extra_Attention_basics.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced/week03_NMT_and_attention/week03_extra_Attention_basics.ipynb)
 
 Full Transformer architecture and training pipeline by Harvard NLP:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/harvardnlp/annotated-transformer/blob/master/The%20Annotated%20Transformer.ipynb)
 
 Understanding the positional encoding:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/advanced/week04_Transformer/week04_positional_encoding_carriers.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced/week04_Transformer/week04_positional_encoding_carriers.ipynb)
 
 
 

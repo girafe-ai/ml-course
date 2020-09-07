@@ -1,5 +1,5 @@
 RL for seq2seq practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/advanced/week11_RL_outside_games/week11_RL_for_seq2sec.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced/week11_RL_outside_games/week11_RL_for_seq2sec.ipynb)
 
 
 

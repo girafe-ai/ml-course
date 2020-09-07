@@ -1,5 +1,5 @@
 week10 practice with PyTorch:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ml-mipt/ml-mipt/blob/basic/week10_DL_step_2/week10_intro_to_pytorch.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic/week10_DL_step_2/week10_intro_to_pytorch.ipynb)
 
 
 __Further readings__:

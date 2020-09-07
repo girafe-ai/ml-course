@@ -30,7 +30,7 @@ Although if you don't have any of this, you could substitude it with your dilige
 
 ## Extra theoretical materials
 
-Informal "aggregation" of all topics by previous years students: [file](https://github.com/ml-mipt/ml-mipt/blob/spring_2019/ML_informal_notes.pdf) (in Russian) - useful for fast and furious exam passing
+Informal "aggregation" of all topics by previous years students: [file](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf) (in Russian) - useful for fast and furious exam passing
 
 Also lectures and seminars contains references to more detailed materials on topics
 

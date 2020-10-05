@@ -75,7 +75,10 @@ class KNearestNeighbor:
                 # not use a loop over dimension, nor use np.linalg.norm().          #
                 #####################################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+                sum_square = 0
+                    for k in range (64):
+                    sum_square +=  (num_test[i][k]-num_train[j][k])**2 
+                dists[i, j] = sqrt(sum_square)
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 

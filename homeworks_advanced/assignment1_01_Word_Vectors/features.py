@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from sklearn.base import TransformerMixin
 from typing import List, Union
 import numpy as np
@@ -7,7 +8,8 @@ class BoW(TransformerMixin):
     """
     Bag of words tranformer class
     
-    check out https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html
+    check out:
+    https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html
     to know about TransformerMixin class
     """
     def __init__(self, k: int):
@@ -54,4 +56,49 @@ class BoW(TransformerMixin):
 
 
 class TfIdf(TransformerMixin):
-    pass
+    """
+    Tf-Idf tranformer class
+    if you have troubles implementing Tf-Idf, check out:
+    https://streamsql.io/blog/tf-idf-from-scratch
+    """
+    def __init__(self, k: int=None, normalize: bool=False):
+        """
+        :param k: number of most frequent tokens to use
+        if set k equals None, than all words in train must be considered
+        :param normalize: if True, you must normalize each data sample
+        after computing tf-idf features
+        """
+        self.k = k
+        self.normalize = normalize
+
+        # self.idf[term] = log(total # of documents / # of documents with term in it)
+        self.idf = OrderedDict()
+
+    def fit(self, X: np.ndarray, y=None):
+        """
+        :param X: array of texts to be trained on
+        """
+        raise NotImplementedError
+
+        # fit method must always return self
+        return self
+
+    def _text_to_tf_idf(self, text: str) -> np.ndarray:
+        """
+        convert text string to an array tf-idfs.
+        *Note* don't forget to normalize, when self.normalize == True
+        :param text: text to be transformed
+        :return tf_idf: tf-idf features
+        """
+
+        result = None
+        raise NotImplementedError
+        return np.array(result, 'float32')
+
+    def transform(self, X: np.ndarray, y=None) -> np.ndarray:
+        """
+        :param X: array of texts to transform
+        :return: array of transformed texts
+        """
+        assert self.idf is not None
+        return np.stack([self._text_to_tf_idf(text) for text in X])

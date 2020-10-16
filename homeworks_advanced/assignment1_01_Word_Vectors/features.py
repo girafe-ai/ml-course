@@ -12,6 +12,7 @@ class BoW(TransformerMixin):
     https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html
     to know about TransformerMixin class
     """
+
     def __init__(self, k: int):
         """
         :param k: number of most frequent tokens to use
@@ -38,10 +39,10 @@ class BoW(TransformerMixin):
         :param text: text to be transformed
         :return bow_feature: feature vector, made by bag of words
         """
-        
+
         result = None
         raise NotImplementedError
-        return np.array(result, 'float32')
+        return np.array(result, "float32")
 
     def transform(self, X: np.ndarray, y=None) -> np.ndarray:
         """
@@ -61,7 +62,8 @@ class TfIdf(TransformerMixin):
     if you have troubles implementing Tf-Idf, check out:
     https://streamsql.io/blog/tf-idf-from-scratch
     """
-    def __init__(self, k: int=None, normalize: bool=False):
+
+    def __init__(self, k: int = None, normalize: bool = False):
         """
         :param k: number of most frequent tokens to use
         if set k equals None, than all words in train must be considered
@@ -93,7 +95,7 @@ class TfIdf(TransformerMixin):
 
         result = None
         raise NotImplementedError
-        return np.array(result, 'float32')
+        return np.array(result, "float32")
 
     def transform(self, X: np.ndarray, y=None) -> np.ndarray:
         """

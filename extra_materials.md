@@ -70,3 +70,9 @@ and Their Implications (GPT-2)](https://openai.com/blog/better-language-models/)
 and Their Implications (GPT-2)](https://openai.com/blog/better-language-models/)
 * [en] One more [blog post explaining BERT](https://yashuseth.blog/2019/06/12/bert-explained-faqs-understand-bert-working/)
 * [en] [Post about GPT-2 in OpenAI blog (by 04.10.2019)](https://openai.com/blog/fine-tuning-gpt-2/)
+
+__Graph Neural Networks__:
+* [en] [Introduction to Graph Neural Networks](https://www.morganclaypool.com/doi/10.2200/S00980ED1V01Y202001AIM045)
+* [en] Grear [repo](https://github.com/thunlp/GNNPapers) with must-read papers on GNN
+
+

@@ -47,7 +47,7 @@ __Deep Learning__:
 * [en] CS231n notes on data preparation: http://cs231n.github.io/neural-networks-2/
 * [en] Convolutional Neural Networks: Architectures, Convolution / Pooling Layers: http://cs231n.github.io/convolutional-networks/
 * [en] Understanding and Visualizing Convolutional Neural Networks: http://cs231n.github.io/understanding-cnn/
-
+* [en] LR warm-up and useful tricks - [article](https://arxiv.org/abs/1812.01187)
 
 __Natural Language Processing__:
 * [en] Great resource by Lena Voita (direct link to Word Embeddings explanation): https://lena-voita.github.io/nlp_course/word_embeddings.html

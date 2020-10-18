@@ -1,6 +1,6 @@
 __En__:
 
-0. Deep Learning book - classics. Deliveres comprehensive overview of almost all vital themes in ML and DL. Available online at https://www.deeplearningbook.org
+0. Deep Learning book - classics. Delivers comprehensive overview of almost all vital themes in ML and DL. Available online at https://www.deeplearningbook.org
 1. The Hundred-page Machine Learning book: [link](http://themlbook.com) (available online, e.g. on the [github](https://github.com/ZakiaSalod/The-Hundred-Page-Machine-Learning-Book))
 2. Stanford lectures on Probability Theory: [link](https://web.stanford.edu/~montanar/TEACHING/Stat310A/lnotes.pdf)
 3. Matrix calculus notes from Stanford: [link](http://cs231n.stanford.edu/vecDerivs.pdf)

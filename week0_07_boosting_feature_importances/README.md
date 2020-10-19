@@ -1,0 +1,2 @@
+Ensembles & Boosting Notebook
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_f20/week0_07_boosting_feature_importances/week0_07_boosting_ensembling.ipynb)

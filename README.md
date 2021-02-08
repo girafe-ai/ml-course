@@ -1,5 +1,5 @@
 # Machine Learning at MIPT
-## Basic track (first semester), Fall 2020
+## Basic track (first semester), Spring 2021
 
 ## Schedule (MIPT)
 
@@ -20,10 +20,8 @@ Organizational information about current launches available at [`ml-mipt.github.
 
 ## Video lectures
 All lecture materials are currently in Russian language 
-* [ru] advanced track (updated) (Fall 2020): [`Lectures youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye), [`Practice sessions youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr)
-* [ru] basic track (Spring 2020, updated): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
-* [ru] advanced track (Fall 2019): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg)
-* [ru] basic track (Spring 2019): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
+* [ru] basic track (Spring 2021, updated): TBD
+* [ru] basic track (Spring 2020): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
 
 ## Prerequisites
 
@@ -42,7 +40,3 @@ A lot of great materials are available online. See [extra_materials.md](https://
 Informal "aggregation" of all topics by previous years students: [file](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf) (in Russian) - useful for fast and furious exam passing.
 
 Also lectures and seminars contains references to more detailed materials on topics.
-
-## Docker image
-
-Using docker for tasks evaluation is a good idea, prebuilt image is under cunstruction.

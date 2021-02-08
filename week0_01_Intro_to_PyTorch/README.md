@@ -1,0 +1,2 @@
+PyTorch intro:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/S7_s21/week0_01_Intro_to_PyTorch/week0_01_intro_to_pytorch.ipynb)

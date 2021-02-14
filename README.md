@@ -14,7 +14,7 @@ Organizational information about current launches available at [`ml-mipt.github.
 * tags (e.g. `spring_2019`) contain previous launches materials for convenience
 
 ## Video lectures
-All lecture materials are currently in Russian language 
+All lecture materials are currently in Russian language
 * [ru] advanced track (updated) (Fall 2020): [`Lectures youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye), [`Practice sessions youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr)
 * [ru] basic track (Spring 2020, updated): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
 * [ru] advanced track (Fall 2019): [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM), [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg)

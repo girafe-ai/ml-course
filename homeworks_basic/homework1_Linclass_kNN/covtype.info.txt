@@ -17,8 +17,8 @@ The Forest CoverType dataset
 		(contact Jock A. Blackard, jblackard 'at' fs.fed.us
 		      or Dr. Denis J. Dean, denis.dean 'at' utdallas.edu)
 
-	NOTE:	Reuse of this database is unlimited with retention of 
-		copyright notice for Jock A. Blackard and Colorado 
+	NOTE:	Reuse of this database is unlimited with retention of
+		copyright notice for Jock A. Blackard and Colorado
 		State University.
 
 	(b) Donors of database:
@@ -34,8 +34,8 @@ The Forest CoverType dataset
 		Program in Geography and Geospatial Sciences
 		School of Economic, Political and Policy Sciences
 		800 West Campbell Rd
-		Richardson, TX  75080-3021 
-		
+		Richardson, TX  75080-3021
+
 		Dr. Charles W. Anderson (anderson 'at' cs.colostate.edu)
 		Associate Professor
 		Department of Computer Science
@@ -50,59 +50,59 @@ The Forest CoverType dataset
 	Blackard, Jock A. and Denis J. Dean.  2000.  "Comparative
 		Accuracies of Artificial Neural Networks and Discriminant
 		Analysis in Predicting Forest Cover Types from Cartographic
-		Variables."  Computers and Electronics in Agriculture 
+		Variables."  Computers and Electronics in Agriculture
 		24(3):131-151.
 
 	Blackard, Jock A. and Denis J. Dean.  1998.  "Comparative
 		Accuracies of Neural Networks and Discriminant Analysis
-		in Predicting Forest Cover Types from Cartographic 
+		in Predicting Forest Cover Types from Cartographic
 		Variables."  Second Southern Forestry GIS Conference.
 		University of Georgia.  Athens, GA.  Pages 189-199.
 
 	Blackard, Jock A.  1998.  "Comparison of Neural Networks and
 		Discriminant Analysis in Predicting Forest Cover Types."
-		Ph.D. dissertation.  Department of Forest Sciences.  
-		Colorado State University.  Fort Collins, Colorado.  
+		Ph.D. dissertation.  Department of Forest Sciences.
+		Colorado State University.  Fort Collins, Colorado.
 		165 pages.
 
 	Abstract of dissertation:
-		Natural resource managers responsible for developing 
-	ecosystem management strategies require basic descriptive 
-	information including inventory data for forested lands to 
-	support their decision-making processes.  However, managers 
-	generally do not have this type of data for inholdings or 
-	neighboring lands that are outside their immediate 
-	jurisdiction.  One method of obtaining this information is 
-	through the use of predictive models.  
-		Two predictive models were examined in this study, a 
-	feedforward neural network model and a more traditional 
-	statistical model based on discriminant analysis.  The overall 
-	objectives of this research were to first construct these two 
-	predictive models, and second to compare and evaluate their 
-	respective classification accuracies when predicting forest 
-	cover types in undisturbed forests.  
-		The study area included four wilderness areas found in 
-	the Roosevelt National Forest of northern Colorado.  A total 
-	of twelve cartographic measures were utilized as independent 
-	variables in the predictive models, while seven major forest 
-	cover types were used as dependent variables.  Several subsets 
-	of these variables were examined to determine the best overall 
-	predictive model.  
-		For each subset of cartographic variables examined in 
-	this study, relative classification accuracies indicate the 
-	neural network approach outperformed the traditional 
-	discriminant analysis method in predicting forest cover types.  
-	The final neural network model had a higher absolute 
-	classification accuracy (70.58%) than the final corresponding 
-	linear discriminant analysis model(58.38%).  In support of these 
-	classification results, thirty additional networks with randomly 
-	selected initial weights were derived.  From these networks, the 
-	overall mean absolute classification accuracy for the neural 
-	network method was 70.52%, with a 95% confidence interval of 
-	70.26% to 70.80%.  Consequently, natural resource managers may 
-	utilize an alternative method of predicting forest cover types 
-	that is both superior to the traditional statistical methods and 
-	adequate to support their decision-making processes for 
+		Natural resource managers responsible for developing
+	ecosystem management strategies require basic descriptive
+	information including inventory data for forested lands to
+	support their decision-making processes.  However, managers
+	generally do not have this type of data for inholdings or
+	neighboring lands that are outside their immediate
+	jurisdiction.  One method of obtaining this information is
+	through the use of predictive models.
+		Two predictive models were examined in this study, a
+	feedforward neural network model and a more traditional
+	statistical model based on discriminant analysis.  The overall
+	objectives of this research were to first construct these two
+	predictive models, and second to compare and evaluate their
+	respective classification accuracies when predicting forest
+	cover types in undisturbed forests.
+		The study area included four wilderness areas found in
+	the Roosevelt National Forest of northern Colorado.  A total
+	of twelve cartographic measures were utilized as independent
+	variables in the predictive models, while seven major forest
+	cover types were used as dependent variables.  Several subsets
+	of these variables were examined to determine the best overall
+	predictive model.
+		For each subset of cartographic variables examined in
+	this study, relative classification accuracies indicate the
+	neural network approach outperformed the traditional
+	discriminant analysis method in predicting forest cover types.
+	The final neural network model had a higher absolute
+	classification accuracy (70.58%) than the final corresponding
+	linear discriminant analysis model(58.38%).  In support of these
+	classification results, thirty additional networks with randomly
+	selected initial weights were derived.  From these networks, the
+	overall mean absolute classification accuracy for the neural
+	network method was 70.52%, with a 95% confidence interval of
+	70.26% to 70.80%.  Consequently, natural resource managers may
+	utilize an alternative method of predicting forest cover types
+	that is both superior to the traditional statistical methods and
+	adequate to support their decision-making processes for
 	developing ecosystem management strategies.
 
 
@@ -119,7 +119,7 @@ The Forest CoverType dataset
 	Predicting forest cover type from cartographic variables only
 	(no remotely sensed data).  The actual forest cover type for
 	a given observation (30 x 30 meter cell) was determined from
-	US Forest Service (USFS) Region 2 Resource Information System 
+	US Forest Service (USFS) Region 2 Resource Information System
 	(RIS) data.  Independent variables were derived from data
 	originally obtained from US Geological Survey (USGS) and
 	USFS data.  Data is in raw form (not scaled) and contains
@@ -129,28 +129,28 @@ The Forest CoverType dataset
 	This study area includes four wilderness areas located in the
 	Roosevelt National Forest of northern Colorado.  These areas
 	represent forests with minimal human-caused disturbances,
-	so that existing forest cover types are more a result of 
+	so that existing forest cover types are more a result of
 	ecological processes rather than forest management practices.
 
-	Some background information for these four wilderness areas:  
-	Neota (area 2) probably has the highest mean elevational value of 
-	the 4 wilderness areas. Rawah (area 1) and Comanche Peak (area 3) 
-	would have a lower mean elevational value, while Cache la Poudre 
-	(area 4) would have the lowest mean elevational value. 
+	Some background information for these four wilderness areas:
+	Neota (area 2) probably has the highest mean elevational value of
+	the 4 wilderness areas. Rawah (area 1) and Comanche Peak (area 3)
+	would have a lower mean elevational value, while Cache la Poudre
+	(area 4) would have the lowest mean elevational value.
 
-	As for primary major tree species in these areas, Neota would have 
+	As for primary major tree species in these areas, Neota would have
 	spruce/fir (type 1), while Rawah and Comanche Peak would probably
-	have lodgepole pine (type 2) as their primary species, followed by 
-	spruce/fir and aspen (type 5). Cache la Poudre would tend to have 
-	Ponderosa pine (type 3), Douglas-fir (type 6), and 
-	cottonwood/willow (type 4).  
+	have lodgepole pine (type 2) as their primary species, followed by
+	spruce/fir and aspen (type 5). Cache la Poudre would tend to have
+	Ponderosa pine (type 3), Douglas-fir (type 6), and
+	cottonwood/willow (type 4).
 
-	The Rawah and Comanche Peak areas would tend to be more typical of 
-	the overall dataset than either the Neota or Cache la Poudre, due 
-	to their assortment of tree species and range of predictive 
-	variable values (elevation, etc.)  Cache la Poudre would probably 
-	be more unique than the others, due to its relatively low 
-	elevation range and species composition. 
+	The Rawah and Comanche Peak areas would tend to be more typical of
+	the overall dataset than either the Neota or Cache la Poudre, due
+	to their assortment of tree species and range of predictive
+	variable values (elevation, etc.)  Cache la Poudre would probably
+	be more unique than the others, due to its relatively low
+	elevation range and species composition.
 
 
 5.	Number of instances (observations):  581,012
@@ -165,8 +165,8 @@ The Forest CoverType dataset
 7.	Attribute information:
 
 Given is the attribute name, attribute type, the measurement unit and
-a brief description.  The forest cover type is the classification 
-problem.  The order of this listing corresponds to the order of 
+a brief description.  The forest cover type is the classification
+problem.  The order of this listing corresponds to the order of
 numerals along the rows of the database.
 
 Name                                     Data Type    Measurement                       Description
@@ -248,7 +248,7 @@ Soil Types:             1 to 40 : based on the USFS Ecological
                 7.  subalpine                           7.  igneous and metamorphic
                 8.  alpine                              8.  volcanic
 
-        The third and fourth ELU digits are unique to the mapping unit 
+        The third and fourth ELU digits are unique to the mapping unit
         and have no special meaning to the climatic or geologic zones.
 
 Forest Cover Type Classes:	1 -- Spruce/Fir
@@ -281,20 +281,20 @@ Horizontal_Distance_To_Fire_Points      meters          1980.29 1324.19
 
 10.	Class distribution:
 
-           Number of records of Spruce-Fir:                211840 
-           Number of records of Lodgepole Pine:            283301 
-           Number of records of Ponderosa Pine:             35754 
-           Number of records of Cottonwood/Willow:           2747 
-           Number of records of Aspen:                       9493 
-           Number of records of Douglas-fir:                17367 
-           Number of records of Krummholz:                  20510  
-           Number of records of other:                          0  
-		
+           Number of records of Spruce-Fir:                211840
+           Number of records of Lodgepole Pine:            283301
+           Number of records of Ponderosa Pine:             35754
+           Number of records of Cottonwood/Willow:           2747
+           Number of records of Aspen:                       9493
+           Number of records of Douglas-fir:                17367
+           Number of records of Krummholz:                  20510
+           Number of records of other:                          0
+
            Total records:                                  581012
 
 =====================================================================
 Jock A. Blackard
 08/28/1998 -- original text
-12/07/1999 -- updated mailing address, citations, background info 
+12/07/1999 -- updated mailing address, citations, background info
 		  for study area, added summary statistics.
 =====================================================================

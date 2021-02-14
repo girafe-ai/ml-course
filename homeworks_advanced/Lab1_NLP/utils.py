@@ -21,7 +21,7 @@ def generate_translation(src, trg, model, TRG_vocab):
 
     original = [TRG_vocab.itos[x] for x in list(trg[:,0].cpu().numpy())]
     generated = [TRG_vocab.itos[x] for x in list(output[:, 0])]
-    
+
     original = remove_tech_tokens(original)
     generated = remove_tech_tokens(generated)
     print('Original: {}'.format(' '.join(original)))

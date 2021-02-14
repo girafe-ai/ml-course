@@ -13,7 +13,7 @@ It's good to have a repo with the task solved, so you could have a *private* rep
 ## Codestyle
 
 > Пишите код так, как будто сопровождать его будет склонный к насилию психопат, который знает, где вы живёте
-> 
+>
 > **Russian hackers' proverb**
 
 ### Python

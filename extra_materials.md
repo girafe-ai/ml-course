@@ -74,5 +74,3 @@ and Their Implications (GPT-2)](https://openai.com/blog/better-language-models/)
 __Graph Neural Networks__:
 * [en] [Introduction to Graph Neural Networks](https://www.morganclaypool.com/doi/10.2200/S00980ED1V01Y202001AIM045)
 * [en] Grear [repo](https://github.com/thunlp/GNNPapers) with must-read papers on GNN
-
-

@@ -63,7 +63,3 @@ def load_dataset(flatten=False):
     # We just return all the arrays in order, as expected in main().
     # (It doesn't matter how we do this as long as we can read them again.)
     return X_train, y_train, X_val, y_val, X_test, y_test
-
-
-
-

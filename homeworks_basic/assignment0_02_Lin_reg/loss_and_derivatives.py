@@ -33,7 +33,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE    
-        return 
+        return np.mean(np.abs (X.dot(w) - Y))
 
     @staticmethod
     def l2_reg(w):
@@ -47,7 +47,7 @@ class LossAndDerivatives:
         """
         
         # YOUR CODE HERE
-        return 
+        return np.sum (w ** 2, axis = (0, 1))
 
     @staticmethod
     def l1_reg(w):
@@ -61,7 +61,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sum (w ** 2)
 
     @staticmethod
     def no_reg(w):
@@ -87,7 +87,8 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        from numpy.linalg import inv
+        return np.array (inv(X.T @ X + np.eye (X.shape[1])).dot(X.T @ Y))
 
     @staticmethod
     def mae_derivative(X, Y, w):

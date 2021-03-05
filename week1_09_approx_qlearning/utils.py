@@ -1,9 +1,7 @@
 import numpy as np
 import psutil
 from scipy.signal import convolve, gaussian
-import torch
-from torch import nn
-import os
+
 
 def get_cum_discounted_rewards(rewards, gamma):
     """
@@ -55,7 +53,7 @@ def play_and_log_episode(env, agent, gamma=0.99, t_max=10000):
         'q_spreads': np.array(q_spreads),
         'td_errors': np.array(td_errors),
         'rewards': np.array(rewards),
-        'episode_finished': np.array(done)
+        'episode_finished': np.array(done),
     }
 
     return return_pack
@@ -69,7 +67,7 @@ def img_by_obs(obs, state_dim):
     return obs.reshape([-1, state_dim[2]])
 
 
-def is_enough_ram(min_available_gb = 0.1):
+def is_enough_ram(min_available_gb=0.1):
     mem = psutil.virtual_memory()
     return mem.available >= min_available_gb * (1024 ** 3)
 

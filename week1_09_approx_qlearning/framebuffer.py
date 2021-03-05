@@ -1,6 +1,8 @@
 import numpy as np
-from gym.spaces.box import Box
 from gym.core import Wrapper
+from gym.spaces.box import Box
+
+
 class FrameBuffer(Wrapper):
     def __init__(self, env, n_frames=4, dim_order='tensorflow'):
         """A gym wrapper that reshapes, crops and scales image into the desired shapes"""
@@ -13,7 +15,9 @@ class FrameBuffer(Wrapper):
             n_channels, height, width = env.observation_space.shape
             obs_shape = [n_channels * n_frames, height, width]
         else:
-            raise ValueError('dim_order should be "tensorflow" or "pytorch", got {}'.format(dim_order))
+            raise ValueError(
+                'dim_order should be "tensorflow" or "pytorch", got {}'.format(dim_order)
+            )
         self.observation_space = Box(0.0, 1.0, obs_shape)
         self.framebuffer = np.zeros(obs_shape, 'float32')
 
@@ -33,9 +37,9 @@ class FrameBuffer(Wrapper):
         if self.dim_order == 'tensorflow':
             offset = self.env.observation_space.shape[-1]
             axis = -1
-            cropped_framebuffer = self.framebuffer[:,:,:-offset]
+            cropped_framebuffer = self.framebuffer[:, :, :-offset]
         elif self.dim_order == 'pytorch':
             offset = self.env.observation_space.shape[0]
             axis = 0
             cropped_framebuffer = self.framebuffer[:-offset]
-        self.framebuffer = np.concatenate([img, cropped_framebuffer], axis = axis)
+        self.framebuffer = np.concatenate([img, cropped_framebuffer], axis=axis)

@@ -976,10 +976,14 @@ pandas = ["pandas"]
 plotting = ["graphviz", "matplotlib"]
 scikit-learn = ["scikit-learn"]
 
+[extras]
+basic = ["Pillow", "tqdm", "scikit-image", "h5py", "pydotplus", "eli5", "PDPbox", "shap"]
+rl = ["gym"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "3ddab4b72306d3e883e1981127f48ce6f7b589ddd63d83db775aad64ea5f7158"
+content-hash = "3a43c8a4cde433e9fdd78175f6d29e9110e9bb04199876a9d6a39f6a91d87ae5"
 
 [metadata.files]
 appdirs = [

@@ -20,13 +20,13 @@ opencv-python = "^4.5.1"
 torch = "^1.7.1"
 torchvision = "^0.8.2"
 torchsummary = "^1.5.1"
-h5py = {version = "^3.1.0", optional = true, comment = "parse cats and dogs dataset"}
-pydotplus = {version = "^2.0.2", optional = true, comment = "graph visualization"}
-tqdm = {version = "^4.56.2", optional = true, comment = "not recommended, but used in notebooks"}
-eli5 = {version = "^0.11.0", optional = true, comment = "week0_07 feature importance"}
-PDPbox = {version = "^0.2.0", optional = true, comment = "week0_07 feature importance"}
-shap = {version = "^0.38.1", optional = true, comment = "week0_07 feature importance"}
-scikit-image = {version = "^0.18.1", optional = true, comment = "week0_12 imread and resize"}
+h5py = {version = "^3.1.0", optional = true}
+pydotplus = {version = "^2.0.2", optional = true}
+tqdm = {version = "^4.56.2", optional = true}
+eli5 = {version = "^0.11.0", optional = true}
+PDPbox = {version = "^0.2.0", optional = true}
+shap = {version = "^0.38.1", optional = true}
+scikit-image = {version = "^0.18.1", optional = true}
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.10.1"

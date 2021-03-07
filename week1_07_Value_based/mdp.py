@@ -190,12 +190,7 @@ class FrozenLakeEnv(MDP):
     """
 
     MAPS = {
-        "4x4": [
-            "SFFF",
-            "FHFH",
-            "FFFH",
-            "HFFG"
-        ],
+        "4x4": ["SFFF", "FHFH", "FFFH", "HFFG"],
         "8x8": [
             "SFFFFFFF",
             "FFFFFFFF",
@@ -204,7 +199,7 @@ class FrozenLakeEnv(MDP):
             "FFFHFFFF",
             "FHHFFFHF",
             "FHFFHFHF",
-            "FFFHFFFG"
+            "FFFHFFFG",
         ],
     }
 

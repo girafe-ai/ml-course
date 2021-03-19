@@ -53,14 +53,17 @@ ensure_newline_before_comments = true
 line_length = 100
 lines_after_imports = 2
 
-[tool.nbqa.mutate]
-black = 1
-isort = 1
-
 [tool.nbqa.config]
 black = "pyproject.toml"
 isort = "pyproject.toml"
 flake8 = "setup.cfg"
+
+[tool.nbqa.addopts]
+flake8 = ["--extend-ignore=E402"]
+
+[tool.nbqa.mutate]
+black = 1
+isort = 1
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

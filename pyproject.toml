@@ -34,7 +34,7 @@ gym = {version = "^0.18.0", optional = true}
 [tool.poetry.extras]
 basic = ["Pillow", "tqdm", "scikit-image", "h5py", "pydotplus", "eli5", "PDPbox", "shap"]
 rl = ["gym"]
-# nlp = ["mysqlclient"]
+# nlp = ["nltk"]
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.10.1"
@@ -42,8 +42,7 @@ ipykernel = "^5.4.3"
 
 [tool.black]
 line-length = 100
-target-version = ["py37"]
-skip-string-normalization = true
+target-version = ["py38"]
 
 [tool.isort]
 multi_line_output = 3

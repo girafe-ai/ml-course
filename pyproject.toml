@@ -20,6 +20,7 @@ torch = "^1.7.1"
 torchvision = "^0.8.2"
 torchsummary = "^1.5.1"
 
+# basic
 Pillow = {version = "^7.2.0", optional = true} # TODO: remove
 tqdm = {version = "^4.56.2", optional = true} # TODO: remove
 scikit-image = {version = "^0.18.1", optional = true} # TODO: remove week0_12 imread and resize
@@ -29,6 +30,7 @@ eli5 = {version = "^0.11.0", optional = true} # week0_07 feature importance
 PDPbox = {version = "^0.2.0", optional = true} # week0_07 feature importance
 shap = {version = "^0.38.1", optional = true} # week0_07 feature importance
 
+# rl
 gym = {version = "^0.18.0", optional = true}
 
 [tool.poetry.extras]

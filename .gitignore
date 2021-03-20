@@ -117,3 +117,6 @@ venv.bak/
 /week0_03_logistic/notMNIST_small/
 
 /week1_08_model_free/qlearning.py
+
+# datasets
+/datasets/quora.txt

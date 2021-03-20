@@ -205,22 +205,22 @@ class FrozenLakeEnv(MDP):
 
     def __init__(self, desc=None, map_name="4x4", slip_chance=0.2):
         if desc is None and map_name is None:
-            raise ValueError('Must provide either desc or map_name')
+            raise ValueError("Must provide either desc or map_name")
         elif desc is None:
             desc = self.MAPS[map_name]
         assert (
-            ''.join(desc).count('S') == 1
+            "".join(desc).count("S") == 1
         ), "this implementation supports having exactly one initial state"
-        assert all(c in "SFHG" for c in ''.join(desc)), "all cells must be either of S, F, H or G"
+        assert all(c in "SFHG" for c in "".join(desc)), "all cells must be either of S, F, H or G"
 
-        self.desc = desc = np.asarray(list(map(list, desc)), dtype='str')
+        self.desc = desc = np.asarray(list(map(list, desc)), dtype="str")
         self.lastaction = None
 
         nrow, ncol = desc.shape
         states = [(i, j) for i in range(nrow) for j in range(ncol)]
         actions = ["left", "down", "right", "up"]
 
-        initial_state = states[np.array(desc == b'S').ravel().argmax()]
+        initial_state = states[np.array(desc == b"S").ravel().argmax()]
 
         transition_probs = {s: {} for s in states}
         rewards = {s: {} for s in states}
@@ -245,20 +245,20 @@ class FrozenLakeEnv(MDP):
                         transition_probs[row, col][action][newrow, newcol] = prob
                     else:
                         transition_probs[row, col][action][newrow, newcol] += prob
-                    if desc[newrow, newcol] == 'G':
+                    if desc[newrow, newcol] == "G":
                         rewards[row, col][action][newrow, newcol] = 1.0
 
         MDP.__init__(self, transition_probs, rewards, initial_state)
 
     def move(self, row, col, movement):
         nrow, ncol = self.desc.shape
-        if movement == 'left':
+        if movement == "left":
             col = max(col - 1, 0)
-        elif movement == 'down':
+        elif movement == "down":
             row = min(row + 1, nrow - 1)
-        elif movement == 'right':
+        elif movement == "right":
             col = min(col + 1, ncol - 1)
-        elif movement == 'up':
+        elif movement == "up":
             row = max(row - 1, 0)
         else:
             raise ValueError("invalid action")
@@ -266,16 +266,16 @@ class FrozenLakeEnv(MDP):
 
     def render(self):
         desc_copy = np.copy(self.desc)
-        desc_copy[self._current_state] = '*'
-        print('\n'.join(map(''.join, desc_copy)), end='\n\n')
+        desc_copy[self._current_state] = "*"
+        print("\n".join(map("".join, desc_copy)), end="\n\n")
 
 
 def plot_graph(
     mdp,
-    graph_size='10,10',
-    s_node_size='1,5',
-    a_node_size='0,5',
-    rankdir='LR',
+    graph_size="10,10",
+    s_node_size="1,5",
+    a_node_size="0,5",
+    rankdir="LR",
 ):
     """
     Function for pretty drawing MDP graph with graphviz library.
@@ -292,36 +292,36 @@ def plot_graph(
     :return: dot object
     """
     s_node_attrs = {
-        'shape': 'doublecircle',
-        'color': '#85ff75',
-        'style': 'filled',
-        'width': str(s_node_size),
-        'height': str(s_node_size),
-        'fontname': 'Arial',
-        'fontsize': '24',
+        "shape": "doublecircle",
+        "color": "#85ff75",
+        "style": "filled",
+        "width": str(s_node_size),
+        "height": str(s_node_size),
+        "fontname": "Arial",
+        "fontsize": "24",
     }
 
     a_node_attrs = {
-        'shape': 'circle',
-        'color': 'lightpink',
-        'style': 'filled',
-        'width': str(a_node_size),
-        'height': str(a_node_size),
-        'fontname': 'Arial',
-        'fontsize': '20',
+        "shape": "circle",
+        "color": "lightpink",
+        "style": "filled",
+        "width": str(a_node_size),
+        "height": str(a_node_size),
+        "fontname": "Arial",
+        "fontsize": "20",
     }
 
-    s_a_edge_attrs = {'style': 'bold', 'color': 'red', 'ratio': 'auto'}
+    s_a_edge_attrs = {"style": "bold", "color": "red", "ratio": "auto"}
 
     a_s_edge_attrs = {
-        'style': 'dashed',
-        'color': 'blue',
-        'ratio': 'auto',
-        'fontname': 'Arial',
-        'fontsize': '16',
+        "style": "dashed",
+        "color": "blue",
+        "ratio": "auto",
+        "fontname": "Arial",
+        "fontsize": "16",
     }
 
-    graph = Digraph(name='MDP')
+    graph = Digraph(name="MDP")
     graph.attr(rankdir=rankdir, size=graph_size)
     for state_node in mdp._transition_probs:
         graph.node(state_node, **s_node_attrs)
@@ -338,9 +338,9 @@ def plot_graph(
                 reward = mdp.get_reward(state_node, posible_action, posible_next_state)
 
                 if reward != 0:
-                    label_a_s_edge = 'p = ' + str(probability) + '  ' + 'reward =' + str(reward)
+                    label_a_s_edge = "p = " + str(probability) + "  " + "reward =" + str(reward)
                 else:
-                    label_a_s_edge = 'p = ' + str(probability)
+                    label_a_s_edge = "p = " + str(probability)
 
                 graph.edge(action_node, posible_next_state, label=label_a_s_edge, **a_s_edge_attrs)
     return graph
@@ -351,7 +351,7 @@ def plot_graph_with_state_values(mdp, state_values):
     graph = plot_graph(mdp)
     for state_node in mdp._transition_probs:
         value = state_values[state_node]
-        graph.node(state_node, label=str(state_node) + '\n' + 'V =' + str(value)[:4])
+        graph.node(state_node, label=str(state_node) + "\n" + "V =" + str(value)[:4])
     return graph
 
 
@@ -364,7 +364,7 @@ def get_optimal_action_for_plot(mdp, state_values, state, gamma=0.9):
         from mdp_get_action_value import get_action_value
     except ImportError:
         raise ImportError(
-            "Implement get_action_value(mdp, state_values, state, action, gamma) in the file \"mdp_get_action_value.py\"."
+            'Implement get_action_value(mdp, state_values, state, action, gamma) in the file "mdp_get_action_value.py".'
         )
     q_values = [
         get_action_value(mdp, state_values, state, action, gamma) for action in next_actions
@@ -376,11 +376,11 @@ def get_optimal_action_for_plot(mdp, state_values, state, gamma=0.9):
 def plot_graph_optimal_strategy_and_state_values(mdp, state_values, gamma=0.9):
     """ Plot graph with state values and """
     graph = plot_graph(mdp)
-    opt_s_a_edge_attrs = {'style': 'bold', 'color': 'green', 'ratio': 'auto', 'penwidth': '6'}
+    opt_s_a_edge_attrs = {"style": "bold", "color": "green", "ratio": "auto", "penwidth": "6"}
 
     for state_node in mdp._transition_probs:
         value = state_values[state_node]
-        graph.node(state_node, label=str(state_node) + '\n' + 'V =' + str(value)[:4])
+        graph.node(state_node, label=str(state_node) + "\n" + "V =" + str(value)[:4])
         for action in mdp.get_possible_actions(state_node):
             if action == get_optimal_action_for_plot(mdp, state_values, state_node, gamma):
                 graph.edge(state_node, state_node + "-" + action, **opt_s_a_edge_attrs)

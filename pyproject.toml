@@ -30,6 +30,11 @@ eli5 = {version = "^0.11.0", optional = true} # week0_07 feature importance
 PDPbox = {version = "^0.2.0", optional = true} # week0_07 feature importance
 shap = {version = "^0.38.1", optional = true} # week0_07 feature importance
 
+# nlp
+nltk = "^3.5"
+gensim = "^3.8.3"
+bokeh = "^2.3.0"
+
 # rl
 gym = {version = "^0.18.0", optional = true}
 graphviz = "^0.16"
@@ -37,7 +42,7 @@ graphviz = "^0.16"
 [tool.poetry.extras]
 basic = ["Pillow", "tqdm", "scikit-image", "h5py", "pydotplus", "eli5", "PDPbox", "shap"]
 rl = ["gym", "graphviz"]
-# nlp = ["nltk"]
+nlp = ["nltk", "gensim", "bokeh"]
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.10.1"

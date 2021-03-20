@@ -105,6 +105,10 @@ venv.bak/
 
 .DS_Store
 
-#
+# teachers materials
 *__from_class*
 *__solved*
+
+# generated data
+/week0_01_intro_and_kNN/pows.png
+/week0_01_intro_and_kNN/another_titanic.csv

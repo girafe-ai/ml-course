@@ -1,5 +1,4 @@
-# most of this code was politely stolen from https://github.com/berkeleydeeprlcourse/homework/
-# all credit goes to https://github.com/abhishekunique (if i got the author right)
+"""most of this code was politely borrowed from https://github.com/berkeleydeeprlcourse/homework/"""
 import random
 
 import numpy as np
@@ -157,7 +156,7 @@ class MDP:
                 )
         msg = (
             "The Enrichment Center once again reminds you that Android Hell is a real place where"
-            " you will be sent at the first sign of defiance. "
+            " you will be sent at the first sign of defiance."
         )
         assert None not in transition_probs, "please do not use None as a state identifier. " + msg
         assert None not in rewards, "please do not use None as an action identifier. " + msg
@@ -277,18 +276,20 @@ def plot_graph(
     a_node_size="0,5",
     rankdir="LR",
 ):
-    """
-    Function for pretty drawing MDP graph with graphviz library.
+    """Function for pretty drawing MDP graph with graphviz library.
+
     Requirements:
     graphviz : https://www.graphviz.org/
     for ubuntu users: sudo apt-get install graphviz
     python library for graphviz
     for pip users: pip install graphviz
+
     :param mdp:
     :param graph_size: size of graph plot
     :param s_node_size: size of state nodes
     :param a_node_size: size of action nodes
     :param rankdir: order for drawing
+
     :return: dot object
     """
     s_node_attrs = {
@@ -347,7 +348,7 @@ def plot_graph(
 
 
 def plot_graph_with_state_values(mdp, state_values):
-    """ Plot graph with state values"""
+    """Plot graph with state values"""
     graph = plot_graph(mdp)
     for state_node in mdp._transition_probs:
         value = state_values[state_node]
@@ -356,7 +357,7 @@ def plot_graph_with_state_values(mdp, state_values):
 
 
 def get_optimal_action_for_plot(mdp, state_values, state, gamma=0.9):
-    """ Finds optimal action using formula above. """
+    """Finds optimal action using formula above."""
     if mdp.is_terminal(state):
         return None
     next_actions = mdp.get_possible_actions(state)
@@ -374,7 +375,7 @@ def get_optimal_action_for_plot(mdp, state_values, state, gamma=0.9):
 
 
 def plot_graph_optimal_strategy_and_state_values(mdp, state_values, gamma=0.9):
-    """ Plot graph with state values and """
+    """Plot graph with state values and"""
     graph = plot_graph(mdp)
     opt_s_a_edge_attrs = {"style": "bold", "color": "green", "ratio": "auto", "penwidth": "6"}
 

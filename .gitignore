@@ -112,3 +112,6 @@ venv.bak/
 # generated data
 /week0_01_intro_and_kNN/pows.png
 /week0_01_intro_and_kNN/another_titanic.csv
+
+/week0_03_logistic/notMNIST_small.tar.gz
+/week0_03_logistic/notMNIST_small/

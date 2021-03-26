@@ -1,4 +1,5 @@
-import numpy as np
+import numpy as np  # noqa: F401
+
 
 class Module(object):
     """
@@ -14,7 +15,8 @@ class Module(object):
 
         gradInput = module.backward(input, gradOutput)
     """
-    def __init__ (self):
+
+    def __init__(self):
         self.output = None
         self.gradInput = None
         self.training = True
@@ -36,7 +38,6 @@ class Module(object):
         self.updateGradInput(input, gradOutput)
         self.accGradParameters(input, gradOutput)
         return self.gradInput
-
 
     def updateOutput(self, input):
         """
@@ -121,13 +122,13 @@ class Module(object):
 
 class Sequential(Module):
     """
-         This class implements a container, which processes `input` data sequentially.
+    This class implements a container, which processes `input` data sequentially.
 
-         `input` is processed by each module (layer) in self.modules consecutively.
-         The resulting array is called `output`.
+    `input` is processed by each module (layer) in self.modules consecutively.
+    The resulting array is called `output`.
     """
 
-    def __init__ (self):
+    def __init__(self):
         super(Sequential, self).__init__()
         self.modules = []
 
@@ -181,13 +182,12 @@ class Sequential(Module):
         """
         # Your code goes here. ################################################
 
-        for i in range(len(self.modules)-1, 0, -1):
-            gradOutput = self.modules[i].backward(self.modules[i-1].output, gradOutput)
+        for i in range(len(self.modules) - 1, 0, -1):
+            gradOutput = self.modules[i].backward(self.modules[i - 1].output, gradOutput)
 
         self.gradInput = self.modules[0].backward(input, gradOutput)
 
         return self.gradInput
-
 
     def zeroGradParameters(self):
         for module in self.modules:
@@ -206,10 +206,10 @@ class Sequential(Module):
         return [x.getGradParameters() for x in self.modules]
 
     def __repr__(self):
-        string = "".join([str(x) + '\n' for x in self.modules])
+        string = "".join([str(x) + "\n" for x in self.modules])
         return string
 
-    def __getitem__(self,x):
+    def __getitem__(self, x):
         return self.modules.__getitem__(x)
 
     def train(self):
@@ -230,27 +230,27 @@ class Sequential(Module):
 
 
 class Criterion(object):
-    def __init__ (self):
+    def __init__(self):
         self.output = None
         self.gradInput = None
 
     def forward(self, input, target):
         """
-            Given an input and a target, compute the loss function
-            associated to the criterion and return the result.
+        Given an input and a target, compute the loss function
+        associated to the criterion and return the result.
 
-            For consistency this function should not be overrided,
-            all the code goes in `updateOutput`.
+        For consistency this function should not be overrided,
+        all the code goes in `updateOutput`.
         """
         return self.updateOutput(input, target)
 
     def backward(self, input, target):
         """
-            Given an input and a target, compute the gradients of the loss function
-            associated to the criterion and return the result.
+        Given an input and a target, compute the gradients of the loss function
+        associated to the criterion and return the result.
 
-            For consistency this function should not be overrided,
-            all the code goes in `updateGradInput`.
+        For consistency this function should not be overrided,
+        all the code goes in `updateGradInput`.
         """
         return self.updateGradInput(input, target)
 

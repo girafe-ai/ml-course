@@ -1,4 +1,4 @@
-'''This code originates from https://github.com/openai/baselines/blob/master/baselines/deepq/replay_buffer.py'''
+"""This code originates from https://github.com/openai/baselines/blob/master/baselines/deepq/replay_buffer.py"""
 import random
 
 import numpy as np

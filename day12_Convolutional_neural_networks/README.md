@@ -1,0 +1,2 @@
+﻿CNN practice:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/harbour_masters_ml_s21/day12_Convolutional_neural_networks/12_cnn_seminar.ipynb)

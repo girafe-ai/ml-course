@@ -1,9 +1,9 @@
+<<<<<<< HEAD
 NN from scratch:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week08_intro_to_DL/week08_nn_from_scratch_practice_edition.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_08_intro_to_DL/week08_nn_from_scratch_practice_edition.ipynb)
 
 NN from scratch(full): 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week08_intro_to_DL/week08_nn_from_scratch.ipynb)
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_08_intro_to_DL/week08_nn_from_scratch.ipynb)
 
 __Further readings__:
 * [en] Notes on vector and matrix derivatives: http://cs231n.stanford.edu/vecDerivs.pdf

@@ -1,4 +1,4 @@
-Your ulitmate goal is to implement all the basic blocks of the neural network in pure numpy. All the code you need is available in this directory. You may refer to the [week0_08 directory](https://github.com/girafe-ai/ml-mipt/tree/basic_s21/week0_08_Intro_to_DL) as well.
+Your ulitmate goal is to implement all the basic blocks of the neural network in pure numpy. All the code you need is available in this directory. You may refer to the [week0_08 directory](https://github.com/girafe-ai/ml-mipt/tree/basic_s21/week0_08_intro_to_DL) as well.
 
 Please, implement the modules (layers, loss functions, optimizers, etc.) in the `modules.ipynb`. Two layers (`Conv2d` and `MaxPool2d`) are optional and will give you a bit more challenge (and more points of course).
 

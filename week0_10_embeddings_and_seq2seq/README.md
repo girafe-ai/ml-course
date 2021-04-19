@@ -1,5 +1,5 @@
 Generating names with RNNs:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic/week11_embeddings_and_seq2seq/week11_seq2seq_rnn_practice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_10_embeddings_and_seq2seq/week10_seq2seq_rnn_practice.ipynb)
 
 
 __Further readings__:

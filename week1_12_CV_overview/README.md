@@ -14,3 +14,5 @@ __Practical notes__:
 * [en] Bag of Tricks for Image Classification with CNNs [paper](https://arxiv.org/abs/1812.01187)
 
 * [en] SimCLR: A Simple framework for Contrastive Learning of Visual Representations [paper](https://arxiv.org/abs/2002.05709)
+
+* [en] Illustrated Contrastive Learning Concept [blog post](https://amitness.com/2020/03/illustrated-simclr/)

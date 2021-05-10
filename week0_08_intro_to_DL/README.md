@@ -1,3 +1,5 @@
+__For assignment0_05 please refer to the assignment [folder](https://github.com/girafe-ai/ml-mipt/tree/basic_s21/homeworks_basic/assignment0_05_NN_from_scratch)__
+
 NN from scratch:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_08_intro_to_DL/week08_nn_from_scratch_practice_edition.ipynb)
 

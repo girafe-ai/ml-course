@@ -1,5 +1,5 @@
 Neural Machine Translation as seq2sec:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/harbour_dlia_s21/day03_Machine_Translation/practice_seq2seq_NMT.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/harbour_dlia_s21/day03_Machine_Translation/practice_seq2seq_NMT_from_class.ipynb)
 
 
 Further readings:

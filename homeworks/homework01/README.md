@@ -1,0 +1,1 @@
+Please, proceed to day02 materials and finish the bonus assignment on the three inputs net.

@@ -1,5 +1,5 @@
 Question Answering (and TTS):
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/harbour_dlia_s21/day07_question_answering/Question_Answering_with_a_Fine_Tuned_BERT_and_TTS.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/harbour_dlia_s21/day07_question_answering/Question_Answering_with_a_Fine_Tuned_BERT_and_TTS_en.ipynb)
 
 
 

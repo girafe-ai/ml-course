@@ -52,7 +52,7 @@ A lot of great materials are available online. See
 file for the whole list.
 
 Informal "aggregation" of all topics by previous years students:
-[file](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf) (in
+[file](https://github.com/girafe-ai/ml-mipt/blob/94bd19509b2615b1f463a74a7104574a2287e9bd/ML_informal_notes.pdf) (in
 Russian) - useful for fast and furious exam passing.
 
 Also lectures and seminars contains references to more detailed materials on topics.

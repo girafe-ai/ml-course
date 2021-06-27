@@ -19,8 +19,7 @@
 
 - Отличные лекции Жени Соколова. Читать pdf, лучше всего наиболее актуальный год:
   [link](https://github.com/esokolov/ml-course-hse)
-- “Рукописный учебник” от студентов нашего курса на ФИВТе:
-  [link](https://github.com/girafe-ai/ml-mipt/blob/master/ML_informal_notes.pdf)
+- [“Рукописный учебник”](https://github.com/girafe-ai/ml-mipt/blob/94bd19509b2615b1f463a74a7104574a2287e9bd/ML_informal_notes.pdf) от студентов нашего курса на ФИВТе
 - Методичка Воронцова,
   [link](http://www.machinelearning.ru/wiki/images/6/6d/Voron-ML-1.pdf)
 - Замечательная книжка В.Г. Спокойного про линейные оценки:

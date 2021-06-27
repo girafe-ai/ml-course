@@ -119,4 +119,4 @@ venv.bak/
 /week1_08_model_free/qlearning.py
 
 # datasets
-/datasets/quora.txt
+/datasets/

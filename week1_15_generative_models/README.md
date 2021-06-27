@@ -1,7 +1,8 @@
-VAE practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_15_generative/week15_VAE_practice.ipynb)
+# VAE practice
 
-**Further readings**:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/develop/week1_15_generative_models/week1_15_variational_autoencoders.ipynb)
+
+## Further readings
 
 - [en] Tutorial on VAE (paper): https://arxiv.org/abs/1606.05908
 

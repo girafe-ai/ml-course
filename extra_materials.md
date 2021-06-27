@@ -1,19 +1,21 @@
-**En**:
+# Extra reading materials
 
-0. Deep Learning book - classics. Delivers comprehensive overview of almost all vital
-   themes in ML and DL. Available online at https://www.deeplearningbook.org
-1. The Hundred-page Machine Learning book: [link](http://themlbook.com) (available online,
-   e.g. on the
-   [github](https://github.com/ZakiaSalod/The-Hundred-Page-Machine-Learning-Book))
-2. Stanford lectures on Probability Theory:
-   [link](https://web.stanford.edu/~montanar/TEACHING/Stat310A/lnotes.pdf)
-3. Matrix calculus notes from Stanford: [link](http://cs231n.stanford.edu/vecDerivs.pdf)
-4. Derivatives notes from Stanford:
-   [link](http://cs231n.stanford.edu/handouts/derivatives.pdf)
-5. Reinforcement Learning: An introduction by Richard S. Sutton and Andrew G. Barto:
-   [link](http://incompleteideas.net/book/the-book-2nd.html)
+## En
 
-**Ru**:
+- Deep Learning book - classics. Delivers comprehensive overview of almost all vital
+  themes in ML and DL. Available online at https://www.deeplearningbook.org
+- The Hundred-page Machine Learning book: [link](http://themlbook.com) (available online,
+  e.g. on the
+  [github](https://github.com/ZakiaSalod/The-Hundred-Page-Machine-Learning-Book))
+- Stanford lectures on Probability Theory:
+  [link](https://web.stanford.edu/~montanar/TEACHING/Stat310A/lnotes.pdf)
+- Matrix calculus notes from Stanford: [link](http://cs231n.stanford.edu/vecDerivs.pdf)
+- Derivatives notes from Stanford:
+  [link](http://cs231n.stanford.edu/handouts/derivatives.pdf)
+- Reinforcement Learning: An introduction by Richard S. Sutton and Andrew G. Barto:
+  [link](http://incompleteideas.net/book/the-book-2nd.html)
+
+## Ru
 
 - Отличные лекции Жени Соколова. Читать pdf, лучше всего наиболее актуальный год:
   [link](https://github.com/esokolov/ml-course-hse)
@@ -24,21 +26,21 @@
 - Замечательная книжка В.Г. Спокойного про линейные оценки:
   [link](http://strlearn.ru/wp-content/uploads/2017/01/script2018-5.pdf)
 
-**Basics**:
+## Basics
 
 - [en] Naive Bayesian classifier explained:
   [link](https://machinelearningmastery.com/classification-as-conditional-probability-and-the-naive-bayes-algorithm/)
 - Stanford notes on linear models:
   [link](http://cs229.stanford.edu/notes/cs229-notes1.pdf)
 
-**Bootstrap and bias-variance decomposition**:
+## Bootstrap and bias-variance decomposition
 
 - [en] Detailed description of bootstrap procedure:
   [link](http://www.math.ntu.edu.tw/~hchen/teaching/LargeSample/notes/notebootstrap.pdf)
 - [en] Bias-variance tradeoff in more general case: A Unified Bias-Variance Decomposition
   and its Applications [link](https://homes.cs.washington.edu/~pedrod/papers/mlc00a.pdf)
 
-**Gradient Boosting and Feature importances**:
+## Gradient Boosting and Feature importances
 
 - [en] Great interactive blogpost by Alex Rogozhnikov on Gradient Boosting:
   http://arogozhnikov.github.io/2016/06/24/gradient_boosting_explained.html
@@ -48,7 +50,7 @@
 - [en] Kaggle tutorial on feature importances:
   https://www.kaggle.com/learn/machine-learning-explainability
 
-**Deep Learning**:
+## Deep Learning
 
 - [en] Notes on vector and matrix derivatives: http://cs231n.stanford.edu/vecDerivs.pdf
 - [en] More notes on matrix derivatives from Stanford:
@@ -76,7 +78,7 @@
   http://cs231n.github.io/understanding-cnn/
 - [en] LR warm-up and useful tricks - [article](https://arxiv.org/abs/1812.01187)
 
-**Natural Language Processing**:
+## Natural Language Processing
 
 - [en] Great resource by Lena Voita (direct link to Word Embeddings explanation):
   https://lena-voita.github.io/nlp_course/word_embeddings.html
@@ -113,7 +115,7 @@
 - [en]
   [Post about GPT-2 in OpenAI blog (by 04.10.2019)](https://openai.com/blog/fine-tuning-gpt-2/)
 
-**Graph Neural Networks**:
+## Graph Neural Networks
 
 - [en]
   [Introduction to Graph Neural Networks](https://www.morganclaypool.com/doi/10.2200/S00980ED1V01Y202001AIM045)

@@ -1,5 +1,5 @@
 Практика и введение:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/extra_lectures/Sber_July_2021/Step01_practice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/extra_lectures/Sber_July_2021/Step01__practice.ipynb)
 
 
 __Further readings__:

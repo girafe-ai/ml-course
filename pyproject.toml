@@ -36,6 +36,12 @@ ipywidgets = "^7.6.3" # week1_15 downloading mnist via torchvision
 # nlp
 nltk = "^3.5"
 gensim = "^3.8.3"
+spacy = "^3.1.1"
+subword-nmt = "^0.3.7"
+
+pytorch-transformers = "^1.2.0"
+torchtext = "^0.8"
+
 bokeh = "^2.3.0"
 
 # rl
@@ -44,8 +50,8 @@ graphviz = "^0.16"
 
 [tool.poetry.extras]
 basic = ["Pillow", "tqdm", "scikit-image", "h5py", "pydotplus", "eli5", "PDPbox", "shap"]
+nlp = ["nltk", "gensim", "spacy", "subword-nmt", "pytorch-transformers", "torchtext", "bokeh"]
 rl = ["gym", "graphviz"]
-nlp = ["nltk", "gensim", "bokeh"]
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.10.1"

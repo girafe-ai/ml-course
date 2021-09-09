@@ -1,5 +1,6 @@
 Word embeddings overview and visualization:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_f21/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings.ipynb)
+Self-practice version: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_f21/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings__completed.ipynb)
+Solved version: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_f21/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings__completed.ipynb)
 
 Further readings:
 1. Great resource by Lena Voita (direct link to Word Embeddings explanation): https://lena-voita.github.io/nlp_course/word_embeddings.html

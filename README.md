@@ -7,7 +7,7 @@ Artificial Intelligence. It is designed to take one year (two terms at MIPT) -
 approximately 2 \* 15 lectures and seminars.
 
 All learning materials are available here, full list of topics considered in the
-course are listed in `program_*.pdf` files
+course are listed in `program_*.pdf` files.
 
 Organizational information about current launches available at
 [`ml-mipt.github.io`](https://ml-mipt.github.io/)
@@ -16,9 +16,9 @@ Organizational information about current launches available at
 
 - on `master` branch previous term materials are stored to give a quick and
   comprehensive overview
-- on `basic` and `advanced` branches materials for current launches are being
-  published
-- tags (e.g. `spring_2019`) contain previous launches materials for convenience
+- on `*_basic` and `*_advanced` branches materials for current launches are
+  being published
+- tags (e.g. `2021_spring`) contain previous launches materials for convenience
 
 ## Video lectures
 

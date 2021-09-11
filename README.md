@@ -52,15 +52,13 @@ yourself.
 ## Materials for self-study
 
 A lot of great materials are available online. See
-[extra_materials.md](https://github.com/girafe-ai/ml-mipt/blob/master/extra_materials.md)
-file for the whole list.
+[extra materials](extra_materials.md) file for the whole list.Also lectures and
+seminars contains references to more detailed materials on topics.
 
-Informal "aggregation" of all topics by previous years students:
-[file](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf)
-(in Russian) - useful for fast and furious exam passing.
-
-Also lectures and seminars contains references to more detailed materials on
-topics.
+Lectures conspects are available for both [basic](lecture_notes_basic__ru.pdf)
+and [advanced](lecture_notes_advanced__ru.pdf). Especially useful for fast and
+furious exam passing. (Previous version of informal basic conspect is
+[available](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf))
 
 ## Docker image
 

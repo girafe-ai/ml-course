@@ -2,7 +2,7 @@ default_language_version:
   python: python3.8
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-yaml
       - id: check-json
@@ -13,33 +13,33 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 21.8b0
     hooks:
       - id: black
 
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.7.0
+    rev: 5.9.3
     hooks:
       - id: isort
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.2
     hooks:
       - id: flake8
         additional_dependencies: [flake8-bugbear]
 
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 0.5.7
+    rev: 1.1.0
     hooks:
       - id: nbqa-black
-        additional_dependencies: [black==20.8b1]
+        additional_dependencies: [black==21.8b0]
       - id: nbqa-isort
-        additional_dependencies: [isort==5.7.0]
+        additional_dependencies: [isort==5.9.3]
       - id: nbqa-flake8
-        additional_dependencies: [flake8==3.8.4]
+        additional_dependencies: [flake8==3.9.2]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.2.1
+    rev: v2.4.0
     hooks:
       - id: prettier
         args: [--print-width=80, --prose-wrap=always]

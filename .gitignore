@@ -105,6 +105,8 @@ venv.bak/
 
 .DS_Store
 
-#
+# ml-mipt specific
 *__from_class*
 *__solved*
+*__draft*
+testing/

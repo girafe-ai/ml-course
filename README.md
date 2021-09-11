@@ -24,17 +24,12 @@ Organizational information about current launches available at
 
 All lecture materials are currently in Russian language
 
-- [ru] advanced track (updated) (Fall 2020):
-  [`Lectures youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye),
-  [`Practice sessions youtube playlist`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr)
-- [ru] basic track (Spring 2020, updated):
-  [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj),
-  [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
-- [ru] advanced track (Fall 2019):
-  [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM),
-  [`practice sessions youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg)
-- [ru] basic track (Spring 2019):
-  [`lectures youtube playlist (ru)`](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt)
+| Track    | Launch      | Lectures                                                                            | Practice                                                                            | Language |
+| -------- | ----------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------- |
+| basic    | Spring 2020 | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z) | ru       |
+| advanced | Fall 2020   | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr) | ru       |
+| advanced | Fall 2019   | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg) | ru       |
+| basic    | Spring 2019 | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt) | -                                                                                   | ru       |
 
 ## Prerequisites
 

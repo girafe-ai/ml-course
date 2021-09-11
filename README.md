@@ -1,4 +1,4 @@
-# Machine Learning at MIPT
+# Machine Learning at MIPT, fall 2021 basic track
 
 ## Basic (first semester) and advanced (second semester) tracks, Spring 2021
 

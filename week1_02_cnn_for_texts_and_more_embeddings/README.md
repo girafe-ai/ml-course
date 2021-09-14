@@ -1,5 +1,5 @@
-﻿Slides:
-[link](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_02_cnn_for_texts_and_more_embeddings/ml-mipt_f21_lect102_cnn_for_texts_and_more_embeddings.pdf)
+Slides:
+[link](https://github.com/girafe-ai/ml-mipt/blob/21f_advanced/week1_02_cnn_for_texts_and_more_embeddings/ml-mipt_f21_lect102_cnn_for_texts_and_more_embeddings.pdf)
 
 Word embeddings overview and visualization:
 

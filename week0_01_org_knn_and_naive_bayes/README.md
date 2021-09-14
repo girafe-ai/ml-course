@@ -1,6 +1,6 @@
 Slides:
-[Organizational slides link](https://github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_01_org_knn_and_naive_bayes/ml-mipt_f21_lect000_org_slides_style.pdf)
-[Lecture 01 slides link](https://github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_01_org_knn_and_naive_bayes/ml-mipt_f21_lect001_intro_knn_naive_bayes_style.pdf)
+* [Organizational slides](https://github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_01_org_knn_and_naive_bayes/ml-mipt_f21_lect000_org_slides_style.pdf)
+* [Lecture 01 slides](https://github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_01_org_knn_and_naive_bayes/ml-mipt_f21_lect001_intro_knn_naive_bayes_style.pdf)
 
 
 Naive Bayes from scratch:

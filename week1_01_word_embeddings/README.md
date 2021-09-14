@@ -1,5 +1,5 @@
 Slides:
-[link](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/ml-mipt_f21_lect101_Word_embeddings.pdf)
+[link](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/ml-mipt_f21_lect101_Word_embeddings.pdf)
 
 Word embeddings overview and visualization:
 

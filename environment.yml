@@ -1,0 +1,8 @@
+name: ml-mipt
+
+channels:
+  - default
+  - conda-forge
+
+dependencies:
+  - python=3.8

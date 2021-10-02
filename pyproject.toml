@@ -32,10 +32,11 @@ shap = {version = "^0.38.1", optional = true} # week0_07 feature importance
 
 # advanced
 ipywidgets = "^7.6.3" # week1_15 downloading mnist via torchvision
+umap-learn = "^0.5.1" # week1_01 dimension reduction for embeddings
 
 # nlp
 nltk = "^3.5"
-gensim = "^3.8.3"
+gensim = "^4.1.2"
 spacy = "^3.1.1"
 subword-nmt = "^0.3.7"
 

@@ -1,5 +1,5 @@
 BERT for text classification:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_05_elmo_and_bert/week05_BERT_for_text_classification.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_05_elmo_and_bert/practice_bert_for_text_classification.ipynb)
 
 
 __Further readings__:

@@ -1,7 +1,7 @@
 Decision trees notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_06_trees_and_ensembles/week0_06_decision_trees.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_05_trees_and_ensembles/practice0_05_decision_trees.ipynb)
 
 Ensembles:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_06_trees_and_ensembles/week0_06_ensembles.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_05_trees_and_ensembles/practice0_05_ensembles.ipynb)
 
-[Lecture notes link](https://github.com/girafe-ai/ml-mipt/blob/basic_s21/week0_06_trees_and_ensembles/week0_06_trees_and_ensembles.pdf)
+[Lecture notes link](https://github.com/girafe-ai/ml-mipt/blob/21f_basic/week0_05_trees_and_ensembles/ml-mipt_21f_lect005_trees_and_ensembles_style.pdf)

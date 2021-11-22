@@ -2,7 +2,7 @@ Policy gradient practice:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_10_reinforce/practice_reinforce.ipynb)
 
 Binpord's policy gradient practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_10_reinforce/binpord_practice_reinforce.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_10_reinforce/binpord_practice_reinforce_clean.ipynb)
 
 Further readings:
 

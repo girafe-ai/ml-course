@@ -3,8 +3,14 @@ Slides:
 
 Word embeddings overview and visualization:
 
-Self-practice version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings__completed.ipynb)
+Binpord's practice:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/binpord_practice_word_embeddings_clean.ipynb)
+
+Binpord's solved practice:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/binpord_practice_word_embeddings.ipynb)
+
+Practice:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings.ipynb)
 
 Solved version:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/21f_advanced/week1_01_word_embeddings/practice1_01_dealing_with_word_embeddings__completed.ipynb)

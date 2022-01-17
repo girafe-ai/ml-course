@@ -7,6 +7,7 @@ repos:
       - id: check-yaml
       - id: check-json
       - id: check-added-large-files
+        args: ["--maxkb=15000"]
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-case-conflict

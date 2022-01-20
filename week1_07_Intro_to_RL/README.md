@@ -1,5 +1,5 @@
-Gym interfaces:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_07_Intro_to_RL/practice_gym_interfaces_example.ipynb)
+Gym interface and crossentropy method:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_07_Intro_to_RL/practice_gym_and_crossentropy_method.ipynb)
 
-Crossentropy method practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_07_Intro_to_RL/practice_Crossentropy_method.ipynb)
+Solved version:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_07_Intro_to_RL/practice_gym_and_crossentropy_method_solved.ipynb)

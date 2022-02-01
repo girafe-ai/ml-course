@@ -42,3 +42,5 @@ def download_file(url: str, save_path: Optional[str] = None, verbose: bool = Fal
             leave=True,
         ):
             file.write(chunk)
+
+    return path

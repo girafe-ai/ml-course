@@ -112,5 +112,6 @@ venv.bak/
 testing/
 
 # Datsets
+*.tar.gz
 *.csv
 !/datasets/*.csv

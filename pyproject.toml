@@ -9,7 +9,7 @@ keywords = ["machine learning", "mipt", "data science", "natural language proces
 license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "~3.8"
 scikit-learn = "^0.24.1"
 matplotlib = "^3.3.4"
 pandas = "^1.2.2"
@@ -57,7 +57,7 @@ nlp = ["nltk", "gensim", "spacy", "subword-nmt", "pytorch-transformers", "torcht
 rl = ["gym", "graphviz"]
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.10.1"
+pre-commit = "^2.17.0"
 ipykernel = "^5.4.3"
 
 [tool.black]
@@ -65,11 +65,7 @@ line-length = 100
 target-version = ["py38"]
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-ensure_newline_before_comments = true
+profile = "black"
 line_length = 100
 lines_after_imports = 2
 

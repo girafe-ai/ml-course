@@ -2,8 +2,11 @@
 name = "ml-mipt"
 version = "1.0.0"
 description = "Machine learning course at MIPT"
-authors = ["Vladislav Goncharenko <vladislav.goncharenko@phystech.edu>, Radoslav Neychev <neychev@phystech.edu>"]
-license = "MIT License"
+authors = ["Radoslav Neychev <neychev@phystech.edu>, Vladislav Goncharenko <vladislav.goncharenko@phystech.edu>"]
+readme = "README.md"
+repository = "https://github.com/girafe-ai/ml-mipt"
+keywords = ["machine learning", "mipt", "data science", "natural language processing", "reinforcement learning", "computer vision"]
+license = "Apache-2.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"

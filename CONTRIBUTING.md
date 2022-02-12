@@ -7,6 +7,25 @@ You must inherit
 It contains minimal setup to add any materials and still preserve structure and quality
 of all `ml-mipt` launches.
 
+## Notebook layout
+
+[`template` notebook](https://github.com/girafe-ai/ml-mipt/blob/develop/template.ipynb)
+is reference point to start from.
+
+It contains:
+
+- header with girafe-ai logo and course name
+- number and name of the seminar
+- footer with cridentials (authors) of this materials
+
+If you significally coutribute to some notebook, you are added to authors list
+(if you want of course).
+
+### TODO
+
+- Script to randomly watermark materials!
+- Validator of header + footer + watermarks
+
 ## Environment setup
 
 1. [установить poetry](https://python-poetry.org/docs/#installation) (менеджер

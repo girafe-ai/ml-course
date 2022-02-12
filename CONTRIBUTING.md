@@ -10,6 +10,7 @@ of all `ml-mipt` launches.
 ## Notebook layout
 
 [`template` notebook](https://github.com/girafe-ai/ml-mipt/blob/develop/template.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/develop/template.ipynb)
 is reference point to start from.
 
 It contains:

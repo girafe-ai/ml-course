@@ -1629,6 +1629,14 @@ numpy = "*"
 typing-extensions = "*"
 
 [[package]]
+name = "torchinfo"
+version = "1.6.3"
+description = "Model summary in PyTorch, based off of the original torchsummary."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
 name = "torchtext"
 version = "0.8.1"
 description = "Text utilities and datasets for PyTorch"
@@ -1815,7 +1823,7 @@ rl = ["gym", "graphviz"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "df6877ee329f3bb96990b3f2e0989640d9a160f168660e4ff429e657b72a898d"
+content-hash = "fa75ff1ca467416c432c781fa60a9267bf3ef58379021a03032429f32568b37a"
 
 [metadata.files]
 appnope = [
@@ -3106,6 +3114,10 @@ torch = [
     {file = "torch-1.7.1-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:a3793dcceb12b1e2281290cca1277c5ce86ddfd5bf044f654285a4d69057aea7"},
     {file = "torch-1.7.1-cp39-cp39-win_amd64.whl", hash = "sha256:6652a767a0572ae0feb74ad128758e507afd3b8396b6e7f147e438ba8d4c6f63"},
     {file = "torch-1.7.1-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:38d67f4fb189a92a977b2c0a38e4f6dd413e0bf55aa6d40004696df7e40a71ff"},
+]
+torchinfo = [
+    {file = "torchinfo-1.6.3-py3-none-any.whl", hash = "sha256:5240f420d35902556ba2988b4b3d08ec3dd439bafd90e03f22d73718858dede1"},
+    {file = "torchinfo-1.6.3.tar.gz", hash = "sha256:835c61b5dc328333d34ecc0ff22677eb8ca705013b0fe680b19dddf44a72bc80"},
 ]
 torchtext = [
     {file = "torchtext-0.8.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:a0c0b7221fdfdd124f98de854d922c111084a4defe11ea32ecc22b56d1f46fd9"},

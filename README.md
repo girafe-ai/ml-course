@@ -1,5 +1,9 @@
 # Machine Learning at MIPT
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ## Basic (first semester) and advanced (second semester) tracks, Spring 2021
 
 This course aims to introduce students to modern state of Machine Learning and

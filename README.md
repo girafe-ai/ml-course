@@ -6,8 +6,8 @@ Artificial Intelligence.
 
 | Date   | Content                | Slides               | WarmUp test             | HW                  | Deadline          |
 |:------:|:-----------------------|:--------------------:|:-----------------------:|:------------------------:|:----------------------:|
-| 10.03.2022     | Week01. Intro, Naive Bayes and kNN     | [Slides][week0_01_org_knn_and_naive_bayes/MSAI_ML_22s_lect001_intro_knn_naive_bayes.pdf] | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfz-mW9Abwo2hZiDyjP44Fc9Os-jpsC6P1QZ4yIBwcIgOXUbA/viewform?usp=sf_link) | 
-| 17.03.2022     | Week02. Linear Regression     | [Slides][week0_02_linear_reg/MSAI_ML_22s_lect002_Linear_regression.pdf] | [Test][] | 
+| 10.03.2022     | Week01. Intro, Naive Bayes and kNN     | [Slides](week0_01_org_knn_and_naive_bayes/MSAI_ML_22s_lect001_intro_knn_naive_bayes.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfz-mW9Abwo2hZiDyjP44Fc9Os-jpsC6P1QZ4yIBwcIgOXUbA/viewform?usp=sf_link) | 
+| 17.03.2022     | Week02. Linear Regression     | [Slides](week0_02_linear_reg/MSAI_ML_22s_lect002_Linear_regression.pdf) | [Test]() | 
 
 
 

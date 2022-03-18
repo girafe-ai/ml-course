@@ -1,8 +1,8 @@
 RL for seq2seq practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_11_RL_outside_games/practice_rl_for_seq2sec.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_11_RL_outside_games/practice_rl_for_seq2sec.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_11_RL_outside_games/practice_rl_for_seq2sec_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_11_RL_outside_games/practice_rl_for_seq2sec_solved.ipynb)
 
 Further readings:
 

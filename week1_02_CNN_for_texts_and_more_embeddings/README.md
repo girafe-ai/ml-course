@@ -1,8 +1,8 @@
 ﻿CNNs for salary prediction:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_02_CNN_for_texts_and_more_embeddings/practice_cnn_for_texts.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_02_CNN_for_texts_and_more_embeddings/practice_cnn_for_texts.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_02_CNN_for_texts_and_more_embeddings/practice_cnn_for_texts_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_02_CNN_for_texts_and_more_embeddings/practice_cnn_for_texts_solved.ipynb)
 
 Further readings:
 

@@ -21,7 +21,7 @@
 1. [en] Stanford notes on linear models:
    [link](http://cs229.stanford.edu/notes/cs229-notes1.pdf)
 1. [ru] “Рукописный учебник” от студентов нашего курса на ФИВТе:
-   [link](https://github.com/ml-mipt/ml-mipt/blob/22f_binpord/ML_informal_notes.pdf)
+   [link](https://github.com/ml-mipt/ml-mipt/blob/22s_advanced/ML_informal_notes.pdf)
 1. [ru] Методичка Воронцова,
    [link](http://www.machinelearning.ru/wiki/images/6/6d/Voron-ML-1.pdf)
 1. [ru] Замечательная книжка В.Г. Спокойного про линейные оценки:

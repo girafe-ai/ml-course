@@ -1,8 +1,8 @@
 Semantic segmentation practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_12_CV_overview/practice_semantic_segmentation.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_12_CV_overview/practice_semantic_segmentation.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_12_CV_overview/practice_semantic_segmentation_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_12_CV_overview/practice_semantic_segmentation_solved.ipynb)
 
 **Further readings**:
 

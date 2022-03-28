@@ -1,11 +1,11 @@
 PoS Tagging with BiLSTM:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_04_Transformer_and_PoS_Tagging/practice_bilstm_for_pos_tagging.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_04_Transformer_and_PoS_Tagging/practice_bilstm_for_pos_tagging.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_04_Transformer_and_PoS_Tagging/practice_bilstm_for_pos_tagging_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_04_Transformer_and_PoS_Tagging/practice_bilstm_for_pos_tagging_solved.ipynb)
 
 Understanding the positional encoding:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_04_Transformer_and_PoS_Tagging/practice_positional_encoding.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_advanced/week1_04_Transformer_and_PoS_Tagging/practice_positional_encoding.ipynb)
 
 Full Transformer architecture and training pipeline by Harvard NLP:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/harvardnlp/annotated-transformer/blob/master/The%20Annotated%20Transformer.ipynb)

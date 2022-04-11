@@ -8,6 +8,9 @@ import torch.nn.functional as F
 
 import tqdm
 
+# this parameter defines the number of the inputs in the layer,
+# which stands after the concatenation. In should be found out by you.
+concat_number_of_features = <YOUR CODE HERE>>
 
 class ThreeInputsNet(nn.Module):
     def __init__(self, n_tokens, n_cat_features, concat_number_of_features, hid_size=64):

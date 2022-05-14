@@ -1,5 +1,5 @@
 Practice with PyTorch and Dataloaders:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/basic_s21/week0_09_DL_step_2/week0_09_PyTorch_and_Dataloaders.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_msai/week0_09_dl_optimization_regularization/week0_09_PyTorch_and_Dataloaders.ipynb)
 
 **Further readings**:
 

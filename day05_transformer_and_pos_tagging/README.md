@@ -8,7 +8,7 @@ Understanding the positional encoding:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_harbour_dlia/day05_transformer_and_pos_tagging/practice_positional_encoding.ipynb)
 
 Full Transformer architecture and training pipeline by Harvard NLP:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/harvardnlp/annotated-transformer/blob/master/The%20Annotated%20Transformer.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/harvardnlp/annotated-transformer/blob/master/AnnotatedTransformer.ipynb)
 
 **Further readings**:
 

@@ -21,7 +21,7 @@ All lectures are available in the [playlist](https://youtube.com/playlist?list=P
 | 14.05.2022     | Week09. Regularization and optimization in DL. | [Lecture](https://youtu.be/-tLvY-5QJMI)     | [Slides](week0_09_dl_optimization_regularization/MSAI_ML_s21__lect009_dl_optimization_regularization.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLScqIRLc9fSTwc6lkJAhEpa98YagTMycKyGq9gIt5FhPK2lbqw/viewform?usp=sf_link) | 
 | 21.05.2022     | Week10. Recurrent Neural Networks. | [Lecture](https://youtu.be/9tAsoX6a9Ts)     | [Slides](week0_10_embeddings_and_seq2seq/ml-mipt_lect010_Language_models_and_RNN.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfqUfvjmCemmi2L3T9j85Wct2lB89W5iYe1jNzz4gpmkG-JtA/viewform?usp=sf_link) | 
 | 04.06.2022     | Week11. Convolutional Neural Networks. | [Lecture](https://youtu.be/Jd_Man9QNig)     | [Slides](week0_10_cnn/MSAI_ML_s21__lect011_CNN.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfvy5vq0JSvJG3Y5sonxXZoVZsrL5tjS1bqpj5pOeGd2Tqu8g/viewform?usp=sf_link) | 
-| 25.06.2022     | Week12. Unsupervised learning. | [Lecture]() TBD     | [Slides]() TBD | [Warm up test]() TBD | 
+| 25.06.2022     | Week12. Unsupervised learning. | [Lecture](https://youtu.be/DWQ3E3v-j0E)     | [Slides]() TBD | No warm up test | [Lab 2](https://github.com/girafe-ai/ml-mipt/tree/22s_msai/homeworks/lab02_deep_learning) | 23.59 AOE, 30.06.2022 | [Lab 2 submission via Stepik](https://stepik.org/lesson/744341/step/1?unit=746108)
 
 
 

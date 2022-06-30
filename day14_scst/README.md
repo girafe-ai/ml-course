@@ -1,0 +1,1 @@
+**Practice notebook**: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_harbour_dlia/day14_scst/practice_scst.ipynb)

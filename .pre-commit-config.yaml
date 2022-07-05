@@ -37,11 +37,11 @@ repos:
         additional_dependencies: [isort==5.10.1]
       - id: nbqa-flake8
         additional_dependencies: [flake8==3.9.2]
-      - id: nbqa
-        entry: nbqa mdformat
-        name: nbqa-mdformat
-        alias: nbqa-mdformat
-        additional_dependencies: [mdformat==0.7.14]
+      # - id: nbqa
+      #   entry: nbqa mdformat
+      #   name: nbqa-mdformat
+      #   alias: nbqa-mdformat
+      #   additional_dependencies: [mdformat==0.7.14]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1

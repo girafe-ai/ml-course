@@ -54,6 +54,7 @@ def backslash_fix(*fnames: tuple):
         fname: path to jupyter notebook (.ipynb) to process
     """
     BACKSLASH = "\\\n"
+    TWO_BACKSLASHES = "\\\\\n"
     BR_TAG = "<br>\n"
 
     for fname in fnames:
@@ -63,7 +64,12 @@ def backslash_fix(*fnames: tuple):
             if cell["cell_type"] != "markdown":
                 continue
 
-            cell["source"] = [line.replace(BACKSLASH, BR_TAG) for line in cell["source"]]
+            fixed = []
+            for line in cell["source"]:
+                if line.endswith(BACKSLASH) and not line.endswith(TWO_BACKSLASHES):
+                    line = line.replace(BACKSLASH, BR_TAG)
+                fixed.append(line)
+            cell["source"] = fixed
 
         write_json(notebook, fname, newline=True, ensure_ascii=False, indent=1)
 

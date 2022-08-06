@@ -79,8 +79,8 @@ flake8 = "setup.cfg"
 [tool.nbqa.dont_skip_bad_cells]
 black = true
 
-# [tool.nbqa.md]
-# mdformat = true
+[tool.nbqa.md]
+mdformat = true
 
 [tool.nbqa.addopts]
 flake8 = ["--extend-ignore=E402"]

@@ -1,16 +1,13 @@
-# Machine Learning at MIPT
+# Open Machine Learning course
 
-## Basic (first semester) and advanced (second semester) tracks, Spring 2021
+## Basic (first semester) and advanced (second semester) tracks.
 
 This course aims to introduce students to modern state of Machine Learning and
-Artificial Intelligence. It is designed to take one year (two terms at MIPT) -
+Artificial Intelligence. It is designed to take one full year -
 approximately 2 \* 15 lectures and seminars.
 
 All learning materials are available here, full list of topics considered in the
 course are listed in `program_*.pdf` files.
-
-Organizational information about current launches available at
-[`ml-mipt.github.io`](https://ml-mipt.github.io/)
 
 ## Repository structure
 

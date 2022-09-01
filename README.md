@@ -1,4 +1,6 @@
+*Warning, repository has been renamed to represent its current status.*
 # Open Machine Learning course
+
 
 ## Basic (first semester) and advanced (second semester) tracks.
 

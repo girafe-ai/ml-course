@@ -51,8 +51,3 @@ Lectures conspects are available for both [basic](lecture_notes_basic__ru.pdf)
 and [advanced](lecture_notes_advanced__ru.pdf). Especially useful for fast and
 furious exam passing. (Previous version of informal basic conspect is
 [available](ML_informal_notes.pdf))
-
-## Docker image
-
-Using docker for tasks evaluation is a good idea, prebuilt image is under
-cunstruction.

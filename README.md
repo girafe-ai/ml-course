@@ -1,6 +1,6 @@
 # Machine Learning at MIPT
 
-## Basic (first semester) and advanced (second semester) tracks, Spring 2021
+## Basic (first semester) and advanced (second semester) tracks, Fall 2022
 
 This course aims to introduce students to modern state of Machine Learning and
 Artificial Intelligence. It is designed to take one year (two terms at MIPT) -
@@ -8,9 +8,6 @@ approximately 2 \* 15 lectures and seminars.
 
 All learning materials are available here, full list of topics considered in the
 course are listed in `program_*.pdf` files.
-
-Organizational information about current launches available at
-[`ml-mipt.github.io`](https://ml-mipt.github.io/)
 
 ## Repository structure
 
@@ -53,7 +50,7 @@ seminars contains references to more detailed materials on topics.
 Lectures conspects are available for both [basic](lecture_notes_basic__ru.pdf)
 and [advanced](lecture_notes_advanced__ru.pdf). Especially useful for fast and
 furious exam passing. (Previous version of informal basic conspect is
-[available](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf))
+[available](ML_informal_notes.pdf))
 
 ## Docker image
 

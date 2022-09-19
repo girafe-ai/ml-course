@@ -1,35 +1,23 @@
-# Machine Learning at MIPT
-
-## Basic (first semester) and advanced (second semester) tracks, Spring 2021
+# Machine Learning course
 
 This course aims to introduce students to modern state of Machine Learning and
-Artificial Intelligence. It is designed to take one year (two terms at MIPT) -
-approximately 2 \* 15 lectures and seminars.
+Artificial Intelligence.
 
-All learning materials are available here, full list of topics considered in the
-course are listed in `program_*.pdf` files.
+All lectures are available in the playlist (Link to be added).
 
-Organizational information about current launches available at
-[`ml-mipt.github.io`](https://ml-mipt.github.io/)
 
-## Repository structure
+## Course schedule (is updated according to the semester)
 
-- on `master` branch previous term materials are stored to give a quick and
-  comprehensive overview
-- on `*_basic` and `*_advanced` branches materials for current launches are
-  being published
-- tags (e.g. `2021_spring`) contain previous launches materials for convenience
+| Date   | Content                | Lecture video | Slides               | WarmUp test             | HW                  | Deadline          | Submission link |
+|:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
+| 05.09.2022 | Week01. Intro, Naive Bayes and kNN. | [Запись лекции]() | [Slides](week0_01_naive_bayes/lect001_intro_knn_naive_bayes.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfz-mW9Abwo2hZiDyjP44Fc9Os-jpsC6P1QZ4yIBwcIgOXUbA/viewform?usp=sf_link) | [Assignment 01: kNN](homeworks/assignment0_01_knn) | 23.59 AOE, 03.10.2022 | Link to be added |
+| 12.09.2022 | extra Week. Linear algebra recap. | [Запись лекции]() | [Slides](week0_00_linear_algebra_recap/lecture00-linear_algebra_recap.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSfz-mW9Abwo2hZiDyjP44Fc9Os-jpsC6P1QZ4yIBwcIgOXUbA/viewform?usp=sf_link) | [Assignment 01: kNN](homeworks/assignment0_01_knn) | 23.59 AOE, 23.03.2022 | Link to be added |
+| 19.09.2022     | Week02. Linear Regression. | [Lecture](https://youtu.be/EboX9XxvNsc)     | [Slides](week0_02_linear_reg/lect002_linear_regression.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLScN6qmwPFKzx58zeBnmUGtRwQjajsLZj7wzw9PkpY5iqvlvcA/viewform?usp=sf_link) | 
+| 26.09.2022     | Week03. Linear Classification. | [Lecture]()     | [Slides](week0_03_linear_classification/msai-ml_s21_lect003_logistic_regression.pdf) | [Warm up test](https://docs.google.com/forms/d/e/1FAIpQLSeWno4dJ9bwbXpd_MstUyREvvO5fSq1duOi7gXYhJM983UDJg/viewform?usp=sf_link) | 
 
-## Video lectures
 
-All lecture materials are currently in Russian language
 
-| Track    | Launch      | Lectures                                                                            | Practice                                                                            | Language |
-| -------- | ----------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------- |
-| basic    | Spring 2020 | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZyW6qS58x4uElZgAkMVUvj) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z) | ru       |
-| advanced | Fall 2020   | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr) | ru       |
-| basic    | Spring 2019 | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvasRqzz4w562ce0esEwS0Mt) | -                                                                                   | ru       |
-| advanced | Fall 2019   | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvZeq93ssEUaR47xhvs7IhJM) | [youtube](https://www.youtube.com/playlist?list=PL4_hYwCyhAvYvuHz_PKlEV-kOsK2bwUBg) | ru       |
+
 
 ## Prerequisites
 
@@ -43,19 +31,3 @@ We are expecting our students to have a basic knowlege of:
 Although if you don't have any of this, you could substitude it with your
 diligence because the course provides additional materials to study requirements
 yourself.
-
-## Materials for self-study
-
-A lot of great materials are available online. See
-[extra materials](extra_materials.md) file for the whole list.Also lectures and
-seminars contains references to more detailed materials on topics.
-
-Lectures conspects are available for both [basic](lecture_notes_basic__ru.pdf)
-and [advanced](lecture_notes_advanced__ru.pdf). Especially useful for fast and
-furious exam passing. (Previous version of informal basic conspect is
-[available](https://github.com/girafe-ai/ml-mipt/blob/spring_2019/ML_informal_notes.pdf))
-
-## Docker image
-
-Using docker for tasks evaluation is a good idea, prebuilt image is under
-cunstruction.

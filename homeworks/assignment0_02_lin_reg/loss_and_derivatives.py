@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class LossAndDerivatives:
     @staticmethod
     def mse(X, Y, w):
@@ -33,7 +32,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE    
-        return 
+        return np.mean(np.abs(X @ w - Y))
 
     @staticmethod
     def l2_reg(w):
@@ -47,7 +46,7 @@ class LossAndDerivatives:
         """
         
         # YOUR CODE HERE
-        return 
+        return (w ** 2).sum()
 
     @staticmethod
     def l1_reg(w):
@@ -61,7 +60,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.abs(w).sum()
 
     @staticmethod
     def no_reg(w):
@@ -87,7 +86,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return 2 * X.T @  (X @ w - Y) / len(Y)
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -106,7 +105,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return X.T @ (X @ w - Y)/ (np.abs(X @ w - Y) * len(Y))
 
     @staticmethod
     def l2_reg_derivative(w):

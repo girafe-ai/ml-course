@@ -179,7 +179,7 @@ class KNearestNeighbor:
             argums = self.y_train[np.argpartition(dists[i], k)[:k]]
             elems, counts = np.unique(argums, return_counts=True)
             closests_map = dict(zip(elems, counts))
-            y_pred[i] = sorted(closests_map.items(), key = lambda x : (-x[0], x[1]))[0][0]
+            y_pred[i] = sorted(closests_map.items(), key = lambda x : (-x[1], x[0]))[0][0]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 

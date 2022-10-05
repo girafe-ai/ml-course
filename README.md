@@ -12,7 +12,7 @@
 |:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
 | 05.09.2022 | Week01. Intro, Naive Bayes and kNN. | [Запись лекции 2021](https://youtu.be/74Kd-rNxSm0) [Запись семинара 2021](https://youtu.be/bzCwHkO-YEk)| [Слайды](week0_01_naive_bayes/lect001_intro_knn_naive_bayes.pdf) | | [Assignment 01: kNN](homeworks/assignment0_01_knn) | 23.59 AOE, 03.10.2022 | *По техническим причинам запись лекции 2022 года не велась*
 | 12.09.2022 | extra Week. Linear algebra recap. | [Запись лекции]() TBD| [Слайды](week0_00_linear_algebra_recap/lecture00-linear_algebra_recap.pdf) |  | |  | Лекция находится в монтаже |
-| 19.09.2022     | Week02. Linear Regression. | [Запись лекции]() TBD | [Слайды](week0_02_linear_reg/lect002_linear_regression.pdf) |  |  [Assignment 02: Linear Regression](homeworks/assignment0_02_lin_reg) || 23.59 AOE, 10.10.2022 |
+| 19.09.2022     | Week02. Linear Regression. | [Запись лекции]() TBD | [Слайды](week0_02_linear_reg/lect002_linear_regression.pdf) |  |  [Assignment 02: Linear Regression](homeworks/assignment0_02_lin_reg) | 23.59 AOE, 10.10.2022 |  |
 | 26.09.2022     | Week03. Linear Classification. |     | [Слайды](week0_03_linear_classification/msai-ml_s21_lect003_logistic_regression.pdf) |  | 
 
 

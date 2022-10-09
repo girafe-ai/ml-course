@@ -168,7 +168,7 @@ class KNearestNeighbor:
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            closest_y = self.y_train[np.where(np.argsort(dists[i]) < k)]
+            closest_y = self.y_train[dists[i].argsort()[:k]]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             #########################################################################
@@ -180,7 +180,8 @@ class KNearestNeighbor:
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            y_pred[i] = int(np.median(closest_y))
+            values, counts = np.unique(closest_y, return_counts=True)
+            y_pred[i] = values[counts == counts.max()].min()
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 

@@ -15,6 +15,7 @@
 | 19.09.2022     | Week02. Linear Regression. | [Запись лекции](https://youtu.be/imzlM4jRbD4?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) [Запись семинара 2022](https://youtu.be/LLGLeM3JKDQ?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) | [Слайды](week0_02_linear_reg/lect002_linear_regression.pdf) |  |  [Assignment 02: Linear Regression](homeworks/assignment0_02_lin_reg) | 23.59 AOE, 10.10.2022 |  |
 | 26.09.2022     | Week03. Linear Classification. | [Запись лекции](https://youtu.be/db1XU_WJHFs?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) [Запись семинара 2022](https://youtu.be/vSeETg1two8)   | [Слайды](week0_03_linear_classification/msai-ml_s21_lect003_logistic_regression.pdf)   |  | 
 | 03.10.2022     | Week04. SVM, PCA. | [Запись лекции](https://youtu.be/mlA-XxC9Ugg?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) [Запись семинара 2022](https://youtu.be/z-JqKoyHHRI?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM)   | [Слайды](week0_04_svm_and_pca/lect004_svm_pca.pdf) |  | 
+| 10.10.2022     | Week05. Trees and ensembles | [Запись лекции](https://youtu.be/kbNZsQj2eHk)   | [Слайды](week0_05_trees_and_ensembles/lect005_trees_and_ensembles_style.pdf) | | | | Вместо семинара проходила контрольная работа | 
 
 
 

@@ -132,9 +132,7 @@ class KNearestNeighbor:
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        X = np.repeat(X, num_train, axis = -2)
-        X = np.expand_dims(X, axis = 0)
-        dists = np.sqrt(((X.reshape(num_test, num_train, -1) - self.X_train)**2).sum(axis=-1))
+        dists = np.sqrt((X**2).sum(axis=1)[:, np.newaxis] + (self.X_train**2).sum(axis=1) - 2 * X.dot(self.X_train.T))
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -176,11 +174,10 @@ class KNearestNeighbor:
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            argums = self.y_train[np.argpartition(dists[i], k)[:k]]
+            argums = self.y_train[np.argsort(dists[i])[:k]]
             elems, counts = np.unique(argums, return_counts=True)
             closests_map = dict(zip(elems, counts))
             y_pred[i] = sorted(closests_map.items(), key = lambda x : (-x[1], x[0]))[0][0]
-
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return y_pred

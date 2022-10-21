@@ -16,6 +16,7 @@
 | 26.09.2022     | Week03. Linear Classification. | [Запись лекции](https://youtu.be/db1XU_WJHFs?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) [Запись семинара 2022](https://youtu.be/vSeETg1two8)   | [Слайды](week0_03_linear_classification/msai-ml_s21_lect003_logistic_regression.pdf)   |  | [Lab01: ML pipeline](https://github.com/girafe-ai/ml-course/tree/22f_basic/homeworks/lab01_ml_pipeline) | 23.59 AOE 31.10.2022 | 
 | 03.10.2022     | Week04. SVM, PCA. | [Запись лекции](https://youtu.be/mlA-XxC9Ugg?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM) [Запись семинара 2022](https://youtu.be/z-JqKoyHHRI?list=PLJR10EXrBaAv2vPy05qesewHv9JFc8ZjM)   | [Слайды](week0_04_svm_and_pca/lect004_svm_pca.pdf) |  |  [Assignment 03: SVM kernel](https://github.com/girafe-ai/ml-course/tree/22f_basic/homeworks/assignment0_03_svm) | 23.59 AOE, 24.10.2022 |  
 | 10.10.2022     | Week05. Trees and ensembles | [Запись лекции](https://youtu.be/kbNZsQj2eHk)   | [Слайды](week0_05_trees_and_ensembles/lect005_trees_and_ensembles_style.pdf) | | | | Вместо семинара проходила контрольная работа | 
+| 17.10.2022     | Week06. Gradient boosting | [Запись лекции](https://youtu.be/Y97xrRiLY1Q) [Запись семинара](https://youtu.be/4vo39B6M270)   | [Слайды](week0_06_boosting/week0_06_gradient_boosting.pdf) | | | |  | 
 
 
 

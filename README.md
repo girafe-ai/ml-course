@@ -16,5 +16,5 @@ yourself.
 ## Materials for self-study
 
 A lot of great materials are available online. See
-[extra materials](extra_materials.md) file for the whole list.Also lectures and
+[extra materials]([extra_materials.md](https://github.com/girafe-ai/ml-course/blob/master/extra_materials.md) file for the whole list. Also lectures and
 seminars contains references to more detailed materials on topics.

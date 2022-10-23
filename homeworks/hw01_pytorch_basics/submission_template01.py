@@ -3,14 +3,12 @@ import torch
 from torch import nn
 
 def create_model():
-    # your code here
-    # return model instance (None is just a placeholder)
-
-    return None
-
+    simple_nn = nn.ReLU(784, 256, 16, 10, bias=False)
+    medium_model = nn.Sequential(*[nn.Linear(784, 32, bias=False), nn.ReLU(), nn.Linear(32, 10, bias=False)])
+    return simple_nn 
 def count_parameters(model):
-    # your code here
-    # return integer number (None is just a placeholder)
+    param = model.parameters()
+    return param
     
     return None
     

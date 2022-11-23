@@ -18,7 +18,10 @@
 | 10.10.2022     | Week05. Trees and ensembles | [Запись лекции](https://youtu.be/kbNZsQj2eHk)   | [Слайды](week0_05_trees_and_ensembles/lect005_trees_and_ensembles_style.pdf) | | [Optional assignment 04: Tree from scratch](https://github.com/girafe-ai/ml-course/tree/22f_basic/homeworks/assignment0_04_tree) | 23.59 AOE, 22.12.2022 | Вместо семинара проходила контрольная работа | 
 | 17.10.2022     | Week06. Gradient boosting | [Запись лекции](https://youtu.be/Y97xrRiLY1Q) [Запись семинара](https://youtu.be/4vo39B6M270)   | [Слайды](week0_06_boosting/week0_06_gradient_boosting.pdf) | | | |  | 
 | 24.10.2022     | Week07. Аnalysis of the testing | [Запись разбора](https://youtu.be/YiO1N6yVJcg)    |  | | | | Вместо лекции были тест и разбор. | 
-
+| 31.10.2022     | Week08. Intro into Deep Learning | [Запись лекции](https://youtu.be/G--msc2IR-Y) [Запись семинара](https://youtu.be/0WMAfRuFHy8)   | [Слайды](https://github.com/girafe-ai/ml-course/blob/22f_basic/week0_07_intro_to_DL/lect007_intro_to_dl_style.pdf) | | | |  | 
+| 07.11.2022     | Week09. Backpropogation |  [Запись семинара](https://youtu.be/HGk5xQ0azdo)   | [Слайды]() | | | | Лекция не велась по причине болезни преподавателя, однако был проведён дополнительный семинар по backpropogation | 
+| 14.11.2022     | Week10. Dropout and Batchnorm | [Запись лекции](https://youtu.be/UtEV_ILJTA0) [Запись семинара](https://youtu.be/tq-mmdsW5QI)   | [Слайды](https://github.com/girafe-ai/ml-course/blob/22f_basic/week0_08_dropout_batchnorm/lect008_deeplearning_part_2_style.pdf) | | | |  | 
+| 21.11.2022     | Week11. Embeddings and seq2seq model | [Запись лекции](https://youtu.be/kUAnB_Leg6E) [Запись семинара](https://youtu.be/KOIEozoCQo0)   | [Слайды](https://github.com/girafe-ai/ml-course/blob/22f_basic/week0_09_embeddings_and_seq2seq/lect009_Language_models_and_RNN.pdf) | | | |  | 
 
 
 

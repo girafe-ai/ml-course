@@ -1,4 +1,4 @@
-# Machine Learning at MIPT
+# Machine Learning course
 
 This course aims to introduce students to modern state of Machine Learning and
 Artificial Intelligence.

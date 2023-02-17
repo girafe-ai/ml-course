@@ -1,5 +1,6 @@
 *Warning, repository has been renamed to represent its current status.*
 # Open Machine Learning course
+- With their various learnings like Supervised (Classification and Regression) , Unsupervised and Reinforcement Learning
 
 
 ## Basic (first semester) and advanced (second semester) tracks.

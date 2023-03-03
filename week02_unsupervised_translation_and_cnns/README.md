@@ -1,6 +1,6 @@
 ﻿CNNs for salary prediction:
 
-* Regular version:[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/23s_advanced/week02_unsupervised_translation_and_cnns/practice_cnn_for_texts_solved.ipynb)
+* Solved version:[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/23s_advanced/week02_unsupervised_translation_and_cnns/practice_cnn_for_texts_solved.ipynb)
 
 * Regular version:[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/23s_advanced/week02_unsupervised_translation_and_cnns/practice_cnn_for_texts__with_normalization.ipynb)
 

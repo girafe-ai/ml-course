@@ -2,7 +2,7 @@
 # Open Machine Learning course
 
 
-## Basic (first semester) and advanced (second semester) tracks.
+## Basic (first semester) and advanced (second semester) tracks ,
 
 This course aims to introduce students to modern state of Machine Learning and
 Artificial Intelligence. It is designed to take one full year -

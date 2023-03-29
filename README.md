@@ -1,12 +1,8 @@
 # Machine Learning course
 
-Первый семестр годового курса по машинному обучению.
-Ссылки на записи лекций и семинаров будут добавляться ниже
+First semester of girafe-ai Machine Learning course
 
-Занятия проходят по понедельникам в 17.05 в Большой Химической аудитории Лабораторного корпуса МФТИ.
-
-
-## Расписание курса
+## Recordings and materials
 
 | Date   | Content                | Lecture video | Slides               | WarmUp test             | HW                  | Deadline          | Comments |
 |:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
@@ -25,33 +21,36 @@
 
 
 
-## Система оценивания
-Оценка за курс выставляется по следующей формуле:
-$$ \frac{\text{Накопленные баллы}{\text{максимальное кол-во баллов}} \cdot 0.65 + \frac{оценка за экзамен (из 10)}{10} \cdot 0.35$$
-
-Теор. мин. является обязательным на экзамене.
-На усмотрение экзаменатора оценка может быть поднята на 2 бала или понижена на 2 балла из 10.
-
-
 ## Prerequisites
+Prerequisites are located [here](./prerequisites.md).
 
-Теоретический минимум для участия в курсе доступен [по ссылке](./prerequisites.md).
+## Literature:
+1. [YSDA ML Book](https://academy.yandex.ru/dataschool/book) (Russian only)
+2. Probabilistic Machine Learning: An Introduction; [English link](https://probml.github.io/pml-book/book1.html), [Русский перевод](https://dmkpress.com/catalog/computer/data/978-5-93700-119-1/)
+3. Deep Learning Book: [English link](https://www.deeplearningbook.org/). Первая часть (Part I) крайне рекомендуется к прочтению.
+ 
+More additional materials are available [here](https://github.com/girafe-ai/ml-course/blob/22f_basic/extra_materials.md)
 
-## Литература:
-Основные книги, которые могут быть полезны в рамках прохождения курса:
-1. Probabilistic Machine Learning: An Introduction; [English link](https://probml.github.io/pml-book/book1.html), [Русский перевод](https://dmkpress.com/catalog/computer/data/978-5-93700-119-1/)
-2. Deep Learning Book: [English link](https://www.deeplearningbook.org/). Первая часть (Part I) крайне рекомендуется к прочтению.
-3. [Онлайн-учебник, написанный совместно с ШАД](https://academy.yandex.ru/dataschool/book)
-
-Более полный список хороших книг/лекционных заметок на русском и английском языке можно найти здесь: [link](https://github.com/girafe-ai/ml-course/blob/22f_basic/extra_materials.md)
-
-
-Также прилагаю небольшую подборка материалов для тех, кто хочет освежить/улучшить знания Python:
-
-1. Хороший и короткий туториал от Stanford’а: http://cs231n.github.io/python-numpy-tutorial/
-
-2. Репозиторий с большим набором примеров/упражнений: https://gitlab.erc.monash.edu.au/andrease/Python4Maths/tree/master
+## Exam program:
+Available [here](./approximate_program.pdf)
 
 
-## Примерная программа экзамена:
-Доступна по [ссылке](./approximate_program.pdf)
+## Main authors:
+* Radoslav Neychev
+* Vladislav Goncharenko
+
+## Contributors:
+* Iurii Efimov
+* Nikolay Karpachev
+* Ivan Provilkov
+* Valery Marchenkov
+* Anastasia Ianina
+* Irina Rudenko
+* Fedor Ryabov
+
+## Acknowledgements:
+Special thanks to:
+* Stanislav Fedotov, ex. YSDA
+
+
+

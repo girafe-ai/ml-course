@@ -50,7 +50,7 @@ Available [here](./approximate_program.pdf)
 
 ## Acknowledgements:
 Special thanks to:
-* Stanislav Fedotov, ex. YSDA for informative discussions, program verification and support.
+* Stanislav Fedotov, YSDA for informative discussions, program verification and support.
 * Konstantiv Vorontsov
 * Vadim Strijov for teaching this course teachers
 * Just Heuristic

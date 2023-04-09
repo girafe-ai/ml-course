@@ -1,8 +1,8 @@
 BERT for text classification:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_05_BERT_and_GPT/week05_BERT_for_text_classification.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_05_BERT_and_GPT/practice_bert_for_text_classification.ipynb)
 
-Fine tunning BERT:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_05_BERT_and_GPT/week05__extra__BERT_Fine_Tunning.ipynb)
+Solved version:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_05_BERT_and_GPT/practice_bert_for_text_classification_solved.ipynb)
 
 **Further readings**:
 

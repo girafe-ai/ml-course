@@ -1,5 +1,5 @@
 Question Answering (and TTS):
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_06_Question_Answering/week06__Question_Answering_with_a_Fine_Tuned_BERT_and_TTS.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_06_Question_Answering/practice_question_answering_and_tts.ipynb)
 
 **Further readings**:
 

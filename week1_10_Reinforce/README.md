@@ -1,5 +1,8 @@
 Policy gradient practice:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/advanced_s21/week1_10_Reinforce/week10_Reinforce_practice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_10_Reinforce/practice_reinforce.ipynb)
+
+Solved version:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/master/week1_10_Reinforce/practice_reinforce_solved.ipynb)
 
 Further readings:
 

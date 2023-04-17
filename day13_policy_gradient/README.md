@@ -3,6 +3,6 @@ Policy gradient for discounted rewards: [NeurIPS proceddings link](https://proce
 
 **Practice:**
 
-* Self-practice version: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_harbour_dlia/day13_policy_gradient/practice_reinforce.ipynb)
+* Self-practice version: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/22s_harbour_dlia/day13_policy_gradient/practice_reinforce.ipynb)
 
-* Solved version with modified reward: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22s_harbour_dlia/day13_policy_gradient/practice_reinforce__modified_reward.ipynb)
+* Solved version with modified reward: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/22s_harbour_dlia/day13_policy_gradient/practice_reinforce__modified_reward.ipynb)

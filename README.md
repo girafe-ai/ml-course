@@ -17,7 +17,7 @@ Prerequisites are located [here](./prerequisites.md).
 2. Probabilistic Machine Learning: An Introduction; [English link](https://probml.github.io/pml-book/book1.html), [Русский перевод](https://dmkpress.com/catalog/computer/data/978-5-93700-119-1/)
 3. Deep Learning Book: [English link](https://www.deeplearningbook.org/). Первая часть (Part I) крайне рекомендуется к прочтению.
  
-More additional materials are available [here](https://github.com/girafe-ai/ml-course/blob/22f_basic/extra_materials.md)
+More additional materials are available [here](https://github.com/girafe-ai/ml-course/blob/23f_basic/extra_materials.md)
 
 ## Exam program:
 Available [here](./approximate_program.pdf)

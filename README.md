@@ -1,6 +1,6 @@
 # Machine Learning course
 
-First semester of girafe-ai Machine Learning course
+First semester of girafe-ai Machine Learning course and their explanations tions
 
 ## Recordings and materials
 

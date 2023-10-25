@@ -6,7 +6,7 @@
 
 
 | Date | Content | Extra video | Slides | WarmUp test | HW | Deadline | Comments |
-|:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
+|:------:|:-----------------------|:----------------------------:|:------------:|:-----------------------:|:------------:|:------------:|:----------------------:|
 | 19.10.2023 | Week01. Intro & kNN| [Введение в машинное обучение](https://www.youtube.com/watch?v=4wBEb5AHaXQ)<br>[Основные понятия](https://www.youtube.com/watch?v=iOKM50P4_OA)<br>[Формальная задача](https://www.youtube.com/watch?v=zKBv_7ifIpY)<br>[Метод ближайшиих соседей](https://www.youtube.com/watch?v=dKRomMplMdA) | [Слайды](week0_01_intro/lect001_knn_intro.pdf) | | | 
 | 26.10.2023 | Week02. Linear Regression| [Линейные модели машинного обучения](https://www.youtube.com/watch?v=mRgPp_BeODQ)<br>[Линейная регрессия](https://www.youtube.com/watch?v=opdB7ePcPHU)<br>[Теорема Гаусса-Маркова](https://www.youtube.com/watch?v=C5MkZVEHoII)<br>[L1 и L2 регуляризация](https://www.youtube.com/watch?v=P0RQyTO0V58) | [Слайды](week0_02_linear_reg/lect002_linear_regression.pdf) | | |
 

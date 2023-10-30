@@ -22,6 +22,7 @@
 | 07.11.2022     | Week09. Backpropogation |  [Запись семинара](https://youtu.be/HGk5xQ0azdo)   | [Слайды]() | | | | Лекция не велась по причине болезни преподавателя, однако был проведён дополнительный семинар по backpropogation | 
 | 14.11.2022     | Week10. Dropout and Batchnorm | [Запись лекции](https://youtu.be/UtEV_ILJTA0) [Запись семинара](https://youtu.be/tq-mmdsW5QI)   | [Слайды](https://github.com/girafe-ai/ml-course/blob/22f_basic/week0_08_dropout_batchnorm/lect008_deeplearning_part_2_style.pdf) | | | |  | 
 | 21.11.2022     | Week11. Embeddings and seq2seq model | [Запись лекции](https://youtu.be/kUAnB_Leg6E) [Запись семинара](https://youtu.be/KOIEozoCQo0)   | [Слайды](https://github.com/girafe-ai/ml-course/blob/22f_basic/week0_09_embeddings_and_seq2seq/lect009_Language_models_and_RNN.pdf) | | | |  | 
+| 28.11.2022     | Week12. Convolutional neural networks | [Запись лекции](https://youtu.be/1UmrBlcze1s) [Запись семинара](https://youtu.be/9x1cfUny_GY)   | [Слайды](https://github.com/girafe-ai/ml-course/tree/22f_basic/week0_10_cnn) | | | |  | 
 
 
 

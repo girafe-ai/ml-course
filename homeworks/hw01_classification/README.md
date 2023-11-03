@@ -1,0 +1,2 @@
+
+Домашнее задание №1: задача классификации; [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/23f_ptml/homeworks/hw01_classification/hw01_classification_pipeline.ipynb)

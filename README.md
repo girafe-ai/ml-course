@@ -6,7 +6,12 @@ First semester of girafe-ai Machine Learning course
 
 | Date   | Content                | Lecture video | Slides               | WarmUp test             | HW                  | Deadline          | Comments |
 |:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
-| 04.09.2023 | Week01. Intro & Org| [Запись лекции 2023]() TBD [Запись семинара 2023] () TBD| [Слайды](week0_01_naive_bayes/lect001_intro_knn_naive_bayes.pdf) | | | | Лекция в процессе обработки
+| 04.09.2023 | Week01. Intro & Org| [Запись лекции 2023](https://www.youtube.com/watch?v=7KNqvYwPvSc&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=1)  [Запись семинара 2023](https://www.youtube.com/watch?v=PKlVqALjV4Q&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=2) | [Слайды](week0_01_naive_bayes/lect001_intro_knn_naive_bayes.pdf) | | | | Лекция в процессе обработки
+| 11.09.2023 | Week02. Linear Regression| [Запись лекции 2023](https://www.youtube.com/watch?v=q88RNRbQuqQ&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=3)  [Запись семинара 2023](https://www.youtube.com/watch?v=Ty_eDpm9bDY&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=4) | [Слайды](https://github.com/girafe-ai/ml-course/blob/23f_basic/week0_02_linear_reg/lect002_linear_regression.pdf) | | | | Лекция в процессе обработки
+| 18.09.2023 | Week03. TBD| [Запись лекции 2023](https://www.youtube.com/watch?v=uMqNy2CI-xE&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=5)  [Запись семинара 2023](https://www.youtube.com/watch?v=P-VnVv3QeMw&list=PLJR10EXrBaAtTCcgu58A_-wMoHYWW-_ev&index=6)| [Слайды]() | | | | Лекция в процессе обработки
+| 25.09.2023 | Week04. TBD| [Запись лекции 2023]() TBD [Запись семинара 2023] () TBD| [Слайды]() | | | | Лекция в процессе обработки
+| 02.10.2023 | Week05. TBD| [Запись лекции 2023]() TBD [Запись семинара 2023] () TBD| [Слайды]() | | [Контест 1](https://contest.yandex.ru/contest/52649/problems/ ) и [Контест 2](https://contest.yandex.ru/contest/52650/problems/) | 03.10.2023| Лекция в процессе обработки
+
 
 
 ## Prerequisites

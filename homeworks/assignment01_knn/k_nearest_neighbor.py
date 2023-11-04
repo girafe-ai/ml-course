@@ -75,7 +75,7 @@ class KNearestNeighbor:
                 # not use a loop over dimension, nor use np.linalg.norm().          #
                 #####################################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-                dists[i, j] = (i ** 2 + j ** 2)**0.5
+                dists[i, j] = np.sqrt(np.sum((X[i] - self.X_train[j]) ** 2))
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
@@ -125,10 +125,13 @@ class KNearestNeighbor:
         #       and two broadcast sums.                                         #
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-        differences = X[:, np.newaxis, :] - self.X_train
-        squared_distances = differences ** 2
-        summed_distances = squared_distances.sum(axis=2)
-        dists = np.sqrt(summed_distances)
+
+        test_squared = np.sum(X ** 2, axis=1, keepdims=True)
+        train_squared = np.sum(self.X_train ** 2, axis=1)
+        inner_product = np.dot(X, self.X_train.T)
+
+        # Вычислите квадрат расстояния Евклида между всеми парами точек
+        dists = np.sqrt(test_squared - 2 * inner_product + train_squared)
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
@@ -161,6 +164,7 @@ class KNearestNeighbor:
 
             closest_k_indices = np.argsort(dists[i])[:k]
             closest_y = self.y_train[closest_k_indices]
+
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             #########################################################################

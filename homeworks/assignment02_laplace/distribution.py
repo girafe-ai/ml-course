@@ -22,6 +22,7 @@ class LaplaceDistribution:
         Args:
             feature: A numpy array of shape (n_objects, n_features). Every column represents all available values for the selected feature.
         '''
+
         ####
         # Do not change the class outside of this block
         self.loc = loc # YOUR CODE HERE

@@ -125,7 +125,10 @@ class KNearestNeighbor:
         #       and two broadcast sums.                                         #
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-        pass
+        differences = X[:, np.newaxis, :] - self.X_train
+        squared_distances = differences ** 2
+        summed_distances = squared_distances.sum(axis=2)
+        dists = np.sqrt(summed_distances)
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 

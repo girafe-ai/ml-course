@@ -7,8 +7,8 @@
 
 | Дата | Тема и запись | Слайды | Доп. материалы | Домашнее задание | Тест для самопроверки |
 |:------:|:-----------------------|:----------------------------:|:------------:|:-----------------------:|:----------------------:|
-| 02.11.2023 | [01. Введение, kNN, Naive Bayes](https://www.youtube.com/live/k3UJOG-DKHE) | [Слайды лекции №1](./step01_intro/lecture01_intro_knn_naive_bayes.pdf)| | | |
-| 03.11.2023 | [02. Линейная регрессия и регуляризация](https://www.youtube.com/watch?v=5qLVUO0q644) | [Слайды лекции №2](./step02_linear_regression/lect002_linear_regression.pdf)| | | |
+| 02.11.2023 | [01. Введение, kNN, Naive Bayes](https://www.youtube.com/live/k3UJOG-DKHE) | [Слайды лекции №1](./step01_intro/lecture01_intro_knn_naive_bayes.pdf)| [link](./step01_intro/README.md) | [1. Задача на kNN](./homeworks/assignment01_knn/)<br>[2. Распределение Лапласа](./homeworks/assignment02_laplace/) | |
+| 03.11.2023 | [02. Линейная регрессия и регуляризация](https://www.youtube.com/watch?v=5qLVUO0q644) | [Слайды лекции №2](./step02_linear_regression/lect002_linear_regression.pdf)| [link](./step02_linear_regression/README.md) | | |
 
 
 

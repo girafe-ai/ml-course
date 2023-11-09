@@ -11,9 +11,9 @@ class LaplaceDistribution:
         ####
         # Do not change the class outside of this block
         # Your code here
-        median = np.median(x, axis=0)  # Находим медиану для каждой фичи
+        median = np.median(x)  # Находим медиану для каждой фичи
         deviation = np.abs(x - median)  # Находим абсолютное отклонение от медианы
-        mean_deviation = np.mean(deviation, axis=0)  # Находим среднее абсолютное отклонение
+        mean_deviation = np.mean(deviation)  # Находим среднее абсолютное отклонение
         return mean_deviation
         ####
 

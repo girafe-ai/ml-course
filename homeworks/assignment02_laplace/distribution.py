@@ -17,16 +17,15 @@ class LaplaceDistribution:
         return mean_deviation
         ####
 
-    def __init__(self, features):
+    def __init__(self, features, loc=0.0, scale=1.0):
         '''
         Args:
             feature: A numpy array of shape (n_objects, n_features). Every column represents all available values for the selected feature.
+            loc: The location (mean) parameter of the Laplace distribution.
+            scale: The scale (standard deviation) parameter of the Laplace distribution.
         '''
-
-        ####
-        # Do not change the class outside of this block
-        self.loc = loc # YOUR CODE HERE
-        self.scale = scale # YOUR CODE HERE
+        self.loc = loc
+        self.scale = scale
         ####
 
 

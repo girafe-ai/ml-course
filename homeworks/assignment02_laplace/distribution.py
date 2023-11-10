@@ -11,6 +11,7 @@ class LaplaceDistribution:
         ####
         # Do not change the class outside of this block
         # Your code here
+        
         ####
 
     def __init__(self, features):
@@ -20,8 +21,8 @@ class LaplaceDistribution:
         '''
         ####
         # Do not change the class outside of this block
-        self.loc = # YOUR CODE HERE
-        self.scale = # YOUR CODE HERE
+        self.loc = np.median(features, axis=0)
+        self.scale = np.sum(abs(features-self.loc), axis=0)/feature.shape[0]
         ####
 
 
@@ -33,7 +34,7 @@ class LaplaceDistribution:
         '''
         ####
         # Do not change the class outside of this block
-        return 
+        return np.log((1/2 * self.scale)*np.exp(-(abs(values - self.loc))/(self.scale)))
         ####
         
     

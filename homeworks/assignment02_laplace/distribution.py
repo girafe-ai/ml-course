@@ -22,7 +22,7 @@ class LaplaceDistribution:
         ####
         # Do not change the class outside of this block
         self.loc = np.median(features, axis=0)
-        self.scale = np.sum(abs(features-self.loc), axis=0)/feature.shape[0]
+        self.scale = np.sum(abs(features-self.loc), axis=0)/features.shape[0]
         ####
 
 

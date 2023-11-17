@@ -12,7 +12,7 @@
 | 09.11.2023 | <details><summary>[03. Линейная классификация. Метод максимального правдоподобия](https://www.youtube.com/watch?v=R1ccYYpEpiA)</summary><br>1. Линейные механизмы классификации. Отступ.<br>2. Логистическая функция потерь. <br>3. Логистическая регрессия и бернуллиевская случайная величина.<br>4. Оценка качества классификации</details> | [Лекция №3](./step03_logistic_regression/README.md) | | |
 | 10.11.2023 | <details><summary>[04. Решающие деревья, композиции деревьев, Random Forest](https://youtube.com/live/rBIVch1h5qc)</summary><br>1. Процедура построения деревьев регрессии и классификации. Жадный алгоритм.<br>2. Информационные критерии.<br>3. Бутстрап, бэггинг. «Мудрость толпы». Случайный лес.<br>4. Особые свойства решающих деревьев.</details> | [Лекция №4](./step04_trees_and_forests/README.md) | [03. Векторные производные](./homeworks/assignment03_derivatives/)<br>[04. Степенной метод](./homeworks/assignment04_power_iteration/) | |
 | 11.11.2023 | <details><summary>[05. Градиентный бустинг]()</summary><br></details> | [Лекция №5](./step05_gradient_boosting/README.md) |  | |
-| 17.11.2023 | <details><summary>[06. Основы Deep Learning бустинг]()</summary><br></details> | [Лекция №5](./step06_intro_to_dl/README.md) |  | |
+| 17.11.2023 | <details><summary>[06. Основы Deep Learning бустинг]()</summary><br></details> | [Лекция №6](./step06_intro_to_dl/README.md) | [05. Оценка OOB](./homeworks/assignment05_bagging_and_oob/)<br>[06. Градиентный бустинг](./homeworks/assignment06_boosting/)<br>[07. Классификация MNIST](./homeworks/assignment07_mnist_classification/) | |
 
 
 

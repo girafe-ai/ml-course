@@ -1,0 +1,1 @@
+[Слайды](./lect007_explaining_ai.pdf)

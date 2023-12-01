@@ -1,0 +1,1 @@
+[Слайды](./lect008_distillation.pdf)

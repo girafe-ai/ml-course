@@ -9,3 +9,5 @@ __To submit the assignment, convert your notebook with modules into `.py` file (
 P.s. You will need the implemented layers in the Lab 2 as well. 
 
 Good luck!
+
+__Контест__: https://contest.yandex.ru/contest/57019/

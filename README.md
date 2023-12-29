@@ -13,6 +13,8 @@
 | 09.11.2023 | Week04. Linear Models recap| | [Слайды 02](week0_02_linear_reg/lect002_linear_regression.pdf), [Слайды 03](week0_03_linear_classification/lect003_linear_clf.pdf) |  | |
 | 16.11.2023 | Week05. Decision Trees and Bagging| | [Слайды](week0_05_trees_and_ensembles/lect005_trees_and_ensembles.pdf)|  | |
 | 30.11.2023 | Week06. Gradient boosting| | [Слайды](week0_06_boosting/lect006_boosting.pdf)|  | |
+| 07.12.2023 | Week07. Intro to DL| |  |  | |
+| 14.12.2023 | Week08. ML models relations. General overview.| | |  | |
 
 ## Теоретический минимум по математике
 

@@ -32,7 +32,7 @@
 29. LSTM/GRU, концепция памяти, идеи вентилей (gates).
 30. Операция свертки. Свёрточный слой, обратное распространение через него. Гиперпараметры свёрток. Сравнение 1x1 свёрток и полносвязных слоёв. Пулинг: max/average.
 31. Основные идеи AlexNet, VGG, Inception (GoogLeNet), архитектуры ResNet.
-32. Геометрические методы в машинном обучении. Задача кластеризации. IsoMap, LLE, DBSCAN, k-средние, t-SNE.
+32. Опционально: Геометрические методы в машинном обучении. Задача кластеризации. IsoMap, LLE, DBSCAN, k-средние, t-SNE.
 
 ## Теоретический минимум
 1. Задача обучения с учителем
@@ -67,7 +67,7 @@
 30. Как работает базовая RNN (Vanilla RNN)?
 31. Как работает Dropout?
 32. Как Dropout и пакетная нормализация меняют свое поведение на этапе вывода?
-33. В чем состоит формулировка задачи для Анализа Главных Компонентов?
+33. Сформулируйте оптимизационную задачу для Метода Главных Компонент?
 
 
 # Exam program:
@@ -105,7 +105,7 @@
 29. LSTM/GRU, memory concept, gates ideas.
 30. Matrix convolution. Convolutional layer, backpropagation through it. Hyperparameters of Convs. 1x1 convolutions, comparison to FC layers. Max/Average Pooling.
 31. Main ideas of AlexNet, VGG, Inception (GoogLeNet), ResNet architectures.
-32. Geometrical methods in ML. Clustering problem. IsoMap, LLE, DBSCAN, k-means, t-SNE.
+32. Optional: Geometrical methods in ML. Clustering problem. IsoMap, LLE, DBSCAN, k-means, t-SNE.
 
 ## Theoretical minimum
 1. Supervised learning problem statement

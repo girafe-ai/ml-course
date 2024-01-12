@@ -27,8 +27,7 @@ class SimplifiedBaggingRegressor:
         self.data = None
         self.target = None
         self._generate_splits(data)
-        assert len(set(list(map(len, self.indices_list)))) == 1, 'All bags should be of the same length!'
-        assert list(map(len, self.indices_list))[0] == len(data), 'All bags should contain `len(data)` number of elements!'
+        assert all(len(indices) == len(data) for indices in self.indices_list), 'All bags should contain `len(data)` number of elements!'
         self.models_list = []
         for bag in range(self.num_bags):
             model = model_constructor()

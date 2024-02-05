@@ -1,0 +1,1 @@
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/23s_nes/homeworks/hw04_umt/Lab_NLP_part1_Embedding_based_MT.ipynb)

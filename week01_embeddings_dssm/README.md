@@ -1,4 +1,6 @@
-﻿Visualizing and building embeddings:
+**Week1: Word Embeddings, DSSM**
+ 
+Visualizing and building embeddings:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_advanced/week01_embeddings_dssm/week01_dealing_with_word_embeddings.ipynb)
 
 Further readings:

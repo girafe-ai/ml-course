@@ -20,5 +20,5 @@ Prerequisites are located [here](./prerequisites.md).
 More additional materials are available [here](https://github.com/girafe-ai/ml-course/blob/22f_basic/extra_materials.md)
 
 ## Course staff (spring 2024)
-[Radoslav Neychev](https://linkedin.com/in/radoslav-neychev)
+[Radoslav Neychev](https://linkedin.com/in/radoslav-neychev) \
 [Nikolay Karpachev](https://linkedin.com/in/nkarpachev)

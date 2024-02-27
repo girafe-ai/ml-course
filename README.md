@@ -7,7 +7,8 @@ Second semester of girafe-ai Machine Learning course
 |:------:|:-----------------------|:------------:|:------------:|:-----------------------:|:------------------------:|:----------------------:|:----------------------:|
 | 05.02.2024 | Text processing pipeline. Word embeddings. Semantic search, DSSM. | [Lecture2023](https://youtu.be/moMlM5Nuk04?si=hry8ni5Db9C1EVX-) | [Lecture2024](https://github.com/girafe-ai/ml-course/blob/24s_advanced/week01_embeddings_dssm/week01_word_embeddings.pdf), [Seminar2024](https://github.com/girafe-ai/ml-course/blob/24s_advanced/week01_embeddings_dssm/week01_seminar_embeddings_dssm.pdf) | | | | |
 | 12.02.2024 | Seq2seq learning, NMT | [Lecture2024](https://www.youtube.com/live/EsDzgDmefJg?si=x1HPzmx-ciIpeFTz), [Seminar2024](https://www.youtube.com/live/HSJqdWAqNN0?si=fPHvK1AHe0f-v-Wk) | [Lecture2024](https://github.com/girafe-ai/ml-course/blob/24s_advanced/week02_seq2seq_nmt/week02_seq2seq_nmt.pdf) | | [Lab01](https://github.com/girafe-ai/ml-course/tree/24s_advanced/assignments/lab01_umt) | 3.03.2024 23:59 AOE | HW normalized weight: 5 pts |
-| 19.02.2024 | Transformer, self-attention | | | | [Lab02](https://github.com/girafe-ai/ml-course/tree/24s_advanced/assignments/lab02_nmt) | 10.03.2024 23:59 AOE | HW normalized weight: 15 pts |
+| 19.02.2024 | Transformer, self-attention | [Lecture2024](https://www.youtube.com/live/8sxu2fHFyiI?si=v7kb49qp5o2aY4H1), [Seminar2024](https://www.youtube.com/live/LdD54JO7FT4?si=YaVGipwi0uC1olhP) | | | [Lab02](https://github.com/girafe-ai/ml-course/tree/24s_advanced/assignments/lab02_nmt) | 10.03.2024 23:59 AOE | HW normalized weight: 15 pts |
+| 26.02.2024 | Transfer Learning | [Lecture2024](https://www.youtube.com/live/rIBacp5r6Rc?si=2A69W2mt6j_XJzWj), [Seminar2024](https://www.youtube.com/live/8bmLz0fvjeA?si=w5u6tDXJcUkMeGlP) | | | | | |
 
 ## Prerequisites
 Prerequisites are located [here](./prerequisites.md).

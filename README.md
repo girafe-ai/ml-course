@@ -12,7 +12,7 @@ Second semester of girafe-ai Machine Learning course
 | 04.03.2024 | Generative pretraining: T5, GPT | [Lecture2024](https://www.youtube.com/watch?v=-bYYaaWqvtk), [Seminar2024](https://www.youtube.com/watch?v=7Z8ANN7IQl0) | | | | | |
 | 11.03.2024 | Intro to RL | [Lecture2024](https://www.youtube.com/watch?v=V3rcWaGPhR8), [Seminar2024](https://www.youtube.com/watch?v=L56YASoET9U) | | | | | |
 | 18.03.2024 | Model-based RL. Value / Policy iteration | [Lecture2024](https://www.youtube.com/watch?v=SxiBXEBb_RI), [Seminar2024](https://www.youtube.com/watch?v=MRLQQnr-cZQ) | | | | | |
-| 25.03.2024 | Model-free RL. QLearning, SARSA | [Lecture2024](https://www.youtube.com/watch?v=X2b0FYKW-m8), [Seminar2024](https://www.youtube.com/watch?v=oIu8iDyxthk) | | | | | |
+| 25.03.2024 | Model-free RL. QLearning, SARSA | [Lecture2024](https://www.youtube.com/watch?v=X2b0FYKW-m8), [Seminar2024](https://www.youtube.com/watch?v=oIu8iDyxthk) | | | | 07.04.2024 23:59 AOE | HW normalized weight: 7 (+5 bonus) pts |
 | 01.04.2024 | Approximate QLearning. DQN | | | | | | |
 | 08.04.2024 | Policy gradient, REINFORCE | | | | | | |
 | 15.04.2024 | RL outside games. SCST | | | | | | |

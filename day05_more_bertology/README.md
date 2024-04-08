@@ -1,8 +1,8 @@
 PoS Tagging with BiLSTM:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/24s_harbour_dlia/day05_more_bertology/practice_bilstm_for_pos_tagging.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day05_more_bertology/practice_bilstm_for_pos_tagging.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/24s_harbour_dlia/day05_more_bertology/practice_bilstm_for_pos_tagging_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day05_more_bertology/practice_bilstm_for_pos_tagging_solved.ipynb)
 
 
 **Further readings**:

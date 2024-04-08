@@ -1,8 +1,8 @@
 BERT for text classification:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_05_BERT_and_GPT/practice_bert_for_text_classification.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/22f_binpord/week1_05_BERT_and_GPT/practice_bert_for_text_classification.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/22f_binpord/week1_05_BERT_and_GPT/practice_bert_for_text_classification_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/22f_binpord/week1_05_BERT_and_GPT/practice_bert_for_text_classification_solved.ipynb)
 
 **Further readings**:
 

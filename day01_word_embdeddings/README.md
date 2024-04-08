@@ -1,14 +1,14 @@
 Generating names with RNN:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embeddings/seq2seq_rnn_practice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embdeddings/seq2seq_rnn_practice.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embeddings/seq2seq_rnn_practice_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embdeddings/seq2seq_rnn_practice_solved.ipynb)
 
 Visualizing and building embeddings:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embeddings/practice_word_embeddings.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embdeddings/practice_word_embeddings.ipynb)
 
 Solved version:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embeddings/practice_word_embeddings_solved.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day01_word_embdeddings/practice_word_embeddings_solved.ipynb)
 
 
 

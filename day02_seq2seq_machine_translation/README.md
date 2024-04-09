@@ -6,5 +6,5 @@ Solved version:
 
 Further readings:
 
-YSDA nlp_course materials: https://github.com/yandexdataschool/nlp_course/tree/2023/week04_seq2seq
-Original seq2seq paper by Ilya Sutskever, Oriol Vinyals & Quoc V. Le [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) (2014).
+- YSDA nlp_course materials: https://github.com/yandexdataschool/nlp_course/tree/2023/week04_seq2seq
+- Original seq2seq paper by Ilya Sutskever, Oriol Vinyals & Quoc V. Le [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) (2014).

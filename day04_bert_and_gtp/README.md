@@ -4,6 +4,9 @@ BERT for text classification:
 Solved version:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/22f_binpord/week1_05_BERT_and_GPT/practice_bert_for_text_classification_solved.ipynb)
 
+BERT for QA and TTS example:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/girafe-ai/ml-course/blob/24s_harbour_dlia/day04_bert_and_gtp/practice_question_answering_and_tts.ipynb)
+
 **Further readings**:
 
 - [en] The Illustrated BERT

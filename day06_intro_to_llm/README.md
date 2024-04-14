@@ -1,6 +1,5 @@
-Question Answering (and TTS):
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_harbour_dlia/day06_intro_to_llm/practice.ipynb)
-
 **Further readings**:
 
-TBD
+- GPT-4 blog post: https://openai.com/research/gpt-4
+- A primer in BERTology: https://arxiv.org/abs/2002.12327
+- Very simple LLM course on LLMs by Google: https://developers.google.com/machine-learning/resources/intro-llms

@@ -124,7 +124,6 @@ class LossAndDerivatives:
     @staticmethod
     def l1_reg_derivative(w):
         """
-        Y : numpy array of shape (`n_observations`, `target_dimentionality`) or (`n_observations`,)
         w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
         Return : numpy array of same shape as `w`

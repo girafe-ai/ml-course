@@ -1,0 +1,2 @@
+Self Attention:
+* Practice: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/24s_msai/day13_simple_gpt/building_gpt.ipynb)

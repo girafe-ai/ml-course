@@ -32,8 +32,11 @@ class LossAndDerivatives:
         Comment: If Y is two-dimentional, average the error over both dimentions.
         """
 
-        # YOUR CODE HERE    
-        return 
+        pred = X.dot(w)
+        if Y ndim == 2:
+            return np.mean(np.abs(pred - Y))
+        else:
+            return np.mean(np.abs(pred - Y))  
 
     @staticmethod
     def l2_reg(w):
@@ -47,7 +50,7 @@ class LossAndDerivatives:
         """
         
         # YOUR CODE HERE
-        return 
+        return np.sum(w**2)
 
     @staticmethod
     def l1_reg(w):
@@ -61,7 +64,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sum(np.abs(w))
 
     @staticmethod
     def no_reg(w):
@@ -86,8 +89,13 @@ class LossAndDerivatives:
         dimension as well, so you need to consider that fact in derivative implementation.
         """
 
-        # YOUR CODE HERE
-        return 
+        n_observations, target_dim = Y.shape
+        pred = X.dot(w)
+        if Y.ndim == 2:
+            error = 2 * (pred - Y) / (n_observations * target_dim)
+        else:
+            error = 2 * (pred - Y) / n_observations
+        return X.T.dot(error)
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -104,9 +112,12 @@ class LossAndDerivatives:
         Please mention, that in case `target_dimentionality` > 1 the error is averaged along this
         dimension as well, so you need to consider that fact in derivative implementation.
         """
-
-        # YOUR CODE HERE
-        return 
+        pred = X.dot(w)
+        if Y.ndim == 2:
+            error = np.sign(pred - Y) / (n_observations * target_dim)
+        else:
+            error = np.sign(pred - Y) /n_observations
+        return X.T.dot(error)
 
     @staticmethod
     def l2_reg_derivative(w):
@@ -119,7 +130,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return 2*w
 
     @staticmethod
     def l1_reg_derivative(w):
@@ -133,7 +144,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sign(w)
 
     @staticmethod
     def no_reg_derivative(w):

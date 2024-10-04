@@ -32,11 +32,11 @@ repos:
     rev: 1.8.7
     hooks:
       - id: nbqa-black
-        additional_dependencies: [black==21.8b0]
+        additional_dependencies: [black==24.8.0]
       - id: nbqa-isort
-        additional_dependencies: [isort==5.9.3]
+        additional_dependencies: [isort==5.13.2]
       - id: nbqa-flake8
-        additional_dependencies: [flake8==3.9.2]
+        additional_dependencies: [flake8==7.1.1]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.1.0

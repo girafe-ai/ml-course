@@ -5,8 +5,8 @@ description = "Machine learning course at MIPT"
 authors = ["Vladislav Goncharenko <vladislav.goncharenko@phystech.edu>, Radoslav Neychev <neychev@phystech.edu>"]
 license = "MIT License"
 
-[tool.poetry.dependencies]
-python = "~3.12"
+# old packages
+
 # scikit-learn = "^0.24.1"
 # matplotlib = "^3.3.4"
 # pandas = "^1.2.2"
@@ -52,6 +52,13 @@ python = "~3.12"
 # basic = ["Pillow", "tqdm", "scikit-image", "h5py", "pydotplus", "eli5", "PDPbox", "shap"]
 # nlp = ["nltk", "gensim", "spacy", "subword-nmt", "pytorch-transformers", "torchtext", "bokeh"]
 # rl = ["gym", "graphviz"]
+
+# dev deps
+# pre-commit = "^3.8.0"
+# ipykernel = "^6.29.5"
+
+[tool.poetry.dependencies]
+python = "~3.11"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.8.0"

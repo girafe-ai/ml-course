@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "ml-basic"
 version = "1.0.0"
 description = "Machine learning course at MIPT"

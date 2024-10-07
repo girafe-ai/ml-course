@@ -5,7 +5,7 @@ from pathlib import Path
 import fire
 
 
-COLAB_TEMPLATE = """`{}`:[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-mipt/blob/{}/{}/{})\n"""
+COLAB_TEMPLATE = """`{}`: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/{}/{}/{})\n"""
 MODES = {"overwrite": "w", "append": "a"}
 
 

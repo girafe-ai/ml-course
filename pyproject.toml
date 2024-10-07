@@ -71,6 +71,7 @@ ucimlrepo = "^0.0.7"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.8.0"
 ipykernel = "^6.29.5"
+fire = "^0.7.0"
 
 [tool.black]
 line-length = 100

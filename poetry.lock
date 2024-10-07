@@ -341,6 +341,19 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.6.1)", "diff-cover (>=9.2)", "p
 typing = ["typing-extensions (>=4.12.2)"]
 
 [[package]]
+name = "fire"
+version = "0.7.0"
+description = "A library for automatically generating command line interfaces."
+optional = false
+python-versions = "*"
+files = [
+    {file = "fire-0.7.0.tar.gz", hash = "sha256:961550f07936eaf65ad1dc8360f2b2bf8408fad46abbfa4d2a3794f8d2a95cdf"},
+]
+
+[package.dependencies]
+termcolor = "*"
+
+[[package]]
 name = "fonttools"
 version = "4.54.1"
 description = "Tools to manipulate font files"
@@ -1646,6 +1659,20 @@ develop = ["colorama", "cython (>=3.0.10)", "cython (>=3.0.10,<4)", "flake8", "i
 docs = ["ipykernel", "jupyter-client", "matplotlib", "nbconvert", "nbformat", "numpydoc", "pandas-datareader", "sphinx"]
 
 [[package]]
+name = "termcolor"
+version = "2.5.0"
+description = "ANSI color formatting for output in terminal"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "termcolor-2.5.0-py3-none-any.whl", hash = "sha256:37b17b5fc1e604945c2642c872a3764b5d547a48009871aea3edd3afa180afb8"},
+    {file = "termcolor-2.5.0.tar.gz", hash = "sha256:998d8d27da6d48442e8e1f016119076b690d962507531df4890fcd2db2ef8a6f"},
+]
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "threadpoolctl"
 version = "3.5.0"
 description = "threadpoolctl"
@@ -1762,4 +1789,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "3fcdb7485c3eae756a9b071c1ad0fbabc990182a666e6b284529db70a5051847"
+content-hash = "a1dc2ae83d002e6b1dd43d97a49188b6b4100ed904815526dd28697265e2507e"

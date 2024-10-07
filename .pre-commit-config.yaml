@@ -45,3 +45,15 @@ repos:
         types_or: [markdown, yaml, toml, json, dockerfile, shell]
         additional_dependencies: ["prettier@3.1.0", "prettier-plugin-sh@0.13.1"]
         args: [--print-width=80, --prose-wrap=always]
+
+  - repo: local
+    hooks:
+      - id: backslash-fixer
+        name: Fix backslashes in Jupyter Notebooks
+        description:
+          Replaces all the backslashes in notebook's markdown cells to break
+          tag.
+        entry: python commands.py backslash_fix
+        additional_dependencies: [fire]
+        language: python
+        types: [jupyter]

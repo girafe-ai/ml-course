@@ -1,0 +1,1 @@
+* Sobel filter и упрощённый HoG (10 баллов): [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/25s_ml_trainings_3/homeworks/hw02_edge_detection/hw_sobel_and_simple_hog.ipynb)

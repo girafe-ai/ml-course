@@ -1,0 +1,1 @@
+* Построение панорам (и указание логина для сдачи тестов) (10 баллов): [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/25s_ml_trainings_3/homeworks/hw03_panorama/hw_panorama_matching.ipynb)

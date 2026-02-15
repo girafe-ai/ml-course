@@ -11,6 +11,8 @@ class LaplaceDistribution:
         ####
         # Do not change the class outside of this block
         # Your code here
+        med = np.median(x, axis=0)
+        return np.mean(np.abs(x - med), axis=0)
         ####
 
     def __init__(self, features):
@@ -20,8 +22,8 @@ class LaplaceDistribution:
         '''
         ####
         # Do not change the class outside of this block
-        self.loc = # YOUR CODE HERE
-        self.scale = # YOUR CODE HERE
+        self.loc = np.median(features, axis=0)
+        self.scale = self.mean_abs_deviation_from_median(features)
         ####
 
 
@@ -33,7 +35,7 @@ class LaplaceDistribution:
         '''
         ####
         # Do not change the class outside of this block
-        return 
+        return -np.log(2.0 * self.scale) - (np.abs(values - self.loc) / self.scale) 
         ####
         
     
@@ -43,4 +45,4 @@ class LaplaceDistribution:
         Args:
             values: A numpy array of shape (n_objects, n_features). Every column represents all available values for the selected feature.
         '''
-        return np.exp(self.logpdf(value))
+        return np.exp(self.logpdf(values))

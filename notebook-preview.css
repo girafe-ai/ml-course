@@ -1,0 +1,31 @@
+/* Notebook pages: all selectors are scoped to .nb-page. */
+.nb-page { max-width: 960px; }
+.nb-page h1 { max-width: 24ch; }
+.nb-page .nb-intro { max-width: 70ch; color: var(--muted, #5d6869); }
+.nb-page .nb-download { display: inline-block; margin: .5rem 0 1.8rem; padding: .7rem 1rem; border-radius: 9px; background: var(--accent, #f6e39a); color: var(--accent-ink, #253533); text-decoration: none; font-weight: 700; }
+.nb-page .nb-toc { display: grid; gap: .3rem; margin: 0 0 2rem; padding: 1rem 1.2rem; border: 1px solid var(--line, #d7deda); border-radius: 12px; background: var(--surface, #f7f8f5); }
+.nb-page .nb-toc strong { margin-bottom: .4rem; }
+.nb-page .nb-toc a { color: var(--green, #287465); text-decoration: none; line-height: 1.4; }
+.nb-page .nb-content { min-width: 0; }
+.nb-page .nb-markdown { line-height: 1.65; overflow-wrap: anywhere; }
+.nb-page .nb-markdown h2 { margin-top: 2.6rem; }
+.nb-page .nb-markdown h3 { margin-top: 2rem; }
+.nb-page .nb-markdown p, .nb-page .nb-markdown li { max-width: 80ch; }
+.nb-page .nb-markdown details { border-left: 3px solid var(--green, #287465); padding: .4rem 0 .4rem 1rem; margin: 1.2rem 0; background: var(--surface, #f7f8f5); }
+.nb-page .nb-markdown summary { cursor: pointer; }
+.nb-page .nb-code, .nb-page .nb-table-scroll, .nb-page .nb-stream { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+.nb-page .nb-code { margin: 1.25rem 0 .65rem; border: 1px solid var(--line, #d7deda); border-radius: 10px; background: var(--code-bg, #eef1ee); }
+.nb-page .nb-code-label { padding: .45rem .8rem; border-bottom: 1px solid var(--line, #d7deda); font: 600 .75rem system-ui, sans-serif; color: var(--muted, #5d6869); }
+.nb-page .nb-code pre { width: max-content; min-width: 100%; margin: 0; padding: .8rem; box-sizing: border-box; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 4; color: var(--ink, #182726); }
+.nb-page .nb-stream { margin: .5rem 0 1.25rem; padding: .7rem .9rem; border-left: 3px solid var(--line, #d7deda); white-space: pre; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink, #182726); }
+.nb-page .nb-figure { margin: .8rem 0 1.6rem; }
+.nb-page .nb-figure img { display: block; max-width: 100%; height: auto; background: #fff; border: 1px solid var(--line, #d7deda); border-radius: 8px; }
+.nb-page .nb-table-scroll { margin: .6rem 0 1.5rem; }
+.nb-page table { border-collapse: collapse; width: max-content; max-width: none; font-size: .88rem; line-height: 1.4; }
+.nb-page th, .nb-page td { border: 1px solid var(--line, #d7deda); padding: .35rem .55rem; text-align: left; white-space: nowrap; }
+.nb-page th { background: var(--surface, #f7f8f5); }
+.nb-page .nb-static-note { margin: .7rem 0 1.5rem; padding: .7rem .9rem; border-left: 3px solid var(--green, #287465); background: var(--surface, #f7f8f5); color: var(--muted, #5d6869); }
+.nb-page .math-display { overflow-x: auto; overflow-y: hidden; padding: .3rem 0; }
+.nb-page .katex-display { margin: .5rem 0; }
+@media(max-width: 600px) { .nb-page .nb-code pre { font-size: 12px; } .nb-page .nb-toc { padding: .8rem; } }
+.nb-page .nb-figure figcaption { margin-top: .45rem; max-width: 80ch; color: var(--muted, #5d6869); font-size: .9rem; line-height: 1.5; }

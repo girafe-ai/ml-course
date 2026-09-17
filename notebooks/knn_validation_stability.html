@@ -1,0 +1,1629 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Семинар 1 · kNN: близость, валидация и устойчивость · girafe.ai</title><meta name="description" content="Материалы курса машинного обучения: видео, слайды, ноутбуки и конспекты."><script src="../theme.js"></script><link rel="icon" href="../assets/logo.png"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../notebook-preview.css"><link rel="stylesheet" href="../lectures/02_linear_models/vendor/katex/katex.min.css"></head><body><a class="skip" href="#main">К содержанию</a><div class="wrap"><header class="top"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" width="40" height="40">girafe.ai</a><div class="top-tools"><span class="term">МФТИ · осень 2026</span><label class="theme-control" for="theme-choice">Тема<select id="theme-choice" aria-label="Цветовая тема"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div></header><main id="main" class="reading nb-page"><a class="back" href="../index.html">← Все лекции</a><div class="eyebrow">Ноутбук · статический просмотр</div><h1>Семинар 1 · kNN: близость, валидация и устойчивость</h1><p class="nb-intro">Материал можно читать без запуска Python. Код и сохранённые результаты показаны в порядке тетради; для запуска упражнений скачайте исходный файл.</p><a class="nb-download" href="knn_validation_stability.ipynb" download>Скачать .ipynb ↓</a><nav class="nb-toc" aria-label="Содержание"><strong>Содержание</strong><a href="#section-1-0">Ритм занятия</a><a href="#section-4-1">0. Карта задачи из лекции</a><a href="#section-5-2">1. Один и тот же маленький мир</a><a href="#section-8-3">Эксперимент 1. Одна точка решает всё?</a><a href="#section-11-4">Эксперимент 2. Масштаб — это изменение геометрии</a><a href="#section-13-5">Эксперимент 2b. Другая функция расстояния — другая близость</a><a href="#section-16-6">Интерактивная карта соседей · Bokeh</a><a href="#section-18-7">2. Устойчивость решения</a><a href="#section-22-8">3. Train ≠ validation ≠ test</a><a href="#section-25-9">4. Реальные данные: цифры 8×8</a><a href="#section-27-10">Необязательный мост: вращаемая 3D-проекция · Plotly</a><a href="#section-29-11">Выбор k внутри cross-validation</a><a href="#section-31-12">Другой вопрос: стабилен ли победитель?</a><a href="#section-35-13">5. Leakage: высокий score может быть плохой новостью</a><a href="#section-35-14">5.1. Почти одинаковые снимки одной цифры</a><a href="#section-37-15">5.2. Будущее попало в обучение</a><a href="#section-40-16">Бонус A. YSDA cross-validation riddle</a><a href="#section-43-17">Бонус B. Проклятие размерности</a><a href="#section-45-18">Итоги и exit ticket</a><a href="#section-46-19">Происхождение примеров</a></nav><div class="nb-content"><section class="nb-markdown">
+<p><strong>Формат:</strong> управляемая демонстрация на 90 минут — сначала прогноз аудитории, затем запуск клетки и объяснение результата.</p>
+<p>К концу семинара студент сможет:</p>
+<ul>
+<li>восстановить предсказание k ближайших соседей по таблице расстояний;</li>
+<li>объяснить, как число соседей, масштаб признаков и функция расстояния меняют ответ;</li>
+<li>отличить расстояние внутри алгоритма, loss отдельного предсказания и метрику качества;</li>
+<li>выбрать гиперпараметр только по validation/CV и один раз оценить итог на test;</li>
+<li>увидеть неустойчивость решения к отдельной точке и к конкретному разбиению данных;</li>
+<li>распознать утечку через preprocessing, почти дубликаты, группы и время.</li>
+</ul>
+<blockquote>
+<p>Главный вопрос семинара: <strong>что именно мы считаем похожим — и на каких данных имеем право проверять это предположение?</strong></p>
+</blockquote></section><section class="nb-markdown"><h2 id="section-1-0">Ритм занятия</h2>
+<div class="nb-table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">Время</th>
+<th>Блок</th>
+<th>Действие аудитории</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0–20 мин</td>
+<td>Механика kNN</td>
+<td>назвать соседей и предсказать класс до запуска</td>
+</tr>
+<tr>
+<td style="text-align: right;">20–35 мин</td>
+<td>Масштаб и расстояние</td>
+<td>объяснить, почему тот же объект получил другой ответ</td>
+</tr>
+<tr>
+<td style="text-align: right;">35–50 мин</td>
+<td>Устойчивость</td>
+<td>предсказать, какая часть границы изменится без одной точки</td>
+</tr>
+<tr>
+<td style="text-align: right;">50–70 мин</td>
+<td>Validation и CV</td>
+<td>выбрать <code>k</code>, не заглядывая в test</td>
+</tr>
+<tr>
+<td style="text-align: right;">70–83 мин</td>
+<td>Leakage</td>
+<td>найти нарушение в трёх схемах проверки</td>
+</tr>
+<tr>
+<td style="text-align: right;">83–90 мин</td>
+<td>Итоги</td>
+<td>сформулировать один обязательный вопрос к данным</td>
+</tr>
+</tbody>
+</table></div>
+<p>Правило для каждой демонстрации: <strong>30 секунд подумать → проголосовать → обсудить в паре → запустить → объяснить</strong>.</p>
+<p>Блоки «YSDA riddle» и «размерность» в конце — резерв, если аудитория идёт быстро.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 3</div><pre><code># Если Bokeh или Plotly отсутствуют в новом окружении/Colab,
+# раскомментируйте и один раз выполните следующую строку:
+# %pip install -q bokeh plotly</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 4</div><pre><code>import warnings
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import sklearn
+
+from IPython.display import display
+from matplotlib.colors import ListedColormap
+from sklearn.datasets import load_digits
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
+from sklearn.model_selection import (
+    GridSearchCV,
+    StratifiedKFold,
+    cross_val_score,
+    train_test_split,
+)
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import LinearSVC
+
+warnings.filterwarnings(&quot;ignore&quot;, category=FutureWarning)
+
+SEED = 42
+rng = np.random.default_rng(SEED)
+np.random.seed(SEED)
+
+COLORS = {&quot;A&quot;: &quot;#F2994A&quot;, &quot;B&quot;: &quot;#2F80ED&quot;}
+REGION_CMAP = ListedColormap([&quot;#FDE3C8&quot;, &quot;#D8E9FF&quot;])
+
+plt.rcParams.update(
+    {
+        &quot;figure.figsize&quot;: (10, 6),
+        &quot;figure.dpi&quot;: 110,
+        &quot;axes.grid&quot;: True,
+        &quot;axes.spines.top&quot;: False,
+        &quot;axes.spines.right&quot;: False,
+        &quot;font.size&quot;: 12,
+    }
+)
+
+print(f&quot;Python scientific stack ready · scikit-learn {sklearn.__version__}&quot;)</code></pre></div><pre class="nb-stream">Python scientific stack ready · scikit-learn 1.9.0
+</pre></section><section class="nb-markdown"><h2 id="section-4-1">0. Карта задачи из лекции</h2>
+<p><div class="math-display">
+\mathcal D_{train}
+\xrightarrow[\text{признаки, масштаб, расстояние, }K]{\text{kNN}}
+\widehat y
+\xrightarrow[\text{выбор настроек}]{\mathcal D_{val}\;\text{или CV}}
+\text{final pipeline}
+\xrightarrow[\text{один раз}]{\mathcal D_{test}}
+Q_{final}
+</div></p>
+<p>Не смешиваем три разных объекта:</p>
+<ul>
+<li><strong>расстояние</strong> <span class="math-inline">d(\mathbf x, \mathbf z)</span> сравнивает два объекта и определяет соседей;</li>
+<li><strong>loss</strong> <span class="math-inline">\ell(y, \widehat y)</span> задаёт цену одной ошибки;</li>
+<li><strong>метрика качества</strong> <span class="math-inline">Q</span> агрегирует качество на выборке.</li>
+</ul>
+<p>Для kNN «обучить модель» означает сохранить train-объекты. Однако выбор признаков, масштаба, расстояния и <span class="math-inline">K</span> уже является частью модели и должен проверяться честно.</p></section><section class="nb-markdown"><h2 id="section-5-2">1. Один и тот же маленький мир</h2>
+<p>Используем те же точки, что и в сегодняшней лекции/интерактивной демонстрации. Оси пока называются <code>x1</code> и <code>x2</code>: смысл признаков не должен подменять геометрию красивой историей.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 7</div><pre><code>training = pd.DataFrame(
+    [
+        (&quot;A1&quot;, 1.0, 1.0, &quot;A&quot;),
+        (&quot;A2&quot;, 1.0, 3.0, &quot;A&quot;),
+        (&quot;A3&quot;, 2.0, 2.0, &quot;A&quot;),
+        (&quot;A4&quot;, 2.0, 4.0, &quot;A&quot;),
+        (&quot;A5&quot;, 3.0, 1.0, &quot;A&quot;),
+        (&quot;B1&quot;, 5.0, 5.0, &quot;B&quot;),
+        (&quot;B2&quot;, 5.0, 7.0, &quot;B&quot;),
+        (&quot;B3&quot;, 6.0, 6.0, &quot;B&quot;),
+        (&quot;B4&quot;, 7.0, 5.0, &quot;B&quot;),
+        (&quot;B5&quot;, 7.0, 7.0, &quot;B&quot;),
+        (&quot;B0&quot;, 3.1, 2.2, &quot;B&quot;),  # одиночный выброс среди A
+    ],
+    columns=[&quot;id&quot;, &quot;x1&quot;, &quot;x2&quot;, &quot;label&quot;],
+)
+
+validation = pd.DataFrame(
+    [
+        (&quot;V1&quot;, 2.5, 2.2, &quot;A&quot;),
+        (&quot;V2&quot;, 3.0, 2.2, &quot;A&quot;),
+        (&quot;V3&quot;, 5.5, 5.5, &quot;B&quot;),
+        (&quot;V4&quot;, 6.5, 6.0, &quot;B&quot;),
+        (&quot;V5&quot;, 4.2, 4.0, &quot;B&quot;),
+    ],
+    columns=[&quot;id&quot;, &quot;x1&quot;, &quot;x2&quot;, &quot;label&quot;],
+)
+
+queries = {
+    &quot;outlier&quot;: np.array([3.0, 2.2]),
+    &quot;scale&quot;: np.array([4.0, 4.0]),
+    &quot;metric&quot;: np.array([3.1, 5.0]),
+}
+
+display(training)</code></pre></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A1</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A2</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>A3</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A4</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A5</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>B1</td>
+      <td>5.0</td>
+      <td>5.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>B2</td>
+      <td>5.0</td>
+      <td>7.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>B3</td>
+      <td>6.0</td>
+      <td>6.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>B4</td>
+      <td>7.0</td>
+      <td>5.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>B5</td>
+      <td>7.0</td>
+      <td>7.0</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>B0</td>
+      <td>3.1</td>
+      <td>2.2</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 8</div><pre><code>def distances_to_query(points, query, metric=&quot;euclidean&quot;, scale=(1.0, 1.0)):
+    delta = (points[[&quot;x1&quot;, &quot;x2&quot;]].to_numpy() - np.asarray(query)) * np.asarray(scale)
+    if metric == &quot;euclidean&quot;:
+        return np.sqrt((delta**2).sum(axis=1))
+    if metric == &quot;manhattan&quot;:
+        return np.abs(delta).sum(axis=1)
+    raise ValueError(&quot;metric must be &#x27;euclidean&#x27; or &#x27;manhattan&#x27;&quot;)
+
+
+def neighbor_table(points, query, k=3, metric=&quot;euclidean&quot;, scale=(1.0, 1.0)):
+    table = points.copy()
+    table[&quot;distance&quot;] = distances_to_query(points, query, metric=metric, scale=scale)
+    table = table.sort_values([&quot;distance&quot;, &quot;id&quot;]).reset_index(drop=True)
+    table[&quot;neighbor&quot;] = np.arange(1, len(table) + 1) &lt;= k
+    return table
+
+
+def predict_query(points, query, k=3, metric=&quot;euclidean&quot;, scale=(1.0, 1.0)):
+    nearest = neighbor_table(points, query, k=k, metric=metric, scale=scale).head(k)
+    counts = nearest[&quot;label&quot;].value_counts()
+    winners = set(counts[counts == counts.max()].index)
+    # При ничьей выбираем класс ближайшего среди победителей — правило задано явно.
+    prediction = nearest.loc[nearest[&quot;label&quot;].isin(winners), &quot;label&quot;].iloc[0]
+    return prediction, nearest
+
+
+def plot_neighbors(
+    ax,
+    points,
+    query,
+    k,
+    metric=&quot;euclidean&quot;,
+    scale=(1.0, 1.0),
+    title=None,
+    transform_coordinates=False,
+):
+    prediction, nearest = predict_query(points, query, k=k, metric=metric, scale=scale)
+    display_scale = np.asarray(scale) if transform_coordinates else np.ones(2)
+    for label, group in points.groupby(&quot;label&quot;):
+        ax.scatter(
+            group.x1 * display_scale[0],
+            group.x2 * display_scale[1],
+            s=120,
+            color=COLORS[label],
+            edgecolor=&quot;white&quot;,
+            linewidth=1.2,
+            label=f&quot;class {label}&quot;,
+            zorder=3,
+        )
+    for row in points.itertuples():
+        displayed_point = np.array([row.x1, row.x2]) * display_scale
+        ax.annotate(row.id, displayed_point, xytext=(5, 5), textcoords=&quot;offset points&quot;, fontsize=9)
+    displayed_query = np.asarray(query) * display_scale
+    ax.scatter(*displayed_query, marker=&quot;D&quot;, s=170, color=&quot;white&quot;, edgecolor=&quot;black&quot;, linewidth=2, zorder=5)
+    ax.annotate(&quot;Q&quot;, displayed_query, xytext=(7, -16), textcoords=&quot;offset points&quot;, weight=&quot;bold&quot;)
+    for row in nearest.itertuples():
+        displayed_neighbor = np.array([row.x1, row.x2]) * display_scale
+        ax.plot(
+            [displayed_query[0], displayed_neighbor[0]],
+            [displayed_query[1], displayed_neighbor[1]],
+            color=&quot;#333333&quot;,
+            alpha=0.55,
+            zorder=2,
+        )
+    ax.set(
+        xlim=(0, 8 * display_scale[0]),
+        ylim=(0, 8 * display_scale[1]),
+        xlabel=&quot;x1&quot; if display_scale[0] == 1 else f&quot;{display_scale[0]:g} · x1&quot;,
+        ylabel=&quot;x2&quot; if display_scale[1] == 1 else f&quot;x2′ = {display_scale[1]:g} · x2&quot;,
+    )
+    ax.set_xticks(np.arange(0, 8 * display_scale[0] + 0.1, display_scale[0]))
+    ax.set_yticks(np.arange(0, 8 * display_scale[1] + 0.1, display_scale[1]))
+    if transform_coordinates and display_scale[1] &gt; 1:
+        ax.set_yticks(np.arange(0, 8 * display_scale[1] + 0.1, 1), minor=True)
+        ax.grid(which=&quot;minor&quot;, alpha=0.14, linewidth=0.6)
+        ax.grid(which=&quot;major&quot;, alpha=0.45, linewidth=1.0)
+    ax.set_aspect(&quot;equal&quot;)
+    ax.set_title(title or f&quot;k={k} → class {prediction}&quot;)
+    return prediction, nearest</code></pre></div></section><section class="nb-markdown"><h3 id="section-8-3">Эксперимент 1. Одна точка решает всё?</h3>
+<p>Запрос <code>Q = (3.0, 2.2)</code> на самом деле относится к классу A.</p>
+<p><strong>До запуска:</strong></p>
+<ol>
+<li>Какой объект ближайший?</li>
+<li>Какой ответ даст <code>k=1</code>?</li>
+<li>Изменится ли ответ при <code>k=3</code>? Назовите трёх соседей.</li>
+</ol></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 10</div><pre><code>query = queries[&quot;outlier&quot;]
+fig, axes = plt.subplots(1, 2, figsize=(13, 5.5), constrained_layout=True)
+summaries = []
+
+for ax, k in zip(axes, [1, 3]):
+    prediction, nearest = plot_neighbors(ax, training, query, k=k)
+    summaries.append(
+        {
+            &quot;k&quot;: k,
+            &quot;prediction&quot;: prediction,
+            &quot;neighbors&quot;: &quot;, &quot;.join(nearest.id),
+            &quot;votes&quot;: dict(nearest.label.value_counts()),
+        }
+    )
+
+plt.show()
+display(pd.DataFrame(summaries))
+display(neighbor_table(training, query, k=3).head(5).round({&quot;distance&quot;: 3}))
+
+assert [row[&quot;prediction&quot;] for row in summaries] == [&quot;B&quot;, &quot;A&quot;]</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c09-o00.png" alt="Сохранённый график из ячейки 10"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>k</th>
+      <th>prediction</th>
+      <th>neighbors</th>
+      <th>votes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>B</td>
+      <td>B0</td>
+      <td>{&#x27;B&#x27;: 1}</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>A</td>
+      <td>B0, A3, A5</td>
+      <td>{&#x27;A&#x27;: 2, &#x27;B&#x27;: 1}</td>
+    </tr>
+  </tbody>
+</table></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>label</th>
+      <th>distance</th>
+      <th>neighbor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B0</td>
+      <td>3.1</td>
+      <td>2.2</td>
+      <td>B</td>
+      <td>0.100</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A3</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>A</td>
+      <td>1.020</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>A5</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>A</td>
+      <td>1.200</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A4</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>A</td>
+      <td>2.059</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A2</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>A</td>
+      <td>2.154</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>При <code>k=1</code> выброс <code>B0</code> находится на расстоянии <code>0.1</code> и целиком определяет неправильный ответ B. При <code>k=3</code> следующими идут две точки A, поэтому голосование <code>A:B = 2:1</code> возвращает A.</p>
+<p>Малое <code>k</code> даёт гибкое, но чувствительное локальное правило. Большее <code>k</code> сглаживает одиночный шум, но может стереть настоящий маленький класс. Универсально лучшего <code>k</code> нет.</p>
+</details></section><section class="nb-markdown"><h3 id="section-11-4">Эксперимент 2. Масштаб — это изменение геометрии</h3>
+<p><strong>До запуска:</strong></p>
+<p>Запрос теперь стоит точно в узле сетки: <span class="math-inline">Q=(4,4)</span>.</p>
+<ol>
+<li>В исходных координатах сравните кандидатов <span class="math-inline">A4=(2,4)</span> и <span class="math-inline">B1=(5,5)</span>.</li>
+<li>Затем замените второй признак на <span class="math-inline">x&#x27;_2=3x_2</span>. Все значения второй координаты, включая координату запроса, действительно умножаются на 3: <span class="math-inline">Q&#x27;=(4,12)</span>.</li>
+<li>Предскажите, кто окажется ближе после преобразования.</li>
+</ol>
+<p>На втором графике крупные горизонтальные линии соответствуют одному старому шагу <code>x2</code>, то есть трём новым единицам. Тонкая сетка показывает каждый шаг новой шкалы.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 13</div><pre><code>SCALE_FACTOR = 3
+query = queries[&quot;scale&quot;]
+scale_experiments = [
+    (&quot;До: Q = (4, 4)&quot;, (1, 1)),
+    (&quot;После: Q′ = (4, 12),  x2′ = 3 · x2&quot;, (1, SCALE_FACTOR)),
+]
+
+fig = plt.figure(figsize=(10, 9), constrained_layout=True)
+grid = fig.add_gridspec(1, 2, width_ratios=[1.0, 0.42])
+axes = [fig.add_subplot(grid[0, 0]), fig.add_subplot(grid[0, 1])]
+scale_rows = []
+
+for ax, (name, scale) in zip(axes, scale_experiments):
+    prediction, nearest = plot_neighbors(
+        ax,
+        training,
+        query,
+        k=1,
+        metric=&quot;euclidean&quot;,
+        scale=scale,
+        title=name,
+        transform_coordinates=True,
+    )
+    a4_distance = neighbor_table(training, query, k=1, scale=scale).query(&quot;id == &#x27;A4&#x27;&quot;).distance.iloc[0]
+    b1_distance = neighbor_table(training, query, k=1, scale=scale).query(&quot;id == &#x27;B1&#x27;&quot;).distance.iloc[0]
+    scale_rows.append(
+        {
+            &quot;coordinates&quot;: &quot;(x1, x2)&quot; if scale[1] == 1 else &quot;(x1, 3·x2)&quot;,
+            &quot;Q&quot;: &quot;(4, 4)&quot; if scale[1] == 1 else &quot;(4, 12)&quot;,
+            &quot;A4&quot;: &quot;(2, 4)&quot; if scale[1] == 1 else &quot;(2, 12)&quot;,
+            &quot;distance to A4&quot;: a4_distance,
+            &quot;B1&quot;: &quot;(5, 5)&quot; if scale[1] == 1 else &quot;(5, 15)&quot;,
+            &quot;distance to B1&quot;: b1_distance,
+            &quot;nearest&quot;: nearest.id.iloc[0],
+            &quot;prediction&quot;: prediction,
+        }
+    )
+
+plt.show()
+display(pd.DataFrame(scale_rows).round({&quot;distance to A4&quot;: 3, &quot;distance to B1&quot;: 3}))
+
+assert [row[&quot;nearest&quot;] for row in scale_rows] == [&quot;B1&quot;, &quot;A4&quot;]
+assert [row[&quot;prediction&quot;] for row in scale_rows] == [&quot;B&quot;, &quot;A&quot;]</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c12-o00.png" alt="Сохранённый график из ячейки 13"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>coordinates</th>
+      <th>Q</th>
+      <th>A4</th>
+      <th>distance to A4</th>
+      <th>B1</th>
+      <th>distance to B1</th>
+      <th>nearest</th>
+      <th>prediction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(x1, x2)</td>
+      <td>(4, 4)</td>
+      <td>(2, 4)</td>
+      <td>2.0</td>
+      <td>(5, 5)</td>
+      <td>1.414</td>
+      <td>B1</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(x1, 3·x2)</td>
+      <td>(4, 12)</td>
+      <td>(2, 12)</td>
+      <td>2.0</td>
+      <td>(5, 15)</td>
+      <td>3.162</td>
+      <td>A4</td>
+      <td>A</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><h3 id="section-13-5">Эксперимент 2b. Другая функция расстояния — другая близость</h3>
+<p>Теперь координаты и масштаб не меняются. Для <span class="math-inline">Q=(3.1,5.0)</span> сравниваем только Euclidean и Manhattan.</p>
+<p><strong>До запуска:</strong> может ли смениться ближайший объект без изменения точек и их единиц измерения?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 15</div><pre><code>metric_experiments = [
+    (&quot;Euclidean&quot;, &quot;euclidean&quot;),
+    (&quot;Manhattan&quot;, &quot;manhattan&quot;),
+]
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5.5), constrained_layout=True)
+metric_rows = []
+
+for ax, (name, metric) in zip(axes, metric_experiments):
+    prediction, nearest = plot_neighbors(
+        ax, training, queries[&quot;metric&quot;], k=1, metric=metric, title=name
+    )
+    metric_rows.append(
+        {
+            &quot;distance&quot;: name,
+            &quot;nearest&quot;: nearest.id.iloc[0],
+            &quot;value&quot;: nearest.distance.iloc[0],
+            &quot;prediction&quot;: prediction,
+        }
+    )
+
+plt.show()
+display(pd.DataFrame(metric_rows).round({&quot;value&quot;: 3}))
+
+assert [row[&quot;nearest&quot;] for row in metric_rows] == [&quot;A4&quot;, &quot;B1&quot;]</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c14-o00.png" alt="Сохранённый график из ячейки 15"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>distance</th>
+      <th>nearest</th>
+      <th>value</th>
+      <th>prediction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Euclidean</td>
+      <td>A4</td>
+      <td>1.487</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Manhattan</td>
+      <td>B1</td>
+      <td>1.900</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Масштабирование — не нейтральная косметика: оно меняет относительную важность координат в расстоянии. Статистики масштабирования нужно оценивать <strong>только на train</strong>, а затем применять к validation/test.</p>
+<p><div class="math-display">d_2(\mathbf x,\mathbf z)=\sqrt{\sum_j(x_j-z_j)^2},\qquad
+d_1(\mathbf x,\mathbf z)=\sum_j|x_j-z_j|</div></p>
+<p>Функция расстояния кодирует допустимую геометрию слова «похожий». Это не то же самое, что evaluation metric вроде accuracy.</p>
+</details></section><section class="nb-markdown"><h3 id="section-16-6">Интерактивная карта соседей · Bokeh</h3>
+<p>Это развитие знакомой визуализации из семинара по word2vec. Там точками будут слова, здесь — train-объекты.</p>
+<ul>
+<li>Перетащите белый ромб <code>Q</code> инструментом <strong>Point Draw</strong>.</li>
+<li>Меняйте <code>k</code> и Euclidean/Manhattan.</li>
+<li>Наведите курсор на объект, чтобы увидеть его ID, класс и текущее расстояние.</li>
+<li>Колесо мыши масштабирует график; серые линии показывают выбранных соседей.</li>
+</ul>
+<p><strong>Вопрос аудитории:</strong> может ли набор соседей поменяться, хотя точка запроса и train-объекты остались на местах?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 18</div><pre><code>from bokeh.io import output_notebook, show
+from bokeh.layouts import column, row
+from bokeh.models import ColumnDataSource, CustomJS, Div, HoverTool, PointDrawTool, Select, Slider
+from bokeh.plotting import figure
+from bokeh.resources import INLINE
+
+output_notebook(resources=INLINE, hide_banner=True)
+
+initial_query = queries[&quot;outlier&quot;].copy()
+initial_prediction, initial_neighbors = predict_query(training, initial_query, k=3)
+initial_distances = distances_to_query(training, initial_query)
+initial_neighbor_ids = set(initial_neighbors.id)
+
+point_source = ColumnDataSource(
+    {
+        &quot;x&quot;: training.x1.to_list(),
+        &quot;y&quot;: training.x2.to_list(),
+        &quot;id&quot;: training.id.to_list(),
+        &quot;label&quot;: training.label.to_list(),
+        &quot;color&quot;: training.label.map(COLORS).to_list(),
+        &quot;distance&quot;: initial_distances.tolist(),
+        &quot;size&quot;: [18 if item_id in initial_neighbor_ids else 11 for item_id in training.id],
+        &quot;alpha&quot;: [1.0 if item_id in initial_neighbor_ids else 0.55 for item_id in training.id],
+    }
+)
+query_source = ColumnDataSource({&quot;x&quot;: [initial_query[0]], &quot;y&quot;: [initial_query[1]]})
+segment_source = ColumnDataSource(
+    {
+        &quot;x0&quot;: [initial_query[0]] * len(initial_neighbors),
+        &quot;y0&quot;: [initial_query[1]] * len(initial_neighbors),
+        &quot;x1&quot;: initial_neighbors.x1.to_list(),
+        &quot;y1&quot;: initial_neighbors.x2.to_list(),
+    }
+)
+
+interactive_plot = figure(
+    width=780,
+    height=560,
+    x_range=(0, 8),
+    y_range=(0, 8),
+    title=f&quot;k=3 · Euclidean · prediction: {initial_prediction}&quot;,
+    tools=&quot;pan,wheel_zoom,box_zoom,reset,save&quot;,
+    active_scroll=&quot;wheel_zoom&quot;,
+)
+interactive_plot.xaxis.axis_label = &quot;x1&quot;
+interactive_plot.yaxis.axis_label = &quot;x2&quot;
+interactive_plot.grid.grid_line_alpha = 0.25
+
+interactive_plot.segment(
+    &quot;x0&quot;, &quot;y0&quot;, &quot;x1&quot;, &quot;y1&quot;, source=segment_source,
+    line_color=&quot;#555555&quot;, line_alpha=0.55, line_width=2,
+)
+point_renderer = interactive_plot.scatter(
+    &quot;x&quot;, &quot;y&quot;, source=point_source, size=&quot;size&quot;, fill_color=&quot;color&quot;, fill_alpha=&quot;alpha&quot;,
+    line_color=&quot;white&quot;, line_width=1.5, marker=&quot;circle&quot;,
+)
+query_renderer = interactive_plot.scatter(
+    &quot;x&quot;, &quot;y&quot;, source=query_source, size=22, fill_color=&quot;white&quot;, line_color=&quot;black&quot;,
+    line_width=2.5, marker=&quot;diamond&quot;,
+)
+
+interactive_plot.add_tools(
+    HoverTool(
+        renderers=[point_renderer],
+        tooltips=[(&quot;object&quot;, &quot;@id&quot;), (&quot;class&quot;, &quot;@label&quot;), (&quot;distance&quot;, &quot;@distance{0.000}&quot;)],
+    )
+)
+draw_tool = PointDrawTool(renderers=[query_renderer], add=False)
+interactive_plot.add_tools(draw_tool)
+interactive_plot.toolbar.active_drag = draw_tool
+
+k_slider = Slider(start=1, end=9, value=3, step=2, title=&quot;number of neighbors k&quot;)
+metric_select = Select(title=&quot;distance&quot;, value=&quot;euclidean&quot;, options=[&quot;euclidean&quot;, &quot;manhattan&quot;])
+status = Div(
+    text=f&quot;&lt;b&gt;Prediction: {initial_prediction}&lt;/b&gt; · neighbors: {&#x27;, &#x27;.join(initial_neighbors.id)}&quot;,
+    width=780,
+    height=35,
+)
+
+callback = CustomJS(
+    args={
+        &quot;points&quot;: point_source,
+        &quot;query&quot;: query_source,
+        &quot;segments&quot;: segment_source,
+        &quot;k_widget&quot;: k_slider,
+        &quot;metric_widget&quot;: metric_select,
+        &quot;status&quot;: status,
+        &quot;plot&quot;: interactive_plot,
+    },
+    code=&quot;&quot;&quot;
+        const qx = query.data.x[0];
+        const qy = query.data.y[0];
+        const k = k_widget.value;
+        const metric = metric_widget.value;
+        const xs = points.data.x;
+        const ys = points.data.y;
+        const labels = points.data.label;
+        const ids = points.data.id;
+        const distances = [];
+
+        for (let i = 0; i &lt; xs.length; i++) {
+            const dx = xs[i] - qx;
+            const dy = ys[i] - qy;
+            distances.push(metric === &quot;euclidean&quot; ? Math.sqrt(dx * dx + dy * dy) : Math.abs(dx) + Math.abs(dy));
+        }
+
+        const order = Array.from(xs.keys()).sort((a, b) =&gt; distances[a] - distances[b] || ids[a].localeCompare(ids[b]));
+        const chosen = order.slice(0, k);
+        const chosenSet = new Set(chosen);
+        const counts = {};
+        for (const index of chosen) counts[labels[index]] = (counts[labels[index]] || 0) + 1;
+        const maxVotes = Math.max(...Object.values(counts));
+        let prediction = labels[chosen[0]];
+        for (const index of chosen) {
+            if (counts[labels[index]] === maxVotes) {
+                prediction = labels[index];
+                break;
+            }
+        }
+
+        points.data.distance = distances;
+        points.data.size = xs.map((_, i) =&gt; chosenSet.has(i) ? 18 : 11);
+        points.data.alpha = xs.map((_, i) =&gt; chosenSet.has(i) ? 1.0 : 0.55);
+        points.selected.indices = chosen;
+        segments.data = {
+            x0: chosen.map(() =&gt; qx),
+            y0: chosen.map(() =&gt; qy),
+            x1: chosen.map(i =&gt; xs[i]),
+            y1: chosen.map(i =&gt; ys[i]),
+        };
+
+        const metricName = metric === &quot;euclidean&quot; ? &quot;Euclidean&quot; : &quot;Manhattan&quot;;
+        plot.title.text = `k=${k} · ${metricName} · prediction: ${prediction}`;
+        status.text = `&lt;b&gt;Prediction: ${prediction}&lt;/b&gt; · neighbors: ${chosen.map(i =&gt; ids[i]).join(&quot;, &quot;)}`;
+        points.change.emit();
+        segments.change.emit();
+    &quot;&quot;&quot;,
+)
+
+for widget in (k_slider, metric_select):
+    widget.js_on_change(&quot;value&quot;, callback)
+query_source.js_on_change(&quot;data&quot;, callback)
+
+show(column(row(k_slider, metric_select), interactive_plot, status))</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-interactive-c17.png" alt="Статический снимок начального состояния: Q=(3, 2.2), k=3, евклидово расстояние; соседи B0, A3, A5. Для перемещения Q и смены k откройте исходный ноутбук."><figcaption>Статический снимок начального состояния: Q=(3, 2.2), k=3, евклидово расстояние; соседи B0, A3, A5. Для перемещения Q и смены k откройте исходный ноутбук.</figcaption></figure></section><section class="nb-markdown"><h2 id="section-18-7">2. Устойчивость решения</h2>
+<p>Сначала посмотрим, как <code>k</code> меняет границу решений. Затем удалим ровно одну точку — выброс <code>B0</code> — и измерим долю плоскости, на которой предсказание поменялось.</p>
+<p><strong>До запуска:</strong> расположите <code>k=1</code>, <code>k=3</code>, <code>k=7</code> от самой «рваной» границы к самой гладкой.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 20</div><pre><code>def mesh_for(points, step=0.04, border=0.6):
+    x_min, x_max = points.x1.min() - border, points.x1.max() + border
+    y_min, y_max = points.x2.min() - border, points.x2.max() + border
+    xx, yy = np.meshgrid(
+        np.arange(x_min, x_max, step),
+        np.arange(y_min, y_max, step),
+    )
+    return xx, yy
+
+
+def fit_and_grid_predict(points, k, xx, yy):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(points[[&quot;x1&quot;, &quot;x2&quot;]].to_numpy(), points.label.to_numpy())
+    labels = model.predict(np.c_[xx.ravel(), yy.ravel()])
+    return (labels == &quot;B&quot;).astype(int).reshape(xx.shape)
+
+
+xx, yy = mesh_for(training)
+fig, axes = plt.subplots(1, 3, figsize=(15, 4.8), constrained_layout=True)
+
+for ax, k in zip(axes, [1, 3, 7]):
+    zz = fit_and_grid_predict(training, k, xx, yy)
+    ax.contourf(xx, yy, zz, levels=[-0.5, 0.5, 1.5], cmap=REGION_CMAP, alpha=0.95)
+    for label, group in training.groupby(&quot;label&quot;):
+        ax.scatter(group.x1, group.x2, s=80, color=COLORS[label], edgecolor=&quot;white&quot;)
+    ax.set(title=f&quot;k={k}&quot;, xlabel=&quot;x1&quot;, ylabel=&quot;x2&quot;, xlim=(0.4, 7.6), ylim=(0.4, 7.6))
+    ax.set_aspect(&quot;equal&quot;)
+
+plt.show()</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c19-o00.png" alt="Сохранённый график из ячейки 20"></figure></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 21</div><pre><code>without_outlier = training.query(&quot;id != &#x27;B0&#x27;&quot;).copy()
+stability_rows = []
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4.6), constrained_layout=True)
+for ax, k in zip(axes, [1, 3, 7]):
+    pred_full = fit_and_grid_predict(training, k, xx, yy)
+    pred_without = fit_and_grid_predict(without_outlier, k, xx, yy)
+    changed = pred_full != pred_without
+    changed_share = changed.mean()
+    stability_rows.append({&quot;k&quot;: k, &quot;share of grid changed&quot;: changed_share})
+
+    ax.contourf(xx, yy, changed.astype(int), levels=[-0.5, 0.5, 1.5], cmap=ListedColormap([&quot;#F4F4F4&quot;, &quot;#EB5757&quot;]))
+    ax.scatter(training.x1, training.x2, c=training.label.map(COLORS), s=55, edgecolor=&quot;white&quot;)
+    b0 = training.query(&quot;id == &#x27;B0&#x27;&quot;).iloc[0]
+    ax.scatter(b0.x1, b0.x2, marker=&quot;x&quot;, s=160, linewidth=3, color=&quot;black&quot;)
+    ax.set(title=f&quot;k={k}: changed {changed_share:.1%}&quot;, xlabel=&quot;x1&quot;, ylabel=&quot;x2&quot;)
+    ax.set_aspect(&quot;equal&quot;)
+
+plt.show()
+display(pd.DataFrame(stability_rows).style.format({&quot;share of grid changed&quot;: &quot;{:.2%}&quot;}))</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c20-o00.png" alt="Сохранённый график из ячейки 21"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>k</th>
+      <th>share of grid changed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>9.96%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>4.76%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7</td>
+      <td>10.89%</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><p><strong>Интерпретация устойчивости.</strong> Красная область — запросы, для которых удаление одного наблюдения меняет ответ. Это не полный формальный анализ algorithmic stability, но наглядная операционализация вопроса: «насколько решение зависит от одной строки train?»</p>
+<p>В этом примере <code>k=3</code> устойчивее и <code>k=1</code>, и <code>k=7</code>. Увеличение <code>k</code> часто сглаживает влияние отдельной точки, но <strong>не гарантирует монотонного улучшения</strong>: удаление объекта меняет и состав соседей, и локальные большинства. При слишком большом <code>k</code> решение всё сильнее зависит от глобального баланса классов и теряет локальную структуру. Поэтому устойчивость — часть компромисса, который нужно проверять на новых данных.</p></section><section class="nb-markdown"><h2 id="section-22-8">3. Train ≠ validation ≠ test</h2>
+<p>На тех же маленьких данных сравним <code>k ∈ {1, 3, 5}</code>.</p>
+<p><strong>До запуска:</strong> какое <code>k</code> победит, если смотреть только на train? Почему результат почти предопределён устройством 1-NN?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 24</div><pre><code>X_train_toy = training[[&quot;x1&quot;, &quot;x2&quot;]]
+y_train_toy = training.label
+X_val_toy = validation[[&quot;x1&quot;, &quot;x2&quot;]]
+y_val_toy = validation.label
+
+scores = []
+for k in [1, 3, 5]:
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X_train_toy, y_train_toy)
+    scores.append(
+        {
+            &quot;k&quot;: k,
+            &quot;train accuracy&quot;: model.score(X_train_toy, y_train_toy),
+            &quot;validation accuracy&quot;: model.score(X_val_toy, y_val_toy),
+        }
+    )
+
+toy_scores = pd.DataFrame(scores)
+display(toy_scores.style.format({&quot;train accuracy&quot;: &quot;{:.2f}&quot;, &quot;validation accuracy&quot;: &quot;{:.2f}&quot;}))
+
+assert np.allclose(toy_scores[&quot;validation accuracy&quot;], [0.8, 1.0, 1.0])</code></pre></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>k</th>
+      <th>train accuracy</th>
+      <th>validation accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.00</td>
+      <td>0.80</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>0.91</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>0.91</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>1-NN получает идеальный train score, потому что каждая train-точка является собственным ближайшим соседом — включая выброс. Validation предпочитает более сглаженное решение.</p>
+<p><div class="math-display">
+\text{train строит решение}
+\longrightarrow
+\text{validation выбирает настройки}
+\longrightarrow
+\text{test один раз оценивает финал}
+</div></p>
+<p>После многократного сравнения моделей на validation его score уже нельзя честно объявить финальной оценкой: мы подстроились под этот набор.</p>
+</details></section><section class="nb-markdown"><h2 id="section-25-9">4. Реальные данные: цифры 8×8</h2>
+<p>Теперь применим тот же pipeline к встроенному датасету <code>sklearn.datasets.load_digits</code>: 1797 изображений, каждое превращено в 64 признака-пикселя. Ничего скачивать не нужно.</p>
+<p>Test отделяем <strong>до</strong> выбора <code>k</code> и не используем до последней клетки блока.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 27</div><pre><code>digits = load_digits()
+X, y = digits.data, digits.target
+
+fig, axes = plt.subplots(2, 6, figsize=(10, 4), constrained_layout=True)
+for ax, image, label in zip(axes.flat, digits.images[:12], y[:12]):
+    ax.imshow(image, cmap=&quot;gray_r&quot;)
+    ax.set_title(f&quot;label = {label}&quot;)
+    ax.axis(&quot;off&quot;)
+plt.show()
+
+X_dev, X_test, y_dev, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.20,
+    random_state=SEED,
+    stratify=y,
+)
+
+print(f&quot;development: {X_dev.shape}, untouched test: {X_test.shape}&quot;)</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c26-o00.png" alt="Сохранённый график из ячейки 27"></figure><pre class="nb-stream">development: (1437, 64), untouched test: (360, 64)
+</pre></section><section class="nb-markdown"><h3 id="section-27-10">Необязательный мост: вращаемая 3D-проекция · Plotly</h3>
+<p>В positional encoding мы уже использовали <code>scatter_3d</code>. Здесь применяем ту же механику к цифрам: PCA сжимает 64 пиксельных признака до трёх координат для просмотра.</p>
+<ul>
+<li>Зажмите мышь и вращайте облако.</li>
+<li>Колесо меняет масштаб, hover показывает цифру и номер объекта.</li>
+<li>Ищите плотные острова и области смешения классов.</li>
+</ul>
+<blockquote>
+<p>Важно: это <strong>проекция для визуализации</strong>, а не пространство, в котором ниже обучается kNN. Модель продолжает использовать исходные 64 признака. Позже мы вернёмся к такому же приёму для word embeddings и positional encodings. Если времени мало, этот блок можно пропустить без потери основной линии.</p>
+</blockquote></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 29</div><pre><code>import plotly.express as px
+from sklearn.decomposition import PCA
+
+visual_rng = np.random.default_rng(SEED)
+visual_indices = np.sort(visual_rng.choice(len(X_dev), size=900, replace=False))
+X_visual = StandardScaler().fit_transform(X_dev[visual_indices])
+projection_3d = PCA(n_components=3, random_state=SEED).fit_transform(X_visual)
+
+projection_frame = pd.DataFrame(
+    {
+        &quot;PC1&quot;: projection_3d[:, 0],
+        &quot;PC2&quot;: projection_3d[:, 1],
+        &quot;PC3&quot;: projection_3d[:, 2],
+        &quot;digit&quot;: y_dev[visual_indices].astype(str),
+        &quot;sample&quot;: visual_indices,
+    }
+)
+
+figure_3d = px.scatter_3d(
+    projection_frame,
+    x=&quot;PC1&quot;,
+    y=&quot;PC2&quot;,
+    z=&quot;PC3&quot;,
+    color=&quot;digit&quot;,
+    hover_data={&quot;sample&quot;: True, &quot;PC1&quot;: &quot;:.2f&quot;, &quot;PC2&quot;: &quot;:.2f&quot;, &quot;PC3&quot;: &quot;:.2f&quot;},
+    color_discrete_sequence=px.colors.qualitative.D3,
+    title=&quot;Digits: 64D → 3D PCA projection (visualization only)&quot;,
+)
+figure_3d.update_traces(marker={&quot;size&quot;: 3.5, &quot;opacity&quot;: 0.72})
+figure_3d.update_layout(
+    height=680,
+    margin={&quot;l&quot;: 0, &quot;r&quot;: 0, &quot;t&quot;: 55, &quot;b&quot;: 0},
+    legend_title_text=&quot;digit&quot;,
+)
+figure_3d.show(renderer=&quot;notebook&quot;)</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-interactive-c28.png" alt="Статическая 2D-проекция тех же 900 объектов и первых двух координат PCA. В исходном ноутбуке график трёхмерный и вращается; kNN ниже работает с исходными 64 признаками."><figcaption>Статическая 2D-проекция тех же 900 объектов и первых двух координат PCA. В исходном ноутбуке график трёхмерный и вращается; kNN ниже работает с исходными 64 признаками.</figcaption></figure></section><section class="nb-markdown"><h3 id="section-29-11">Выбор <code>k</code> внутри cross-validation</h3>
+<p><code>StandardScaler</code> находится <strong>внутри</strong> <code>Pipeline</code>. Поэтому на каждом fold средние и масштабы вычисляются только по train-части этого fold, а не заранее по всем данным.</p>
+<p><strong>До запуска:</strong> где ожидаете максимальный train score? Совпадёт ли он с максимумом CV?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 31</div><pre><code>candidate_k = list(range(1, 16, 2))
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)
+
+pipeline = Pipeline(
+    [
+        (&quot;scale&quot;, StandardScaler()),
+        (&quot;knn&quot;, KNeighborsClassifier()),
+    ]
+)
+
+search = GridSearchCV(
+    pipeline,
+    param_grid={&quot;knn__n_neighbors&quot;: candidate_k},
+    scoring=&quot;accuracy&quot;,
+    cv=cv,
+    return_train_score=True,
+    n_jobs=-1,
+)
+search.fit(X_dev, y_dev)
+
+cv_results = pd.DataFrame(search.cv_results_)[
+    [&quot;param_knn__n_neighbors&quot;, &quot;mean_train_score&quot;, &quot;mean_test_score&quot;, &quot;std_test_score&quot;]
+].rename(
+    columns={
+        &quot;param_knn__n_neighbors&quot;: &quot;k&quot;,
+        &quot;mean_train_score&quot;: &quot;train accuracy&quot;,
+        &quot;mean_test_score&quot;: &quot;CV accuracy&quot;,
+        &quot;std_test_score&quot;: &quot;CV fold std&quot;,
+    }
+)
+cv_results[&quot;k&quot;] = cv_results[&quot;k&quot;].astype(int)
+
+fig, ax = plt.subplots(figsize=(9, 5))
+ax.plot(cv_results.k, cv_results[&quot;train accuracy&quot;], &quot;o--&quot;, label=&quot;train&quot;)
+ax.errorbar(
+    cv_results.k,
+    cv_results[&quot;CV accuracy&quot;],
+    yerr=cv_results[&quot;CV fold std&quot;],
+    fmt=&quot;o-&quot;,
+    capsize=4,
+    label=&quot;cross-validation&quot;,
+)
+ax.set(xlabel=&quot;number of neighbors k&quot;, ylabel=&quot;accuracy&quot;, xticks=candidate_k)
+ax.legend()
+plt.show()
+
+display(cv_results.style.format({&quot;train accuracy&quot;: &quot;{:.3f}&quot;, &quot;CV accuracy&quot;: &quot;{:.3f}&quot;, &quot;CV fold std&quot;: &quot;{:.3f}&quot;}))
+print(f&quot;Selected only on development data: k = {search.best_params_[&#x27;knn__n_neighbors&#x27;]}&quot;)</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c30-o00.png" alt="Сохранённый график из ячейки 31"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>k</th>
+      <th>train accuracy</th>
+      <th>CV accuracy</th>
+      <th>CV fold std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1.000</td>
+      <td>0.969</td>
+      <td>0.009</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>0.987</td>
+      <td>0.976</td>
+      <td>0.007</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>0.984</td>
+      <td>0.976</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>0.982</td>
+      <td>0.973</td>
+      <td>0.006</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>0.977</td>
+      <td>0.969</td>
+      <td>0.011</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>11</td>
+      <td>0.975</td>
+      <td>0.965</td>
+      <td>0.012</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>13</td>
+      <td>0.972</td>
+      <td>0.964</td>
+      <td>0.009</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>15</td>
+      <td>0.968</td>
+      <td>0.960</td>
+      <td>0.009</td>
+    </tr>
+  </tbody>
+</table></div><pre class="nb-stream">Selected only on development data: k = 3
+</pre></section><section class="nb-markdown"><h3 id="section-31-12">Другой вопрос: стабилен ли победитель?</h3>
+<p><strong>Предыдущий график</strong> сравнивал разные <code>k</code> при одной зафиксированной схеме из пяти folds и выбрал победителя.</p>
+<p><strong>Этот блок</strong> повторяет весь выбор при шести других корректных разбиениях на folds. Цвет клетки — средняя CV accuracy, звезда — победитель строки. Мы проверяем не качество ещё раз, а устойчивость вывода «лучший <code>k</code> равен …».</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 33</div><pre><code>partition_records = []
+partition_seeds = [11, 22, 33, 44, 55, 66]
+
+for partition_id, partition_seed in enumerate(partition_seeds, start=1):
+    repeated_partition = StratifiedKFold(
+        n_splits=3,
+        shuffle=True,
+        random_state=partition_seed,
+    )
+    for k in candidate_k:
+        model = Pipeline(
+            [
+                (&quot;scale&quot;, StandardScaler()),
+                (&quot;knn&quot;, KNeighborsClassifier(n_neighbors=k)),
+            ]
+        )
+        score = cross_val_score(
+            model,
+            X_dev,
+            y_dev,
+            cv=repeated_partition,
+            scoring=&quot;accuracy&quot;,
+            n_jobs=-1,
+        ).mean()
+        partition_records.append(
+            {
+                &quot;partition&quot;: partition_id,
+                &quot;k&quot;: k,
+                &quot;CV accuracy&quot;: score,
+            }
+        )
+
+partition_scores = pd.DataFrame(partition_records)
+best_per_partition = (
+    partition_scores.sort_values([&quot;partition&quot;, &quot;CV accuracy&quot;, &quot;k&quot;], ascending=[True, False, True])
+    .groupby(&quot;partition&quot;, as_index=False)
+    .first()
+)
+heatmap_data = partition_scores.pivot(index=&quot;partition&quot;, columns=&quot;k&quot;, values=&quot;CV accuracy&quot;)
+
+fig, (ax_heatmap, ax_counts) = plt.subplots(
+    1,
+    2,
+    figsize=(14, 5.5),
+    gridspec_kw={&quot;width_ratios&quot;: [3.2, 1]},
+    constrained_layout=True,
+)
+image = ax_heatmap.imshow(heatmap_data, cmap=&quot;YlGnBu&quot;, aspect=&quot;auto&quot;)
+ax_heatmap.set(
+    xticks=np.arange(len(candidate_k)),
+    xticklabels=candidate_k,
+    yticks=np.arange(len(partition_seeds)),
+    yticklabels=[f&quot;partition {i}&quot; for i in range(1, len(partition_seeds) + 1)],
+    xlabel=&quot;candidate k&quot;,
+    ylabel=&quot;new random CV partition&quot;,
+    title=&quot;Mean 3-fold CV accuracy; ★ marks the winner in each row&quot;,
+)
+for row_index, partition_id in enumerate(heatmap_data.index):
+    winning_k = int(best_per_partition.loc[best_per_partition.partition == partition_id, &quot;k&quot;].iloc[0])
+    for column_index, k in enumerate(heatmap_data.columns):
+        value = heatmap_data.loc[partition_id, k]
+        marker = &quot; ★&quot; if k == winning_k else &quot;&quot;
+        text_color = &quot;white&quot; if image.norm(value) &gt; 0.48 else &quot;black&quot;
+        ax_heatmap.text(
+            column_index,
+            row_index,
+            f&quot;{value:.3f}{marker}&quot;,
+            ha=&quot;center&quot;,
+            va=&quot;center&quot;,
+            fontsize=9,
+            color=text_color,
+            weight=&quot;bold&quot; if k == winning_k else &quot;normal&quot;,
+        )
+fig.colorbar(image, ax=ax_heatmap, shrink=0.82, label=&quot;CV accuracy&quot;)
+
+selection_counts = best_per_partition.k.value_counts().reindex(candidate_k, fill_value=0)
+ax_counts.bar(selection_counts.index.astype(str), selection_counts.values, color=&quot;#2F80ED&quot;)
+ax_counts.set(
+    xlabel=&quot;selected k&quot;,
+    ylabel=&quot;number of partitions&quot;,
+    title=&quot;How often did k win?&quot;,
+    ylim=(0, len(partition_seeds)),
+)
+plt.show()
+
+display(best_per_partition.style.format({&quot;CV accuracy&quot;: &quot;{:.3f}&quot;}))</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c32-o00.png" alt="Сохранённый график из ячейки 33"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>partition</th>
+      <th>k</th>
+      <th>CV accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5</td>
+      <td>0.971</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>0.973</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>5</td>
+      <td>0.973</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>7</td>
+      <td>0.970</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>3</td>
+      <td>0.972</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>5</td>
+      <td>0.971</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><p>Если звезда перескакивает между соседними <code>k</code>, а различия составляют тысячные, утверждение «ровно это <code>k</code> истинно лучше» слишком сильное. Это не ошибка cross-validation, а честная видимость неопределённости на конечной выборке.</p>
+<p>Этот блок опционален для первого занятия. Главная обязательная мысль уже была на предыдущем графике: выбор делаем не по train и не по test.</p>
+<p>Теперь конфигурация зафиксирована. Только сейчас открываем test.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 35</div><pre><code>final_model = search.best_estimator_
+test_predictions = final_model.predict(X_test)
+final_test_accuracy = accuracy_score(y_test, test_predictions)
+
+print(f&quot;Final test accuracy (opened once): {final_test_accuracy:.3f}&quot;)
+
+assert final_test_accuracy &gt; 0.90
+
+fig, ax = plt.subplots(figsize=(7.5, 7.5))
+ConfusionMatrixDisplay.from_predictions(
+    y_test,
+    test_predictions,
+    cmap=&quot;Blues&quot;,
+    colorbar=False,
+    ax=ax,
+)
+ax.set_title(&quot;Untouched test: confusion matrix&quot;)
+plt.show()</code></pre></div><pre class="nb-stream">Final test accuracy (opened once): 0.967
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c34-o01.png" alt="Сохранённый график из ячейки 35"></figure></section><section class="nb-markdown"><h2 id="section-35-13">5. Leakage: высокий score может быть плохой новостью</h2>
+<h3 id="section-35-14">5.1. Почти одинаковые снимки одной цифры</h3>
+<p>Возьмём по <strong>два разных исходных изображения</strong> каждой цифры. Для каждого исходника создадим пять почти одинаковых версий с небольшим шумом. Все версии одного исходника имеют общий <code>group_id</code>.</p>
+<p>Две проверки отвечают на разные вопросы:</p>
+<ul>
+<li><strong>нечестная по строкам:</strong> четыре версии каждого исходника находятся в train, пятая версия того же исходника — в validation;</li>
+<li><strong>честная по группам:</strong> все версии первого исходника цифры находятся в train, все версии другого исходника — в validation.</li>
+</ul>
+<p><strong>До запуска:</strong> в каком случае 1-NN узнаёт конкретную картинку, а не учится распознавать цифру на новом изображении?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 37</div><pre><code>copies_rng = np.random.default_rng(SEED)
+digit_views = []
+view_metadata = []
+
+for digit in range(10):
+    two_sources = np.flatnonzero(y_dev == digit)[:2]
+    for source_slot, source_index in enumerate(two_sources):
+        group_id = f&quot;digit_{digit}_source_{source_slot}&quot;
+        base_image = X_dev[source_index]
+        for view_id in range(5):
+            noise = np.zeros_like(base_image) if view_id == 0 else copies_rng.normal(0, 0.30, size=base_image.shape)
+            digit_views.append(np.clip(base_image + noise, 0, 16))
+            view_metadata.append(
+                {
+                    &quot;digit&quot;: digit,
+                    &quot;source_slot&quot;: source_slot,
+                    &quot;group_id&quot;: group_id,
+                    &quot;view_id&quot;: view_id,
+                }
+            )
+
+X_views = np.asarray(digit_views)
+views = pd.DataFrame(view_metadata)
+
+example_indices = views.index[views.group_id == &quot;digit_3_source_0&quot;]
+fig, axes = plt.subplots(1, 5, figsize=(10, 2.4), constrained_layout=True)
+for ax, item_index in zip(axes, example_indices):
+    ax.imshow(X_views[item_index].reshape(8, 8), cmap=&quot;gray_r&quot;, vmin=0, vmax=16)
+    ax.set_title(f&quot;view {views.loc[item_index, &#x27;view_id&#x27;]}&quot;)
+    ax.axis(&quot;off&quot;)
+fig.suptitle(&quot;Один group_id = digit_3_source_0: это пять версий одного исходного снимка&quot;)
+plt.show()
+
+def score_digit_views(train_mask, validation_mask):
+    model = KNeighborsClassifier(n_neighbors=1)
+    model.fit(X_views[train_mask], views.loc[train_mask, &quot;digit&quot;])
+    return model.score(X_views[validation_mask], views.loc[validation_mask, &quot;digit&quot;])
+
+leaky_train_mask = views.view_id &lt; 4
+leaky_validation_mask = views.view_id == 4
+grouped_train_mask = views.source_slot == 0
+grouped_validation_mask = views.source_slot == 1
+
+leakage_scores = pd.DataFrame(
+    [
+        (
+            &quot;row split — same group on both sides&quot;,
+            &quot;another view of an already seen source&quot;,
+            score_digit_views(leaky_train_mask, leaky_validation_mask),
+        ),
+        (
+            &quot;group split — source images never cross&quot;,
+            &quot;a genuinely different source image&quot;,
+            score_digit_views(grouped_train_mask, grouped_validation_mask),
+        ),
+    ],
+    columns=[&quot;scheme&quot;, &quot;what validation contains&quot;, &quot;validation accuracy&quot;],
+)
+display(leakage_scores.style.format({&quot;validation accuracy&quot;: &quot;{:.2f}&quot;}))
+
+assert leakage_scores.loc[0, &quot;validation accuracy&quot;] == 1.0
+assert leakage_scores.loc[0, &quot;validation accuracy&quot;] &gt; leakage_scores.loc[1, &quot;validation accuracy&quot;]
+
+def one_nn_score(train_frame, val_frame, feature):
+    model = KNeighborsClassifier(n_neighbors=1)
+    model.fit(train_frame[[feature]], train_frame.label)
+    return model.score(val_frame[[feature]], val_frame.label)</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c36-o00.png" alt="Сохранённый график из ячейки 37"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>scheme</th>
+      <th>what validation contains</th>
+      <th>validation accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>row split — same group on both sides</td>
+      <td>another view of an already seen source</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>group split — source images never cross</td>
+      <td>a genuinely different source image</td>
+      <td>0.80</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><p>В первой строке validation проверяет почти копирование: рядом уже лежит почти тот же массив пикселей. Во второй строке validation действительно проверяет перенос на <strong>другой исходный снимок</strong>. Поэтому высокий результат первой схемы не отвечает на нужный вопрос.</p>
+<p>Практические <code>group_id</code>: пациент, пользователь, устройство, исходное изображение до аугментаций, один ролик и его кадры. Объекты одной группы нельзя независимо разбрасывать между train и validation.</p>
+<h3 id="section-37-15">5.2. Будущее попало в обучение</h3>
+<p>В момент <code>T5</code> режим меняется с A на B. Сравним случайное разбиение с честным прогнозом будущего по прошлому.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 39</div><pre><code>temporal = pd.DataFrame(
+    [(f&quot;T{t}&quot;, t, &quot;A&quot; if t &lt;= 4 else &quot;B&quot;) for t in range(1, 9)],
+    columns=[&quot;id&quot;, &quot;time&quot;, &quot;label&quot;],
+)
+
+random_train = temporal.query(&quot;time in [1, 3, 5, 7]&quot;)
+random_val = temporal.query(&quot;time in [2, 4, 6, 8]&quot;)
+past = temporal.query(&quot;time &lt;= 4&quot;)
+future = temporal.query(&quot;time &gt;= 5&quot;)
+
+temporal_scores = pd.DataFrame(
+    [
+        (&quot;random split (uses future neighbors)&quot;, one_nn_score(random_train, random_val, feature=&quot;time&quot;)),
+        (&quot;time split (past → future)&quot;, one_nn_score(past, future, feature=&quot;time&quot;)),
+    ],
+    columns=[&quot;scheme&quot;, &quot;validation accuracy&quot;],
+)
+display(temporal)
+display(temporal_scores.style.format({&quot;validation accuracy&quot;: &quot;{:.2f}&quot;}))
+
+assert np.allclose(temporal_scores[&quot;validation accuracy&quot;], [1.0, 0.0])</code></pre></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>time</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>T1</td>
+      <td>1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>T2</td>
+      <td>2</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>T3</td>
+      <td>3</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>T4</td>
+      <td>4</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>T5</td>
+      <td>5</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>T6</td>
+      <td>6</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>T7</td>
+      <td>7</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>T8</td>
+      <td>8</td>
+      <td>B</td>
+    </tr>
+  </tbody>
+</table></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>scheme</th>
+      <th>validation accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>random split (uses future neighbors)</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>time split (past → future)</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><p>Низкий score честного time split не означает, что разбиение «мешает модели». Он показывает реальную задачу: в прошлом не было примеров нового режима.</p>
+<p><strong>Контрольный список перед оценкой:</strong></p>
+<ol>
+<li>Какая информация реально доступна в момент предсказания?</li>
+<li>Есть ли версии одного объекта, группы или соседние моменты времени?</li>
+<li>Все ли шаги preprocessing обучаются только внутри train/fold?</li>
+<li>Не использовали ли мы test для выбора решения?</li>
+</ol></section><section class="nb-markdown"><h2 id="section-40-16">Бонус A. YSDA cross-validation riddle</h2>
+<p>Сгенерируем признаки и случайные метки, между которыми <strong>нет настоящей связи</strong>. Затем выберем признаки, наиболее коррелирующие с target.</p>
+<p>Вариант 1 делает feature selection заранее по всему датасету. Вариант 2 помещает selection внутрь <code>Pipeline</code>, поэтому на каждом fold он видит только fold-train.</p>
+<p><strong>До запуска:</strong> в каком варианте CV-score окажется подозрительно высоким?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 42</div><pre><code>noise_rng = np.random.default_rng(SEED)
+X_noise = noise_rng.normal(size=(120, 1500))
+y_noise = noise_rng.integers(0, 2, size=120)
+riddle_cv = StratifiedKFold(n_splits=6, shuffle=True, random_state=SEED)
+
+selector = SelectKBest(score_func=f_classif, k=100)
+X_selected_too_early = selector.fit_transform(X_noise, y_noise)
+leaky_scores = cross_val_score(
+    LinearSVC(dual=&quot;auto&quot;, max_iter=5000),
+    X_selected_too_early,
+    y_noise,
+    cv=riddle_cv,
+    scoring=&quot;accuracy&quot;,
+)
+
+honest_pipeline = Pipeline(
+    [
+        (&quot;select&quot;, SelectKBest(score_func=f_classif, k=100)),
+        (&quot;model&quot;, LinearSVC(dual=&quot;auto&quot;, max_iter=5000)),
+    ]
+)
+honest_scores = cross_val_score(
+    honest_pipeline,
+    X_noise,
+    y_noise,
+    cv=riddle_cv,
+    scoring=&quot;accuracy&quot;,
+)
+
+riddle_results = pd.DataFrame(
+    {
+        &quot;fold&quot;: np.arange(1, len(leaky_scores) + 1),
+        &quot;selection before CV (leakage)&quot;: leaky_scores,
+        &quot;selection inside pipeline&quot;: honest_scores,
+    }
+)
+display(riddle_results.style.format(precision=2))
+print(f&quot;Leaky mean:  {leaky_scores.mean():.3f}&quot;)
+print(f&quot;Honest mean: {honest_scores.mean():.3f}  (chance level is about 0.5)&quot;)
+
+assert leaky_scores.mean() &gt; 0.75
+assert abs(honest_scores.mean() - 0.5) &lt; 0.20</code></pre></div><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>fold</th>
+      <th>selection before CV (leakage)</th>
+      <th>selection inside pipeline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.95</td>
+      <td>0.45</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>0.90</td>
+      <td>0.55</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>0.95</td>
+      <td>0.35</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>0.90</td>
+      <td>0.35</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0.85</td>
+      <td>0.55</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>0.90</td>
+      <td>0.50</td>
+    </tr>
+  </tbody>
+</table></div><pre class="nb-stream">Leaky mean:  0.908
+Honest mean: 0.458  (chance level is about 0.5)
+</pre></section><section class="nb-markdown"><p><strong>Почему это утечка:</strong> target всех будущих validation folds уже участвовал в выборе 100 «удачных» признаков. <code>cross_val_score</code> честно переобучает только классификатор, но не может отменить информацию, внесённую заранее.</p>
+<p>Pipeline — не просто удобный синтаксис. Он задаёт границу того, что обязано переобучаться внутри каждого fold.</p></section><section class="nb-markdown"><h2 id="section-43-17">Бонус B. Проклятие размерности</h2>
+<p>В большой размерности расстояния до «ближайшего» и «далёкого» объекта становятся менее контрастными. Посмотрим на отношение</p>
+<p><div class="math-display">\frac{d_{max}-d_{min}}{d_{min}}.</div></p>
+<p>Чем оно меньше, тем труднее отличить действительно близкого соседа по одной только евклидовой геометрии.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 45</div><pre><code>dimension_rows = []
+dim_rng = np.random.default_rng(SEED)
+
+for dimension in [2, 5, 10, 25, 50, 100, 250, 500]:
+    points = dim_rng.normal(size=(1000, dimension))
+    query = dim_rng.normal(size=dimension)
+    distances = np.linalg.norm(points - query, axis=1)
+    dimension_rows.append(
+        {
+            &quot;dimension&quot;: dimension,
+            &quot;nearest&quot;: distances.min(),
+            &quot;farthest&quot;: distances.max(),
+            &quot;relative contrast&quot;: (distances.max() - distances.min()) / distances.min(),
+        }
+    )
+
+dimension_results = pd.DataFrame(dimension_rows)
+ax = dimension_results.plot(
+    x=&quot;dimension&quot;,
+    y=&quot;relative contrast&quot;,
+    marker=&quot;o&quot;,
+    logx=True,
+    legend=False,
+    figsize=(9, 5),
+)
+ax.set(ylabel=&quot;(farthest - nearest) / nearest&quot;, title=&quot;Distance contrast shrinks with dimension&quot;)
+plt.show()
+display(dimension_results.style.format({&quot;nearest&quot;: &quot;{:.2f}&quot;, &quot;farthest&quot;: &quot;{:.2f}&quot;, &quot;relative contrast&quot;: &quot;{:.2f}&quot;}))</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/knn_validation_stability-c44-o00.png" alt="Сохранённый график из ячейки 45"></figure><div class="nb-table-scroll"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>dimension</th>
+      <th>nearest</th>
+      <th>farthest</th>
+      <th>relative contrast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>0.03</td>
+      <td>4.34</td>
+      <td>131.69</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>0.74</td>
+      <td>6.20</td>
+      <td>7.44</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10</td>
+      <td>1.48</td>
+      <td>8.31</td>
+      <td>4.64</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>25</td>
+      <td>4.73</td>
+      <td>10.92</td>
+      <td>1.31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50</td>
+      <td>6.95</td>
+      <td>13.16</td>
+      <td>0.89</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>100</td>
+      <td>10.97</td>
+      <td>17.33</td>
+      <td>0.58</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>250</td>
+      <td>19.54</td>
+      <td>24.92</td>
+      <td>0.28</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>500</td>
+      <td>28.60</td>
+      <td>34.20</td>
+      <td>0.20</td>
+    </tr>
+  </tbody>
+</table></div></section><section class="nb-markdown"><h2 id="section-45-18">Итоги и exit ticket</h2>
+<p>kNN — короткий алгоритм, но длинный список содержательных решений:</p>
+<ul>
+<li>какие признаки сравнивать;</li>
+<li>как их масштабировать;</li>
+<li>что считать расстоянием;</li>
+<li>сколько соседей брать и как взвешивать их ответы;</li>
+<li>каким разбиением имитировать настоящее будущее применение;</li>
+<li>насколько вывод зависит от одной точки или одного split.</li>
+</ul>
+<p>Закончите <strong>одну</strong> фразу:</p>
+<ol>
+<li>«Перед запуском kNN я обязан спросить про данные: …»</li>
+<li>«Validation отличается от test тем, что …»</li>
+<li>«Высокий CV-score может быть обманчивым, если …»</li>
+<li>«Расстояние является содержательным выбором, потому что …»</li>
+</ol></section><section class="nb-markdown"><h2 id="section-46-19">Происхождение примеров</h2>
+<p>Ноутбук собран как обновлённая линия первого занятия курса:</p>
+<ul>
+<li>геометрия kNN и границы решений — из семинарских наработок <code>ml-course</code>, включая ветки <code>24f_ysda</code> и <code>25f_mipt</code>;</li>
+<li>постановочные вопросы и Iris/CV-акцент — из <code>25s_msai</code>;</li>
+<li>идея финального примера на рукописных цифрах — из задания <code>classic_knn</code>, основанного на Stanford CS231n;</li>
+<li>feature-selection riddle — из материалов Yandex School of Data Analysis / MLatImperial;</li>
+<li>точки, выброс, масштаб, group/time leakage и сценарий «сначала прогноз» — из подготовки сегодняшней лекции.</li>
+</ul>
+<p>Все данные, нужные для основного пути, встроены в notebook или входят в scikit-learn. Сетевой доступ не требуется.</p></section></div></main><footer class="footer"><span>Радослав Нейчев · Машинное обучение</span><a href="../index.html">Все лекции</a></footer></div><script src="../lectures/02_linear_models/vendor/katex/katex.min.js"></script><script>document.querySelectorAll(".math-inline,.math-display").forEach(function(el){katex.render(el.textContent,el,{displayMode:el.classList.contains("math-display"),throwOnError:false,trust:false});});</script></body></html>

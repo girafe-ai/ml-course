@@ -1,0 +1,306 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Семинар 2 · Линейная регрессия: решение и оптимизация · girafe.ai</title><meta name="description" content="Материалы курса машинного обучения: видео, слайды, ноутбуки и конспекты."><script src="../theme.js"></script><link rel="icon" href="../assets/logo.png"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../notebook-preview.css"><link rel="stylesheet" href="../lectures/02_linear_models/vendor/katex/katex.min.css"></head><body><a class="skip" href="#main">К содержанию</a><div class="wrap"><header class="top"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" width="40" height="40">girafe.ai</a><div class="top-tools"><span class="term">МФТИ · осень 2026</span><label class="theme-control" for="theme-choice">Тема<select id="theme-choice" aria-label="Цветовая тема"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div></header><main id="main" class="reading nb-page"><a class="back" href="../index.html">← Все лекции</a><div class="eyebrow">Ноутбук · статический просмотр</div><h1>Семинар 2 · Линейная регрессия: решение и оптимизация</h1><p class="nb-intro">Материал можно читать без запуска Python. Код и сохранённые результаты показаны в порядке тетради; для запуска упражнений скачайте исходный файл.</p><a class="nb-download" href="linear_regression_optimization.ipynb" download>Скачать .ipynb ↓</a><nav class="nb-toc" aria-label="Содержание"><strong>Содержание</strong><a href="#section-1-0">Ритм занятия</a><a href="#section-3-1">1. Маленький мир с известным ответом</a><a href="#section-5-2">2. МНК: от ошибки к коэффициентам</a><a href="#section-7-3">3. Почти одинаковые признаки</a><a href="#section-9-4">Регуляризация: ограничиваем размер весов</a><a href="#section-11-5">4. Полный градиентный спуск</a><a href="#section-13-6">5. Случайные мини-батчи</a><a href="#section-15-7">6. Масштаб признаков и sklearn</a><a href="#section-17-8">Один и тот же шаг GD в разных единицах</a><a href="#section-19-9">Итоги и exit ticket</a><a href="#section-19-10">Происхождение и ограничения</a></nav><div class="nb-content"><section class="nb-markdown">
+<p><strong>Формат:</strong> управляемая демонстрация на 90 минут. Перед ключевыми запусками сначала сформулируйте прогноз, затем сравните его с результатом.</p>
+<p>Сегодня одна модель проходит три пути: аналитическое решение, полный градиент и случайные мини-батчи. На почти совпадающих признаках увидим, почему точный прогноз не гарантирует устойчивых коэффициентов.</p>
+<p><strong>Маршрут:</strong> синтетические данные → метод наименьших квадратов → зависимые признаки и регуляризация → GD/SGD → масштабирование и <code>sklearn</code>.</p></section><section class="nb-markdown"><h2 id="section-1-0">Ритм занятия</h2>
+<div class="nb-table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">Время</th>
+<th>Блок</th>
+<th>Что предсказать до запуска</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0–20 мин</td>
+<td>Данные и прямая/плоскость</td>
+<td>Какие роли у коэффициентов и свободного члена?</td>
+</tr>
+<tr>
+<td style="text-align: right;">20–40 мин</td>
+<td>МНК и зависимые признаки</td>
+<td>Что произойдёт с коэффициентами при почти одинаковых столбцах?</td>
+</tr>
+<tr>
+<td style="text-align: right;">40–55 мин</td>
+<td>Регуляризация</td>
+<td>Что уменьшится: ошибка на train или величина весов?</td>
+</tr>
+<tr>
+<td style="text-align: right;">55–75 мин</td>
+<td>GD и мини-батчи</td>
+<td>Как выглядят траектории потерь?</td>
+</tr>
+<tr>
+<td style="text-align: right;">75–90 мин</td>
+<td>Масштаб и <code>sklearn</code></td>
+<td>Почему масштабирование обучают только на train?</td>
+</tr>
+</tbody>
+</table></div>
+<p>Нужны <code>numpy</code>, <code>matplotlib</code> и <code>scikit-learn</code>. Все данные создаются в ноутбуке; фиксированный seed делает запуски воспроизводимыми.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 3</div><pre><code>import matplotlib.pyplot as plt
+import numpy as np
+import sklearn
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+SEED = 42
+rng = np.random.default_rng(SEED)
+np.set_printoptions(precision=3, suppress=True)
+print(f&quot;NumPy {np.__version__}; scikit-learn {sklearn.__version__}; seed {SEED}&quot;)</code></pre></div><pre class="nb-stream">NumPy 2.5.3; scikit-learn 1.9.1; seed 42
+</pre></section><section class="nb-markdown"><h2 id="section-3-1">1. Маленький мир с известным ответом</h2>
+<p>Как и в лекциях, <span class="math-inline">m</span> — число наблюдений, <span class="math-inline">n</span> — число признаков. Матрица <span class="math-inline">\mathbf X\in\mathbb R^{m\times n}</span> содержит объекты по строкам. Вектор <span class="math-inline">\mathbf x^{(i)}</span> описывает объект <span class="math-inline">i</span>, его координата <span class="math-inline">x_j^{(i)}</span> — признак <span class="math-inline">j</span>, а <span class="math-inline">y^{(i)}</span> — скалярный ответ. Все ответы вместе образуют вектор <span class="math-inline">\mathbf y</span>.</p>
+<p>Создадим два признака и ответы <span class="math-inline">\mathbf y=\mathbf X\mathbf w_*+b_*\mathbf1+\boldsymbol\varepsilon</span>, где <span class="math-inline">\mathbf w_*=(1.7,-0.8)^\mathsf T</span>, <span class="math-inline">b_*=1.5</span>, а шум имеет нулевое среднее. Здесь <span class="math-inline">\mathbf X</span> содержит <strong>только признаки</strong>; столбец единиц для свободного члена добавим последним, как в слайдах. Отложим test до оценки обученной модели. В коде <code>n_samples</code> — число наблюдений, то есть <span class="math-inline">m</span>, а не число признаков.</p>
+<p><strong>До запуска:</strong> как изменится плоскость, если увеличить только <span class="math-inline">b</span>? Что изменится при увеличении <span class="math-inline">w_1</span>?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 5</div><pre><code>n_samples = 180
+w_true = np.array([1.7, -0.8])
+b_true = 1.5
+X = rng.uniform(-2, 2, size=(n_samples, 2))
+y = X @ w_true + b_true + rng.normal(0, 0.35, n_samples)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=SEED
+)
+print(f&quot;train: {X_train.shape}; test: {X_test.shape}&quot;)
+print(f&quot;true weights: {w_true}; true bias: {b_true}&quot;)
+
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(projection=&quot;3d&quot;)
+ax.scatter(X_train[:, 0], X_train[:, 1], y_train, s=16, alpha=0.65, label=&quot;train&quot;)
+grid_1, grid_2 = np.meshgrid(np.linspace(-2, 2, 18), np.linspace(-2, 2, 18))
+plane = w_true[0] * grid_1 + w_true[1] * grid_2 + b_true
+ax.plot_surface(grid_1, grid_2, plane, color=&quot;tab:orange&quot;, alpha=0.35)
+ax.set(xlabel=&quot;$x_1$&quot;, ylabel=&quot;$x_2$&quot;, zlabel=&quot;$y$&quot;, title=&quot;Данные и плоскость, породившая их&quot;)
+plt.show()</code></pre></div><pre class="nb-stream">train: (135, 2); test: (45, 2)
+true weights: [ 1.7 -0.8]; true bias: 1.5
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/linear_regression_optimization-c04-o01.png" alt="Сохранённый график из ячейки 5"></figure></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Свободный член сдвигает плоскость вдоль оси ответа, не меняя наклонов. Коэффициент при первом признаке меняет наклон в направлении этой оси. Шум объясняет, почему точки не лежат ровно на плоскости.</p>
+</details>
+<h2 id="section-5-2">2. МНК: от ошибки к коэффициентам</h2>
+<p>Допишем столбец единиц <strong>справа</strong>: <span class="math-inline">\tilde{\mathbf X}=[\mathbf X\ \mathbf1]</span>. Вектор всех параметров <span class="math-inline">\boldsymbol\theta=\tilde{\mathbf w}=(w_1,w_2,b)^\mathsf T</span> имеет тот же порядок, что в лекции. В коде расширенная матрица называется <code>A_train</code>, а вектор параметров — <code>theta_ols</code>.</p>
+<p>Потеря одного объекта — <span class="math-inline">\ell(y^{(i)},\hat y^{(i)})=(y^{(i)}-\hat y^{(i)})^2</span>. Для <span class="math-inline">m</span> обучающих наблюдений минимизируем <strong>среднюю</strong> квадратичную ошибку:</p>
+<p><div class="math-display">Q(\boldsymbol\theta)=\frac1m\sum_{i=1}^m\ell(y^{(i)},\hat y^{(i)})=\frac1m\lVert\tilde{\mathbf X}\boldsymbol\theta-\mathbf y\rVert_2^2,</div>
+<div class="math-display">\nabla Q(\boldsymbol\theta)=\frac2m\tilde{\mathbf X}^\mathsf T(\tilde{\mathbf X}\boldsymbol\theta-\mathbf y).</div></p>
+<p>Нормальное уравнение: <span class="math-inline">\tilde{\mathbf X}^\mathsf T\tilde{\mathbf X}\hat{\boldsymbol\theta}=\tilde{\mathbf X}^\mathsf T\mathbf y</span>. Формула <span class="math-inline">\hat{\boldsymbol\theta}=(\tilde{\mathbf X}^\mathsf T\tilde{\mathbf X})^{-1}\tilde{\mathbf X}^\mathsf T\mathbf y</span> применима <strong>только при обратимости матрицы</strong>. На практике <code>lstsq</code> находит решение без явного обращения. Параметры оцениваем только на train; test используем для оценки, а не для выбора настроек.</p>
+<p><strong>До запуска:</strong> совпадут ли найденные параметры в точности с <span class="math-inline">\mathbf w_*,b_*</span>? Почему?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 7</div><pre><code>A_train = np.column_stack([X_train, np.ones(len(X_train))])
+A_test = np.column_stack([X_test, np.ones(len(X_test))])
+theta_ols, *_ = np.linalg.lstsq(A_train, y_train, rcond=None)
+train_pred = A_train @ theta_ols
+test_pred = A_test @ theta_ols
+print(f&quot;true (w1, w2, b): {np.r_[w_true, b_true]}&quot;)
+print(f&quot;OLS  (w1, w2, b): {theta_ols}&quot;)
+print(f&quot;train MSE: {mean_squared_error(y_train, train_pred):.4f}&quot;)
+print(f&quot;test  MSE: {mean_squared_error(y_test, test_pred):.4f}&quot;)
+assert np.linalg.norm(A_train.T @ (A_train @ theta_ols - y_train)) &lt; 1e-9</code></pre></div><pre class="nb-stream">true (w1, w2, b): [ 1.7 -0.8  1.5]
+OLS  (w1, w2, b): [ 1.704 -0.784  1.499]
+train MSE: 0.1301
+test  MSE: 0.1124
+</pre></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Шум и конечный размер выборки меняют оценку коэффициентов. Небольшое расхождение с истинными весами не означает ошибку метода. Проверка нормального уравнения выше относится к train; test не участвовал в вычислении параметров.</p>
+</details>
+<h2 id="section-7-3">3. Почти одинаковые признаки</h2>
+<p>Если <span class="math-inline">x_2=x_1</span>, то отдельные <span class="math-inline">w_1</span> и <span class="math-inline">w_2</span> нельзя восстановить: прогноз зависит от их суммы. При <span class="math-inline">x_2\approx x_1</span> задача становится чувствительной к шуму. Чтобы увидеть это, обучим две модели на <strong>тех же признаках</strong>, но с двумя независимыми реализациями шума в цели.</p>
+<p><strong>До запуска:</strong> если оба набора прогнозов похожи, обязательно ли будут похожи коэффициенты? Сначала проверим точное совпадение признаков, затем почти совпадение.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 9</div><pre><code>exact_x = np.linspace(-1, 1, 6)
+A_exact = np.column_stack([exact_x, exact_x, np.ones(len(exact_x))])
+y_exact = 1 + 3 * exact_x
+exact_theta, *_ = np.linalg.lstsq(A_exact, y_exact, rcond=None)
+print(f&quot;exact duplicate: rank={np.linalg.matrix_rank(A_exact)} of 3; lstsq weights={exact_theta[:-1]}&quot;)
+print(f&quot;alternative (1, 2) produces the same predictions: {np.allclose(A_exact @ [1, 2, 1], y_exact)}&quot;)
+
+cor_rng = np.random.default_rng(SEED + 1)
+X_cor = np.column_stack([
+    cor_rng.normal(size=160),
+    np.zeros(160),
+])
+X_cor[:, 1] = X_cor[:, 0] + cor_rng.normal(0, 0.001, len(X_cor))
+cor_signal = X_cor @ np.array([2.0, 1.0]) + 1.0
+Y_cor = [cor_signal + cor_rng.normal(0, 0.2, len(X_cor)) for _ in range(2)]
+A_cor = np.column_stack([X_cor, np.ones(len(X_cor))])
+ols_cor = [np.linalg.lstsq(A_cor, target, rcond=None)[0] for target in Y_cor]
+print(f&quot;condition number of A: {np.linalg.cond(A_cor):.0f}&quot;)
+for i, theta in enumerate(ols_cor, 1):
+    print(f&quot;noise {i}: weights={theta[:-1]}, sum={theta[:-1].sum():.3f}, train MSE={mean_squared_error(Y_cor[i-1], A_cor @ theta):.4f}&quot;)
+print(f&quot;RMS difference between fitted predictions: {np.sqrt(np.mean((A_cor @ ols_cor[0] - A_cor @ ols_cor[1])**2)):.4f}&quot;)</code></pre></div><pre class="nb-stream">exact duplicate: rank=2 of 3; lstsq weights=[1.5 1.5]
+alternative (1, 2) produces the same predictions: True
+condition number of A: 2214
+noise 1: weights=[-21.106  24.102], sum=2.996, train MSE=0.0379
+noise 2: weights=[ 17.069 -14.085], sum=2.984, train MSE=0.0340
+RMS difference between fitted predictions: 0.0486
+</pre></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Когда столбцы почти повторяются, изменение одного веса можно компенсировать изменением другого. Поэтому близость <strong>предсказаний на наблюдаемой области</strong> не доказывает устойчивость каждого коэффициента. Большое число обусловленности здесь указывает на чувствительность задачи к возмущениям.</p>
+</details>
+<h3 id="section-9-4">Регуляризация: ограничиваем размер весов</h3>
+<p>Штрафуем только коэффициенты признаков, <strong>не</strong> свободный член:</p>
+<p><div class="math-display">Q_{\mathrm{reg}}(\mathbf w,b)=\frac1m\lVert\mathbf X\mathbf w+b\mathbf1-\mathbf y\rVert_2^2+\lambda\lVert\mathbf w\rVert_2^2,\qquad\lambda&gt;0.</div></p>
+<p>Для <span class="math-inline">\tilde{\mathbf X}=[\mathbf X\ \mathbf1]</span> получаем</p>
+<p><div class="math-display">(\tilde{\mathbf X}^\mathsf T\tilde{\mathbf X}+m\lambda\mathbf D)\hat{\boldsymbol\theta}=\tilde{\mathbf X}^\mathsf T\mathbf y,</div></p>
+<p>где <span class="math-inline">\mathbf D=\operatorname{diag}(1,1,0)</span>: последний параметр — свободный член. В <code>sklearn.Ridge</code> параметр <code>alpha</code> соответствует <strong><span class="math-inline">m\lambda</span></strong>, потому что её критерий содержит сумму квадратов ошибок, а не MSE. Здесь <span class="math-inline">m</span> — число наблюдений конкретного обучающего эксперимента.</p>
+<p><strong>До запуска:</strong> сравните разброс отдельных весов и ошибку на обучении. Может ли штраф ухудшить train MSE?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 11</div><pre><code>lam = 0.05
+penalty = np.diag([1.0, 1.0, 0.0])
+ridge_cor = [
+    np.linalg.solve(A_cor.T @ A_cor + len(X_cor) * lam * penalty, A_cor.T @ target)
+    for target in Y_cor
+]
+for i, theta in enumerate(ridge_cor, 1):
+    print(f&quot;noise {i}: ridge weights={theta[:-1]}, sum={theta[:-1].sum():.3f}, train MSE={mean_squared_error(Y_cor[i-1], A_cor @ theta):.4f}&quot;)
+check_ridge = Ridge(alpha=len(X_cor) * lam).fit(X_cor, Y_cor[0])
+assert np.allclose(np.r_[check_ridge.coef_, check_ridge.intercept_], ridge_cor[0], atol=1e-8)
+assert np.linalg.norm(ridge_cor[0][:-1] - ridge_cor[1][:-1]) &lt; np.linalg.norm(ols_cor[0][:-1] - ols_cor[1][:-1])
+
+fig, ax = plt.subplots(figsize=(8, 4))
+positions = np.arange(2)
+for j, (name, params) in enumerate([(&quot;МНК&quot;, ols_cor), (&quot;Ridge&quot;, ridge_cor)]):
+    for i, theta in enumerate(params):
+        ax.scatter(positions + (j - 0.5) * 0.15 + (i - 0.5) * 0.05, theta[:-1], label=f&quot;{name}, шум {i+1}&quot;, s=55)
+ax.set_xticks(positions, [&quot;$w_1$&quot;, &quot;$w_2$&quot;])
+ax.set_ylabel(&quot;оценка коэффициента&quot;)
+ax.set_title(&quot;Один сигнал, два шума: коэффициенты&quot;)
+ax.legend(ncol=2)
+plt.show()</code></pre></div><pre class="nb-stream">noise 1: ridge weights=[1.463 1.463], sum=2.926, train MSE=0.0433
+noise 2: ridge weights=[1.459 1.459], sum=2.918, train MSE=0.0391
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/linear_regression_optimization-c10-o01.png" alt="Сохранённый график из ячейки 11"></figure></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Штраф удерживает веса ближе к нулю и уменьшает их изменение между двумя реализациями шума. Он может повысить train MSE, потому что оптимизирует <strong>MSE плюс штраф</strong>. Здесь проверена устойчивость коэффициентов в конкретном эксперименте; это не обещание улучшения test при любом <span class="math-inline">\lambda</span>.</p>
+</details>
+<h2 id="section-11-5">4. Полный градиентный спуск</h2>
+<p>Вернёмся к первым данным и функции <span class="math-inline">Q(\boldsymbol\theta)=\mathrm{MSE}</span>. Из нулевого вектора повторяем <span class="math-inline">\boldsymbol\theta_{t+1}=\boldsymbol\theta_t-\eta\nabla Q(\boldsymbol\theta_t)</span>. Полный градиент использует <strong>все train-объекты</strong>. Сравним траекторию с МНК; test при настройке шага не нужен.</p>
+<p><strong>До запуска:</strong> что будет с потерей при слишком большом шаге <span class="math-inline">\eta</span>? Почему маленький шаг может быть неудобен?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 13</div><pre><code>def mse_gradient(A, target, theta):
+    return 2 * A.T @ (A @ theta - target) / len(target)
+
+learning_rate = 0.12
+n_epochs = 80
+theta_gd = np.zeros(A_train.shape[1])
+gd_history = [theta_gd.copy()]
+gd_loss = [mean_squared_error(y_train, A_train @ theta_gd)]
+for _ in range(n_epochs):
+    theta_gd -= learning_rate * mse_gradient(A_train, y_train, theta_gd)
+    gd_history.append(theta_gd.copy())
+    gd_loss.append(mean_squared_error(y_train, A_train @ theta_gd))
+gd_history = np.array(gd_history)
+print(f&quot;OLS: {theta_ols}; GD: {theta_gd}&quot;)
+print(f&quot;train MSE: {gd_loss[-1]:.4f} (GD), {mean_squared_error(y_train, train_pred):.4f} (МНК)&quot;)
+
+fig, axes = plt.subplots(1, 2, figsize=(11, 4), constrained_layout=True)
+axes[0].plot(gd_loss, label=&quot;GD&quot;)
+axes[0].axhline(mean_squared_error(y_train, train_pred), color=&quot;black&quot;, ls=&quot;--&quot;, label=&quot;МНК&quot;)
+axes[0].set(xlabel=&quot;эпоха&quot;, ylabel=&quot;train MSE&quot;, title=&quot;Потеря&quot;)
+axes[0].legend()
+for j, name in enumerate([&quot;$w_1$&quot;, &quot;$w_2$&quot;, &quot;b&quot;]):
+    axes[1].plot(gd_history[:, j], label=name)
+    axes[1].axhline(theta_ols[j], color=f&quot;C{j}&quot;, ls=&quot;--&quot;, alpha=0.6)
+axes[1].set(xlabel=&quot;эпоха&quot;, ylabel=&quot;параметр&quot;, title=&quot;Траектории параметров&quot;)
+axes[1].legend()
+plt.show()</code></pre></div><pre class="nb-stream">OLS: [ 1.704 -0.784  1.499]; GD: [ 1.704 -0.784  1.499]
+train MSE: 0.1301 (GD), 0.1301 (МНК)
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/linear_regression_optimization-c12-o01.png" alt="Сохранённый график из ячейки 13"></figure></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Для выбранного шага полный GD сходится к решению МНК: минимум у них общий. Это не правило для любого шага. Длина шага зависит от масштаба признаков и кривизны функции потерь.</p>
+</details>
+<h2 id="section-13-6">5. Случайные мини-батчи</h2>
+<p>Теперь каждый шаг использует до 16 train-объектов в случайном порядке; последний мини-батч может быть короче. После каждой эпохи измеряем <strong>полную train MSE</strong>, чтобы сравнение с GD было содержательным. Шаги мини-батчей шумят; при постоянной скорости обучения траектория может колебаться вокруг минимума.</p>
+<p><strong>До запуска:</strong> обязана ли потеря после каждой эпохи строго уменьшаться?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 15</div><pre><code>sgd_rng = np.random.default_rng(SEED + 2)
+batch_size = 16
+sgd_rate = 0.04
+theta_sgd = np.zeros(A_train.shape[1])
+sgd_history = [theta_sgd.copy()]
+sgd_loss = [mean_squared_error(y_train, A_train @ theta_sgd)]
+for _ in range(n_epochs):
+    order = sgd_rng.permutation(len(y_train))
+    for start in range(0, len(y_train), batch_size):
+        batch = order[start:start + batch_size]
+        theta_sgd -= sgd_rate * mse_gradient(A_train[batch], y_train[batch], theta_sgd)
+    sgd_history.append(theta_sgd.copy())
+    sgd_loss.append(mean_squared_error(y_train, A_train @ theta_sgd))
+sgd_history = np.array(sgd_history)
+print(f&quot;МНК train MSE: {mean_squared_error(y_train, train_pred):.4f}&quot;)
+print(f&quot;GD  train MSE: {gd_loss[-1]:.4f}; SGD train MSE: {sgd_loss[-1]:.4f}&quot;)
+print(f&quot;steps per epoch: GD = 1 full batch, SGD = {int(np.ceil(len(y_train)/batch_size))} mini-batches&quot;)
+
+fig, axes = plt.subplots(1, 2, figsize=(11, 4), constrained_layout=True)
+axes[0].plot(gd_loss, label=&quot;GD&quot;)
+axes[0].plot(sgd_loss, label=&quot;мини-батчи&quot;, alpha=0.8)
+axes[0].axhline(mean_squared_error(y_train, train_pred), color=&quot;black&quot;, ls=&quot;--&quot;, label=&quot;МНК&quot;)
+axes[0].set(xlabel=&quot;эпоха&quot;, ylabel=&quot;полная train MSE&quot;, title=&quot;Сравнение потерь&quot;)
+axes[0].legend()
+axes[1].plot(gd_history[:, 0], gd_history[:, 1], label=&quot;GD&quot;, marker=&quot;.&quot;, ms=2)
+axes[1].plot(sgd_history[:, 0], sgd_history[:, 1], label=&quot;мини-батчи&quot;, alpha=0.8, marker=&quot;.&quot;, ms=2)
+axes[1].scatter(theta_ols[0], theta_ols[1], color=&quot;black&quot;, marker=&quot;*&quot;, s=110, label=&quot;МНК&quot;)
+axes[1].set(xlabel=&quot;$w_1$&quot;, ylabel=&quot;$w_2$&quot;, title=&quot;Проекция траекторий на веса&quot;)
+axes[1].legend()
+plt.show()</code></pre></div><pre class="nb-stream">МНК train MSE: 0.1301
+GD  train MSE: 0.1301; SGD train MSE: 0.1304
+steps per epoch: GD = 1 full batch, SGD = 9 mini-batches
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/linear_regression_optimization-c14-o01.png" alt="Сохранённый график из ячейки 15"></figure></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>На правом графике показана <strong>проекция</strong> траектории на <span class="math-inline">(w_1,w_2)</span>: свободный член тоже меняется, но не показан. Одна эпоха не означает одинаковое число шагов или одинаковую вычислительную стоимость: GD делает один полный шаг, мини-батчи — несколько коротких. Этот опыт не является бенчмарком времени.</p>
+</details>
+<h2 id="section-15-7">6. Масштаб признаков и <code>sklearn</code></h2>
+<p>Создадим копию задачи, где второй столбец измеряется в единицах, в 100 раз меньших: его численные значения станут в 100 раз больше, а физическая зависимость <span class="math-inline">y</span> останется прежней. У GD меняется допустимый шаг. <code>StandardScaler</code> обучаем <strong>только на train</strong>, затем тем же преобразованием обрабатываем test. В <code>Pipeline</code> это правило выполняется при <code>fit</code>/<code>predict</code> автоматически.</p>
+<p><strong>До запуска:</strong> сравните число обусловленности до и после масштабирования. Будут ли коэффициенты в исходных и стандартизованных единицах непосредственно сравнимы?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 17</div><pre><code>X_train_units = X_train * np.array([1.0, 100.0])
+X_test_units = X_test * np.array([1.0, 100.0])
+scaler = StandardScaler().fit(X_train_units)
+X_train_scaled = scaler.transform(X_train_units)
+X_test_scaled = scaler.transform(X_test_units)
+print(f&quot;condition number before scaling: {np.linalg.cond(np.column_stack([X_train_units, np.ones(len(X_train))])):.1f}&quot;)
+print(f&quot;condition number after scaling:  {np.linalg.cond(np.column_stack([X_train_scaled, np.ones(len(X_train))])):.1f}&quot;)
+print(f&quot;train means after scaling: {X_train_scaled.mean(axis=0)}&quot;)
+print(f&quot;test means after train scaling: {X_test_scaled.mean(axis=0)}&quot;)
+
+ols_pipeline = make_pipeline(StandardScaler(), LinearRegression()).fit(X_train_units, y_train)
+ridge_pipeline = make_pipeline(StandardScaler(), Ridge(alpha=1.0)).fit(X_train_units, y_train)
+print(f&quot;OLS pipeline test MSE: {mean_squared_error(y_test, ols_pipeline.predict(X_test_units)):.4f}&quot;)
+print(f&quot;Ridge pipeline test MSE: {mean_squared_error(y_test, ridge_pipeline.predict(X_test_units)):.4f}&quot;)
+print(f&quot;OLS predictions agree across units: {np.allclose(ols_pipeline.predict(X_test_units), test_pred, atol=1e-10)}&quot;)</code></pre></div><pre class="nb-stream">condition number before scaling: 113.9
+condition number after scaling:  1.1
+train means after scaling: [-0.  0.]
+test means after train scaling: [ 0.088 -0.033]
+OLS pipeline test MSE: 0.1124
+Ridge pipeline test MSE: 0.1138
+OLS predictions agree across units: True
+</pre></section><section class="nb-markdown"><h3 id="section-17-8">Один и тот же шаг GD в разных единицах</h3>
+<p>Для квадратичной MSE с градиентом, содержащим <span class="math-inline">2/m</span>, условие сходимости полного GD при положительно определённой матрице Грама:</p>
+<p><div class="math-display">0&lt;\eta&lt;\frac{1}{\lambda_{\max}(\tilde{\mathbf X}^\mathsf T\tilde{\mathbf X}/m)}.</div></p>
+<p>Здесь <span class="math-inline">\lambda_{\max}</span> обозначает максимальное собственное значение; это не коэффициент регуляризации <span class="math-inline">\lambda</span>. Запустим <strong>шесть шагов</strong> GD с прежним <span class="math-inline">\eta=0.12</span> до и после масштабирования. Если ошибка быстро растёт, остановим только этот опыт; это ожидаемый результат, а не сбой исполнения ноутбука.</p>
+<p><strong>До запуска:</strong> подходит ли прежний шаг для столбца, увеличенного в 100 раз?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 19</div><pre><code>A_units = np.column_stack([X_train_units, np.ones(len(X_train))])
+A_scaled = np.column_stack([X_train_scaled, np.ones(len(X_train))])
+def short_gd(A, target, rate, steps=6):
+    theta = np.zeros(A.shape[1])
+    losses = [mean_squared_error(target, A @ theta)]
+    for _ in range(steps):
+        theta -= rate * mse_gradient(A, target, theta)
+        losses.append(mean_squared_error(target, A @ theta))
+        if losses[-1] &gt; 1e12:
+            break
+    return losses
+
+for name, A in [(&quot;исходные единицы&quot;, A_units), (&quot;после стандартизации&quot;, A_scaled)]:
+    limit = 1 / np.linalg.eigvalsh(A.T @ A / len(A))[-1]
+    losses = short_gd(A, y_train, learning_rate)
+    print(f&quot;{name}: устойчивый шаг &lt; {limit:.6f}; MSE {losses[0]:.2g} → {losses[-1]:.2g} за {len(losses)-1} шагов&quot;)
+    plt.plot(range(len(losses)), losses, marker=&quot;o&quot;, label=name)
+plt.yscale(&quot;log&quot;)
+plt.xlabel(&quot;шаг GD&quot;)
+plt.ylabel(&quot;train MSE (логарифмическая шкала)&quot;)
+plt.title(&quot;Тот же шаг, другой масштаб признаков&quot;)
+plt.legend()
+plt.show()</code></pre></div><pre class="nb-stream">исходные единицы: устойчивый шаг &lt; 0.000081; MSE 6 → 3.7e+13 за 2 шагов
+после стандартизации: устойчивый шаг &lt; 0.934848; MSE 6 → 0.38 за 6 шагов
+</pre><figure class="nb-figure"><img loading="lazy" src="assets/linear_regression_optimization-c18-o01.png" alt="Сохранённый график из ячейки 19"></figure></section><section class="nb-markdown"><details>
+<summary><b>Разбор</b></summary>
+<p>Масштабирование улучшает численную геометрию для итерационного метода. При <strong>обратимом</strong> аффинном преобразовании признаков меняются коэффициенты и свободный член МНК, но сохраняются прогнозы; это проверено для выбранной смены единиц. Для Ridge масштаб уже влияет и на относительную силу штрафа. Test не должен задавать средние и дисперсии преобразования: иначе сведения о нём попадут в обучение.</p>
+</details>
+<h2 id="section-19-9">Итоги и exit ticket</h2>
+<ol>
+<li>Почему <code>np.linalg.lstsq</code> предпочтительнее явного <code>inv(X.T @ X)</code> для МНК?</li>
+<li>Что можно и нельзя заключить о весах, если прогнозы моделей близки, а признаки почти совпадают?</li>
+<li>Где в формулах выше стоит множитель <span class="math-inline">1/m</span>? Как из-за него связаны <span class="math-inline">\lambda</span> и <code>Ridge(alpha=...)</code>?</li>
+<li>Почему нельзя сравнивать коэффициенты до и после <code>StandardScaler</code> по абсолютной разнице?</li>
+<li>Когда именно разрешено смотреть на test?</li>
+</ol>
+<p><strong>Самостоятельный опыт:</strong> поменяйте только <code>learning_rate</code> в блоке GD и постройте тот же график. Найдите шаг, при котором MSE перестанет устойчиво уменьшаться; верните исходное значение перед продолжением семинара.</p>
+<h2 id="section-19-10">Происхождение и ограничения</h2>
+<p>Материал переработан из исходного <code>seminar_02_linear_regression_raw.ipynb</code> для второго семинара курса. Ритм «прогноз → запуск → разбор», воспроизводимый seed и проверка утечки следуют первому семинару <code>knn_validation_stability.ipynb</code>. Выводы об устойчивости и сходимости относятся к конкретным синтетическим опытам, а не ко всем наборам данных. Формулы МНК и Ridge сопоставлены с документацией <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html">NumPy <code>lstsq</code></a> и <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">scikit-learn <code>Ridge</code></a>.</p></section></div></main><footer class="footer"><span>Радослав Нейчев · Машинное обучение</span><a href="../index.html">Все лекции</a></footer></div><script src="../lectures/02_linear_models/vendor/katex/katex.min.js"></script><script>document.querySelectorAll(".math-inline,.math-display").forEach(function(el){katex.render(el.textContent,el,{displayMode:el.classList.contains("math-display"),throwOnError:false,trust:false});});</script></body></html>

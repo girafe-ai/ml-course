@@ -21,3 +21,4 @@ code{background:var(--code-bg)}
 select:focus-visible,button:focus-visible{outline:3px solid #c99b06;outline-offset:3px}
 @media(max-width:700px){.top-tools .term{display:none}.top-tools{gap:8px}.theme-control{gap:4px;font-size:12px}.theme-control select{max-width:117px}.brand{font-size:21px;gap:6px}.brand img{width:34px;height:34px}}
 @media print{:root[data-theme]{color-scheme:light;--ink:#000;--muted:#333;--paper:#fff;--surface:#fff;--line:#bbb;--green:#000;--code-bg:#eee;--soft:#eee;--callout:#eee}.theme-control{display:none}}
+.homework .eyebrow{margin-bottom:10px}.homework-deadline{font-size:18px;margin:16px 0}.homework .callout{margin:20px 0}.homework-link{display:inline-block;min-height:44px;padding:10px 16px;background:var(--accent);color:var(--accent-ink);border-radius:9px;text-decoration:none;font-weight:650}.homework-link:hover{text-decoration:underline}

@@ -1,0 +1,477 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Семинар 3 · Линейная классификация и Word2Vec · girafe.ai</title><meta name="description" content="Материалы курса машинного обучения: видео, слайды, ноутбуки и конспекты."><script src="../theme.js"></script><link rel="icon" href="../assets/logo.png"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../notebook-preview.css"><link rel="stylesheet" href="../lectures/02_linear_models/vendor/katex/katex.min.css"></head><body><a class="skip" href="#main">К содержанию</a><div class="wrap"><header class="top"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" width="40" height="40">girafe.ai</a><div class="top-tools"><span class="term">МФТИ · осень 2026</span><label class="theme-control" for="theme-choice">Тема<select id="theme-choice" aria-label="Цветовая тема"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div></header><main id="main" class="reading nb-page"><a class="back" href="../index.html">← Все лекции</a><div class="eyebrow">Ноутбук · статический просмотр</div><h1>Семинар 3 · Линейная классификация и Word2Vec</h1><p class="nb-intro">Материал можно читать без запуска Python. Код и сохранённые результаты показаны в порядке тетради; для запуска упражнений скачайте исходный файл.</p><a class="nb-download" href="linear_classification_word2vec.ipynb" download>Скачать .ipynb ↓</a><nav class="nb-toc" aria-label="Содержание"><strong>Содержание</strong><a href="#section-1-0">Ритм занятия</a><a href="#section-2-1">1. Один score — бинарное решение</a><a href="#section-4-2">Один объект на бумаге</a><a href="#section-6-3">Обучение: likelihood превращается в log loss</a><a href="#section-9-4">2. От одного класса к словарю классов</a><a href="#section-11-5">3. Где взять признаки слова?</a><a href="#section-13-6">Сначала посмотрим на наблюдаемые данные</a><a href="#section-15-7">4. Skip-gram — тот же классификатор, но вход тоже обучается</a><a href="#section-17-8">Обучаем обе таблицы</a><a href="#section-20-9">Ближайшие соседи — отдельная проверка, не training loss</a><a href="#section-22-10">5. Negative sampling — другая задача классификации</a><a href="#section-24-11">6. Что именно установил эксперимент</a><a href="#section-25-12">Резервные вопросы</a></nav><div class="nb-content"><section class="nb-markdown">
+<p><strong>Формат:</strong> управляемая демонстрация на 90 минут. Перед ключевыми запусками сначала сформулируйте прогноз, затем сравните его с результатом.</p>
+<p>К концу семинара студент сможет:</p>
+<ul>
+<li>вычислить score, sigmoid и log loss бинарного линейного классификатора;</li>
+<li>объяснить, почему в многоклассовой модели каждой категории соответствует свой вектор весов;</li>
+<li>извлечь пары «центральное слово → контекст» из маленького корпуса;</li>
+<li>увидеть Skip-gram как многоклассовый линейный классификатор с обучаемым входным представлением;</li>
+<li>различить full softmax и negative sampling;</li>
+<li>проверить результат через loss, cosine similarity и ближайших соседей.</li>
+</ul>
+<blockquote>
+<p>Главный вопрос семинара: <strong>что меняется, если признаки объекта не заданы заранее, а тоже обучаются?</strong></p>
+</blockquote></section><section class="nb-markdown"><h2 id="section-1-0">Ритм занятия</h2>
+<div class="nb-table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">Время</th>
+<th>Блок</th>
+<th>Что предсказать до запуска</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0–20 мин</td>
+<td>Бинарная классификация</td>
+<td>Как знак score и sigmoid связаны с классом?</td>
+</tr>
+<tr>
+<td style="text-align: right;">20–35 мин</td>
+<td>Softmax</td>
+<td>Что означает строка матрицы весов?</td>
+</tr>
+<tr>
+<td style="text-align: right;">35–50 мин</td>
+<td>Корпус и пары</td>
+<td>Какие направленные пары создаёт окно?</td>
+</tr>
+<tr>
+<td style="text-align: right;">50–72 мин</td>
+<td>Skip-gram</td>
+<td>Где находятся признаки слова и веса классов?</td>
+</tr>
+<tr>
+<td style="text-align: right;">72–83 мин</td>
+<td>Negative sampling</td>
+<td>Какие scores должны вырасти, а какие уменьшиться?</td>
+</tr>
+<tr>
+<td style="text-align: right;">83–90 мин</td>
+<td>Проверка представлений</td>
+<td>Что loss гарантирует, а что — нет?</td>
+</tr>
+</tbody>
+</table></div>
+<p>Правило для каждой демонстрации: <strong>30 секунд подумать → проголосовать → запустить → объяснить</strong>.</p>
+<p>Все данные встроены в notebook. Нужны только <code>numpy</code> и <code>matplotlib</code>; сетевой доступ не требуется.</p></section><section class="nb-markdown"><h2 id="section-2-1">1. Один score — бинарное решение</h2>
+<p>Начнём с уже знакомой модели:</p>
+<p><div class="math-display">
+s(\mathbf x)=\mathbf w^\mathsf T\mathbf x+b,
+\qquad
+p(y=1\mid\mathbf x)=\sigma(s)=\frac{1}{1+e^{-s}}.
+</div></p>
+<p>Граница решения задаётся условием <span class="math-inline">s(\mathbf x)=0</span>. Вероятность <span class="math-inline">p=0.5</span> лежит на той же границе.</p>
+<p>Создадим маленькую воспроизводимую выборку с двумя признаками. Метки используются только для обучения и проверки; на графике они показаны цветом.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 4</div><pre><code>from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+SEED = 20260921
+rng = np.random.default_rng(SEED)
+validation_dir = Path(&quot;validation&quot;)
+validation_dir.mkdir(exist_ok=True)
+
+negative = rng.normal(loc=(-1.3, -0.8), scale=(0.65, 0.55), size=(45, 2))
+positive = rng.normal(loc=(1.2, 0.9), scale=(0.65, 0.55), size=(45, 2))
+X = np.vstack([negative, positive])
+y = np.concatenate([np.zeros(len(negative)), np.ones(len(positive))])
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.scatter(X[:, 0], X[:, 1], c=y, cmap=&quot;coolwarm&quot;, edgecolor=&quot;white&quot;, linewidth=0.7)
+ax.axhline(0, color=&quot;0.85&quot;, linewidth=1)
+ax.axvline(0, color=&quot;0.85&quot;, linewidth=1)
+ax.set(xlabel=&quot;$x_1$&quot;, ylabel=&quot;$x_2$&quot;, title=&quot;Binary classification data&quot;)
+plt.show()</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/linear_classification_word2vec-c03-o00.png" alt="Сохранённый график из ячейки 4"></figure></section><section class="nb-markdown"><h3 id="section-4-2">Один объект на бумаге</h3>
+<p>Пусть <span class="math-inline">\mathbf w=(1.1,0.7)^\mathsf T</span>, <span class="math-inline">b=-0.2</span>, а <span class="math-inline">\mathbf x=(0.8,-0.1)^\mathsf T</span>.</p>
+<p><strong>До запуска:</strong></p>
+<ol>
+<li>Каков знак score?</li>
+<li>Больше или меньше <span class="math-inline">0.5</span> будет вероятность класса 1?</li>
+<li>Изменится ли класс, если умножить одновременно <span class="math-inline">\mathbf w</span> и <span class="math-inline">b</span> на положительную константу? А вероятность?</li>
+</ol></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 6</div><pre><code>def sigmoid(value):
+    value = np.asarray(value, dtype=float)
+    return np.where(
+        value &gt;= 0,
+        1.0 / (1.0 + np.exp(-value)),
+        np.exp(value) / (1.0 + np.exp(value)),
+    )
+
+
+x_demo = np.array([0.8, -0.1])
+w_demo = np.array([1.1, 0.7])
+b_demo = -0.2
+score_demo = x_demo @ w_demo + b_demo
+probability_demo = sigmoid(score_demo)
+
+print(f&quot;score = {score_demo:.3f}&quot;)
+print(f&quot;P(y=1|x) = {probability_demo:.3f}&quot;)
+print(f&quot;predicted class = {int(probability_demo &gt;= 0.5)}&quot;)
+
+assert np.isclose(score_demo, 0.61)
+assert probability_demo &gt; 0.5</code></pre></div><pre class="nb-stream">score = 0.610
+P(y=1|x) = 0.648
+predicted class = 1
+</pre></section><section class="nb-markdown"><h3 id="section-6-3">Обучение: likelihood превращается в log loss</h3>
+<p>Для наблюдения <span class="math-inline">(\mathbf x^{(i)},y^{(i)})</span> бинарная потеря равна</p>
+<p><div class="math-display">
+\ell_i=-y^{(i)}\log p_i-(1-y^{(i)})\log(1-p_i).
+</div></p>
+<p>Её производная по score особенно проста: <span class="math-inline">\partial\ell_i/\partial s_i=p_i-y^{(i)}</span>.
+Значит, ошибка проходит через линейный score к <span class="math-inline">\mathbf w</span> и <span class="math-inline">b</span>.</p>
+<p><strong>До запуска:</strong> loss должен убывать монотонно или обязан лишь в среднем становиться меньше? Что произойдёт при слишком большом шаге?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 8</div><pre><code>def binary_cross_entropy(target, probability):
+    probability = np.clip(probability, 1e-12, 1 - 1e-12)
+    return -np.mean(target * np.log(probability) + (1 - target) * np.log(1 - probability))
+
+
+w = np.zeros(X.shape[1])
+b = 0.0
+learning_rate = 0.35
+loss_history = []
+
+for _ in range(350):
+    scores = X @ w + b
+    probabilities = sigmoid(scores)
+    loss_history.append(binary_cross_entropy(y, probabilities))
+    score_gradient = probabilities - y
+    w -= learning_rate * (X.T @ score_gradient) / len(X)
+    b -= learning_rate * score_gradient.mean()
+
+final_probabilities = sigmoid(X @ w + b)
+predictions = (final_probabilities &gt;= 0.5).astype(int)
+accuracy = np.mean(predictions == y)
+
+print(f&quot;loss: {loss_history[0]:.4f} -&gt; {loss_history[-1]:.4f}&quot;)
+print(f&quot;training accuracy: {accuracy:.3f}&quot;)
+print(f&quot;w = {w.round(3)}, b = {b:.3f}&quot;)
+
+assert loss_history[-1] &lt; 0.25 * loss_history[0]
+assert accuracy &gt; 0.95</code></pre></div><pre class="nb-stream">loss: 0.6931 -&gt; 0.0213
+training accuracy: 1.000
+w = [2.951 3.123], b = -0.078
+</pre></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 9</div><pre><code>fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))
+axes[0].plot(loss_history, color=&quot;#F05A47&quot;, linewidth=2)
+axes[0].set(xlabel=&quot;Gradient step&quot;, ylabel=&quot;Binary cross-entropy&quot;, title=&quot;Training objective&quot;)
+
+axes[1].scatter(X[:, 0], X[:, 1], c=y, cmap=&quot;coolwarm&quot;, edgecolor=&quot;white&quot;, linewidth=0.7)
+x_line = np.linspace(X[:, 0].min() - 0.5, X[:, 0].max() + 0.5, 200)
+y_line = -(w[0] * x_line + b) / w[1]
+axes[1].plot(x_line, y_line, color=&quot;black&quot;, linewidth=2, label=&quot;$s(x)=0$&quot;)
+axes[1].set(xlabel=&quot;$x_1$&quot;, ylabel=&quot;$x_2$&quot;, title=&quot;Learned decision boundary&quot;)
+axes[1].legend()
+fig.tight_layout()
+fig.savefig(validation_dir / &quot;binary_classifier.png&quot;, dpi=150, bbox_inches=&quot;tight&quot;)
+plt.show()</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/linear_classification_word2vec-c08-o00.png" alt="Сохранённый график из ячейки 9"></figure></section><section class="nb-markdown"><h2 id="section-9-4">2. От одного класса к словарю классов</h2>
+<p>В многоклассовой модели у каждого класса <span class="math-inline">c</span> есть свой вектор весов <span class="math-inline">\mathbf u_c</span> и свой score:</p>
+<p><div class="math-display">
+z_c=\mathbf u_c^\mathsf T\mathbf x+b_c,
+\qquad
+p(c\mid\mathbf x)=\frac{e^{z_c}}{\sum_j e^{z_j}}.
+</div></p>
+<p>Строки матрицы <span class="math-inline">\mathbf U</span> — это веса классов. Softmax превращает все scores в одно распределение вероятностей, а cross-entropy для правильного класса <span class="math-inline">y</span> равна <span class="math-inline">-\log p(y\mid\mathbf x)</span>.</p>
+<p><strong>До запуска:</strong> изменится ли softmax, если прибавить одну и ту же константу ко всем scores?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 11</div><pre><code>def softmax(values, axis=-1):
+    values = np.asarray(values, dtype=float)
+    shifted = values - np.max(values, axis=axis, keepdims=True)
+    exponentials = np.exp(shifted)
+    return exponentials / exponentials.sum(axis=axis, keepdims=True)
+
+
+x_multi = np.array([1.2, -0.4])
+U_demo = np.array([
+    [1.0, 0.2],
+    [-0.3, 0.8],
+    [0.1, -1.1],
+])
+class_names = np.array([&quot;кот&quot;, &quot;яблоко&quot;, &quot;поезд&quot;])
+scores_multi = U_demo @ x_multi
+probabilities_multi = softmax(scores_multi)
+target_index = 0
+loss_multi = -np.log(probabilities_multi[target_index])
+
+for name, score, probability in zip(class_names, scores_multi, probabilities_multi):
+    print(f&quot;{name:7s}: score={score: .3f}, probability={probability:.3f}&quot;)
+print(f&quot;cross-entropy for target &#x27;{class_names[target_index]}&#x27;: {loss_multi:.3f}&quot;)
+
+assert np.isclose(probabilities_multi.sum(), 1.0)
+assert np.allclose(softmax(scores_multi), softmax(scores_multi + 100.0))</code></pre></div><pre class="nb-stream">кот    : score= 1.120, probability=0.576
+яблоко : score=-0.680, probability=0.095
+поезд  : score= 0.560, probability=0.329
+cross-entropy for target &#x27;кот&#x27;: 0.552
+</pre></section><section class="nb-markdown"><h2 id="section-11-5">3. Где взять признаки слова?</h2>
+<p>Для обычного классификатора вектор <span class="math-inline">\mathbf x</span> дан заранее. Для слова его можно начать с one-hot-вектора, но такой вектор не кодирует сходство: любые два разных слова одинаково ортогональны.</p>
+<p>Word2Vec обучает таблицу входных векторов <span class="math-inline">\mathbf E</span>. Умножение one-hot-вектора слова на <span class="math-inline">\mathbf E</span> просто выбирает одну строку:</p>
+<p><div class="math-display">
+\operatorname{onehot}(w)^\mathsf T\mathbf E=\mathbf e_w.
+</div></p>
+<p>Чтобы получить обучающие примеры, превращаем корпус в направленные пары:</p>
+<p><div class="math-display">
+(\text{центральное слово},\text{слово из окна}).
+</div></p>
+<p>Используем искусственный корпус из лекции. Группы заданы только при составлении корпуса; их названия не входят в loss.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 13</div><pre><code>groups = {
+    &quot;animals&quot;: [&quot;кот&quot;, &quot;пёс&quot;, &quot;волк&quot;, &quot;лиса&quot;, &quot;медведь&quot;],
+    &quot;fruit&quot;: [&quot;яблоко&quot;, &quot;груша&quot;, &quot;слива&quot;, &quot;вишня&quot;, &quot;персик&quot;],
+    &quot;transport&quot;: [&quot;поезд&quot;, &quot;автобус&quot;, &quot;трамвай&quot;, &quot;метро&quot;, &quot;такси&quot;],
+}
+
+corpus = [
+    [&quot;кот&quot;, &quot;пёс&quot;, &quot;волк&quot;, &quot;лиса&quot;, &quot;медведь&quot;],
+    [&quot;медведь&quot;, &quot;волк&quot;, &quot;кот&quot;, &quot;лиса&quot;, &quot;пёс&quot;],
+    [&quot;лиса&quot;, &quot;медведь&quot;, &quot;пёс&quot;, &quot;кот&quot;, &quot;волк&quot;],
+    [&quot;волк&quot;, &quot;лиса&quot;, &quot;кот&quot;, &quot;медведь&quot;, &quot;пёс&quot;],
+    [&quot;яблоко&quot;, &quot;груша&quot;, &quot;слива&quot;, &quot;вишня&quot;, &quot;персик&quot;],
+    [&quot;персик&quot;, &quot;слива&quot;, &quot;яблоко&quot;, &quot;вишня&quot;, &quot;груша&quot;],
+    [&quot;вишня&quot;, &quot;персик&quot;, &quot;груша&quot;, &quot;яблоко&quot;, &quot;слива&quot;],
+    [&quot;слива&quot;, &quot;вишня&quot;, &quot;яблоко&quot;, &quot;персик&quot;, &quot;груша&quot;],
+    [&quot;поезд&quot;, &quot;автобус&quot;, &quot;трамвай&quot;, &quot;метро&quot;, &quot;такси&quot;],
+    [&quot;такси&quot;, &quot;трамвай&quot;, &quot;поезд&quot;, &quot;метро&quot;, &quot;автобус&quot;],
+    [&quot;метро&quot;, &quot;такси&quot;, &quot;автобус&quot;, &quot;поезд&quot;, &quot;трамвай&quot;],
+    [&quot;трамвай&quot;, &quot;метро&quot;, &quot;поезд&quot;, &quot;такси&quot;, &quot;автобус&quot;],
+]
+
+words = [word for group_words in groups.values() for word in group_words]
+word_to_index = {word: index for index, word in enumerate(words)}
+window_size = 2
+
+
+def extract_pairs(sentences, window):
+    result = []
+    for sentence in sentences:
+        for center_position, center_word in enumerate(sentence):
+            left = max(0, center_position - window)
+            right = min(len(sentence), center_position + window + 1)
+            for context_position in range(left, right):
+                if context_position != center_position:
+                    result.append((center_word, sentence[context_position]))
+    return result
+
+
+pairs = extract_pairs(corpus, window_size)
+print(f&quot;vocabulary size: {len(words)}&quot;)
+print(f&quot;directed positive pair occurrences: {len(pairs)}&quot;)
+print(&quot;first 12 pairs:&quot;, pairs[:12])
+
+assert len(words) == 15
+assert len(pairs) == 168
+assert (&quot;кот&quot;, &quot;пёс&quot;) in pairs and (&quot;пёс&quot;, &quot;кот&quot;) in pairs</code></pre></div><pre class="nb-stream">vocabulary size: 15
+directed positive pair occurrences: 168
+first 12 pairs: [(&#x27;кот&#x27;, &#x27;пёс&#x27;), (&#x27;кот&#x27;, &#x27;волк&#x27;), (&#x27;пёс&#x27;, &#x27;кот&#x27;), (&#x27;пёс&#x27;, &#x27;волк&#x27;), (&#x27;пёс&#x27;, &#x27;лиса&#x27;), (&#x27;волк&#x27;, &#x27;кот&#x27;), (&#x27;волк&#x27;, &#x27;пёс&#x27;), (&#x27;волк&#x27;, &#x27;лиса&#x27;), (&#x27;волк&#x27;, &#x27;медведь&#x27;), (&#x27;лиса&#x27;, &#x27;пёс&#x27;), (&#x27;лиса&#x27;, &#x27;волк&#x27;), (&#x27;лиса&#x27;, &#x27;медведь&#x27;)]
+</pre></section><section class="nb-markdown"><h3 id="section-13-6">Сначала посмотрим на наблюдаемые данные</h3>
+<p>Матрица <span class="math-inline">\mathbf C</span> считает, сколько раз контекст <span class="math-inline">c</span> появился рядом с центральным словом <span class="math-inline">w</span>.
+Она ещё не является embedding и не является целевой функцией Word2Vec. Это только способ увидеть, откуда берётся обучающий сигнал.</p>
+<p><strong>До запуска:</strong> где должны появиться ненулевые блоки? Почему нулевой count не означает, что два слова «несовместимы в языке»?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 15</div><pre><code>V = len(words)
+counts = np.zeros((V, V), dtype=float)
+for center_word, context_word in pairs:
+    counts[word_to_index[center_word], word_to_index[context_word]] += 1
+
+fig, ax = plt.subplots(figsize=(9, 7))
+image = ax.imshow(counts, cmap=&quot;YlOrRd&quot;)
+ax.set_xticks(range(V), words, rotation=70, ha=&quot;right&quot;)
+ax.set_yticks(range(V), words)
+ax.set(xlabel=&quot;Context word&quot;, ylabel=&quot;Center word&quot;, title=&quot;Observed word-context counts&quot;)
+fig.colorbar(image, ax=ax, label=&quot;Pair count&quot;)
+fig.tight_layout()
+fig.savefig(validation_dir / &quot;context_counts.png&quot;, dpi=150, bbox_inches=&quot;tight&quot;)
+plt.show()
+
+assert np.count_nonzero(counts[:5, 5:]) == 0
+assert np.count_nonzero(counts[5:10, :5]) == 0</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/linear_classification_word2vec-c14-o00.png" alt="Сохранённый график из ячейки 15"></figure></section><section class="nb-markdown"><h2 id="section-15-7">4. Skip-gram — тот же классификатор, но вход тоже обучается</h2>
+<p>Для центрального слова <span class="math-inline">w</span> выбираем строку <span class="math-inline">\mathbf e_w</span> из таблицы <span class="math-inline">\mathbf E</span>.
+Каждое возможное контекстное слово <span class="math-inline">c</span> имеет собственный вектор <span class="math-inline">\mathbf u_c</span> в таблице <span class="math-inline">\mathbf U</span>:</p>
+<p><div class="math-display">
+z_c=\mathbf u_c^\mathsf T\mathbf e_w,
+\qquad
+p(c\mid w)=\operatorname{softmax}(\mathbf U\mathbf e_w)_c.
+</div></p>
+<p>Это многоклассовая линейная классификация контекста. Новая часть — вектор признаков <span class="math-inline">\mathbf e_w</span> тоже является параметром.</p>
+<p>Важно: совместное обучение <span class="math-inline">\mathbf E</span> и <span class="math-inline">\mathbf U</span> — билинейная параметризация. В отличие от обычной логистической регрессии с фиксированными признаками, задача в целом не обязана быть выпуклой.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 17</div><pre><code>embedding_size = 2
+model_rng = np.random.default_rng(SEED)
+E = model_rng.normal(0, 0.25, size=(V, embedding_size))
+U = model_rng.normal(0, 0.25, size=(V, embedding_size))
+E_initial = E.copy()
+
+
+def skipgram_loss_and_gradients(input_vectors, context_vectors, pair_counts, l2=1e-4):
+    scores = input_vectors @ context_vectors.T
+    probabilities = softmax(scores, axis=1)
+    row_totals = pair_counts.sum(axis=1, keepdims=True)
+    total_pairs = pair_counts.sum()
+    data_loss = -np.sum(pair_counts * np.log(np.clip(probabilities, 1e-12, 1.0))) / total_pairs
+    regularization = 0.5 * l2 * (np.sum(input_vectors ** 2) + np.sum(context_vectors ** 2))
+    score_gradient = (probabilities * row_totals - pair_counts) / total_pairs
+    input_gradient = score_gradient @ context_vectors + l2 * input_vectors
+    context_gradient = score_gradient.T @ input_vectors + l2 * context_vectors
+    return data_loss + regularization, input_gradient, context_gradient
+
+
+initial_loss, _, _ = skipgram_loss_and_gradients(E, U, counts)
+print(f&quot;initial full-softmax loss: {initial_loss:.4f}&quot;)
+print(f&quot;uniform baseline log(V): {np.log(V):.4f}&quot;)
+
+assert np.isclose(initial_loss, np.log(V), atol=0.2)</code></pre></div><pre class="nb-stream">initial full-softmax loss: 2.7061
+uniform baseline log(V): 2.7081
+</pre></section><section class="nb-markdown"><h3 id="section-17-8">Обучаем обе таблицы</h3>
+<p>Для быстрого воспроизводимого опыта используем Adam и точный градиент по всей маленькой матрице пар. Это не production-реализация Word2Vec: настоящий словарь намного больше, поэтому полный softmax дорог и часто заменяется другими целями.</p>
+<p><strong>До запуска:</strong> loss может уменьшиться, если двигать только <span class="math-inline">\mathbf U</span>? А только <span class="math-inline">\mathbf E</span>? Почему в Word2Vec нужны обе таблицы?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 19</div><pre><code>def adam_update(parameter, gradient, first_moment, second_moment, step, lr=0.08):
+    beta1, beta2, epsilon = 0.9, 0.999, 1e-8
+    first_moment = beta1 * first_moment + (1 - beta1) * gradient
+    second_moment = beta2 * second_moment + (1 - beta2) * gradient ** 2
+    first_unbiased = first_moment / (1 - beta1 ** step)
+    second_unbiased = second_moment / (1 - beta2 ** step)
+    parameter = parameter - lr * first_unbiased / (np.sqrt(second_unbiased) + epsilon)
+    return parameter, first_moment, second_moment
+
+
+m_E = np.zeros_like(E)
+v_E = np.zeros_like(E)
+m_U = np.zeros_like(U)
+v_U = np.zeros_like(U)
+skipgram_history = []
+
+for step in range(1, 1201):
+    loss, gradient_E, gradient_U = skipgram_loss_and_gradients(E, U, counts)
+    skipgram_history.append(loss)
+    E, m_E, v_E = adam_update(E, gradient_E, m_E, v_E, step)
+    U, m_U, v_U = adam_update(U, gradient_U, m_U, v_U, step)
+
+final_loss, _, _ = skipgram_loss_and_gradients(E, U, counts)
+print(f&quot;full-softmax loss: {initial_loss:.4f} -&gt; {final_loss:.4f}&quot;)
+
+assert final_loss &lt; 0.7 * initial_loss
+assert np.isfinite(E).all() and np.isfinite(U).all()</code></pre></div><pre class="nb-stream">full-softmax loss: 2.7061 -&gt; 1.5003
+</pre></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 20</div><pre><code>def cosine_matrix(vectors):
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    normalized = vectors / np.clip(norms, 1e-12, None)
+    return normalized @ normalized.T
+
+
+group_colors = {&quot;animals&quot;: &quot;#3A7D44&quot;, &quot;fruit&quot;: &quot;#F05A47&quot;, &quot;transport&quot;: &quot;#3377CC&quot;}
+group_names = {&quot;animals&quot;: &quot;животные&quot;, &quot;fruit&quot;: &quot;фрукты&quot;, &quot;transport&quot;: &quot;транспорт&quot;}
+word_group = {word: group for group, group_words in groups.items() for word in group_words}
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 4.6))
+axes[0].plot(skipgram_history, color=&quot;#F05A47&quot;, linewidth=2)
+axes[0].set(xlabel=&quot;Adam step&quot;, ylabel=&quot;Cross-entropy&quot;, title=&quot;Full-softmax objective&quot;)
+
+for ax, vectors, title in [
+    (axes[1], E_initial, &quot;Input vectors before training&quot;),
+    (axes[2], E, &quot;Input vectors after training&quot;),
+]:
+    shown_groups = set()
+    for index, word in enumerate(words):
+        group = word_group[word]
+        label = group_names[group] if group not in shown_groups else None
+        ax.scatter(vectors[index, 0], vectors[index, 1], color=group_colors[group], s=55, label=label)
+        shown_groups.add(group)
+    ax.axhline(0, color=&quot;0.88&quot;, linewidth=1)
+    ax.axvline(0, color=&quot;0.88&quot;, linewidth=1)
+    ax.set_title(title)
+    ax.set_aspect(&quot;equal&quot;, adjustable=&quot;datalim&quot;)
+    ax.legend(fontsize=8, loc=&quot;best&quot;)
+
+fig.tight_layout()
+fig.savefig(validation_dir / &quot;skipgram_training.png&quot;, dpi=150, bbox_inches=&quot;tight&quot;)
+plt.show()
+
+similarities = cosine_matrix(E)
+same_group = []
+different_group = []
+for i in range(V):
+    for j in range(i + 1, V):
+        target = same_group if word_group[words[i]] == word_group[words[j]] else different_group
+        target.append(similarities[i, j])
+
+print(f&quot;mean cosine within constructed groups: {np.mean(same_group):.3f}&quot;)
+print(f&quot;mean cosine across constructed groups: {np.mean(different_group):.3f}&quot;)
+assert np.mean(same_group) &gt; np.mean(different_group) + 0.5</code></pre></div><figure class="nb-figure"><img loading="lazy" src="assets/linear_classification_word2vec-c19-o00.png" alt="Сохранённый график из ячейки 20"></figure><pre class="nb-stream">mean cosine within constructed groups: 0.894
+mean cosine across constructed groups: -0.458
+</pre></section><section class="nb-markdown"><h3 id="section-20-9">Ближайшие соседи — отдельная проверка, не training loss</h3>
+<p>Word2Vec обучался предсказывать контекст через dot products <span class="math-inline">\mathbf u_c^\mathsf T\mathbf e_w</span>.
+После обучения мы часто сравниваем <strong>входные</strong> векторы слов через cosine similarity:</p>
+<p><div class="math-display">
+\cos(\mathbf e_a,\mathbf e_b)=
+\frac{\mathbf e_a^\mathsf T\mathbf e_b}{\|\mathbf e_a\|_2\|\mathbf e_b\|_2}.
+</div></p>
+<p>Это правило retrieval, а не оптимизируемая выше cross-entropy.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 22</div><pre><code>def nearest_words(query, k=4):
+    query_index = word_to_index[query]
+    order = np.argsort(-similarities[query_index])
+    return [(words[index], similarities[query_index, index]) for index in order if index != query_index][:k]
+
+
+for query in [&quot;кот&quot;, &quot;яблоко&quot;, &quot;поезд&quot;]:
+    formatted = &quot;, &quot;.join(f&quot;{word} ({value:.2f})&quot; for word, value in nearest_words(query))
+    print(f&quot;{query:7s} -&gt; {formatted}&quot;)
+
+assert all(word_group[word] == &quot;animals&quot; for word, _ in nearest_words(&quot;кот&quot;))
+assert all(word_group[word] == &quot;fruit&quot; for word, _ in nearest_words(&quot;яблоко&quot;))
+assert all(word_group[word] == &quot;transport&quot; for word, _ in nearest_words(&quot;поезд&quot;))</code></pre></div><pre class="nb-stream">кот     -&gt; лиса (1.00), медведь (0.91), пёс (0.77), волк (0.77)
+яблоко  -&gt; вишня (1.00), персик (0.90), груша (0.76), слива (0.76)
+поезд   -&gt; метро (1.00), такси (0.90), трамвай (0.77), автобус (0.77)
+</pre></section><section class="nb-markdown"><h2 id="section-22-10">5. Negative sampling — другая задача классификации</h2>
+<p>Полный softmax сравнивает правильный контекст со всем словарём. Negative sampling формирует другую бинарную задачу:</p>
+<ul>
+<li>наблюдаемая пара <span class="math-inline">(w,c)</span> получает метку <span class="math-inline">y=1</span>;</li>
+<li>выбранные шумовые пары <span class="math-inline">(w,n_i)</span> получают метку <span class="math-inline">y=0</span>.</li>
+</ul>
+<p>Для score <span class="math-inline">s=\mathbf u^\mathsf T\mathbf e_w</span> используется та же бинарная loss, что в начале семинара, и та же производная:</p>
+<p><div class="math-display">
+\frac{\partial\ell}{\partial s}=\sigma(s)-y.
+</div></p>
+<p><strong>До запуска:</strong> в каком направлении loss просит изменить score положительной пары? А scores выбранных отрицательных пар?</p>
+<p>Это утверждение относится к локальной производной по каждому score. Поскольку один центральный вектор участвует сразу в нескольких парах, после общего шага по параметрам каждый отдельный score не обязан измениться монотонно: градиенты взаимодействуют.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 24</div><pre><code>center = word_to_index[&quot;кот&quot;]
+candidate_words = [&quot;пёс&quot;, &quot;яблоко&quot;, &quot;поезд&quot;]
+candidate_indices = np.array([word_to_index[word] for word in candidate_words])
+labels = np.array([1.0, 0.0, 0.0])
+
+center_vector = E[center].copy()
+candidate_vectors = U[candidate_indices].copy()
+scores_before = candidate_vectors @ center_vector
+probabilities_before = sigmoid(scores_before)
+score_gradients = probabilities_before - labels
+score_step = 0.5
+independent_score_step = scores_before - score_step * score_gradients
+
+for word, label, before, gradient, after in zip(
+    candidate_words, labels, scores_before, score_gradients, independent_score_step
+):
+    requested_direction = &quot;increase&quot; if -gradient &gt; 0 else &quot;decrease&quot;
+    print(
+        f&quot;pair (кот, {word:7s}), y={int(label)}: &quot;
+        f&quot;score={before: .3f}, dL/ds={gradient: .6f}, requested={requested_direction}, &quot;
+        f&quot;independent score step -&gt; {after: .6f}&quot;
+    )
+
+assert score_gradients[0] &lt; 0
+assert np.all(score_gradients[1:] &gt; 0)
+assert independent_score_step[0] &gt; scores_before[0]
+assert np.all(independent_score_step[1:] &lt; scores_before[1:])</code></pre></div><pre class="nb-stream">pair (кот, пёс    ), y=1: score= 7.960, dL/ds=-0.000349, requested=increase, independent score step -&gt;  7.960415
+pair (кот, яблоко ), y=0: score=-8.342, dL/ds= 0.000238, requested=decrease, independent score step -&gt; -8.341951
+pair (кот, поезд  ), y=0: score= 2.123, dL/ds= 0.893130, requested=decrease, independent score step -&gt;  1.676556
+</pre></section><section class="nb-markdown"><h2 id="section-24-11">6. Что именно установил эксперимент</h2>
+<p><strong>Установлено для этого запуска:</strong></p>
+<ul>
+<li>бинарная log loss уменьшилась, и линейная граница разделила синтетические классы;</li>
+<li>full-softmax Skip-gram loss уменьшилась;</li>
+<li>на специально сконструированном корпусе слова из заданных групп получили более близкие входные векторы;</li>
+<li>локальные производные negative sampling требуют увеличить score положительной пары и уменьшить scores выбранных отрицательных пар; общий шаг по разделяемым векторам может смешивать эти влияния.</li>
+</ul>
+<p><strong>Из этого не следует:</strong></p>
+<ul>
+<li>что маленький корпус моделирует естественный язык;</li>
+<li>что Word2Vec гарантирует «истинную» семантику;</li>
+<li>что cosine является training loss;</li>
+<li>что ненаблюдаемая пара лингвистически невозможна;</li>
+<li>что совместное обучение двух таблиц является выпуклой задачей.</li>
+</ul>
+<p>Финальная формула-мост:</p>
+<p><div class="math-display">
+\underbrace{\mathbf u_c^\mathsf T\mathbf x}_{\text{линейный классификатор с фиксированными признаками}}
+\quad\longrightarrow\quad
+\underbrace{\mathbf u_c^\mathsf T\mathbf e_w}_{\text{Skip-gram: признаки слова тоже обучаются}}.
+</div></p></section><section class="nb-markdown"><h2 id="section-25-12">Резервные вопросы</h2>
+<ol>
+<li>Почему прибавление одной константы ко всем logits не меняет softmax?</li>
+<li>Почему две таблицы <span class="math-inline">\mathbf E</span> и <span class="math-inline">\mathbf U</span> не обязаны совпадать?</li>
+<li>Чем «сосед в текстовом окне» отличается от «соседа в embedding space»?</li>
+<li>Почему negative sampling не даёт нормированную вероятность <span class="math-inline">p(c\mid w)</span> по всему словарю?</li>
+<li>Что изменится, если увеличить размер окна или сделать частые слова намного чаще остальных?</li>
+</ol></section></div></main><footer class="footer"><span>Радослав Нейчев · Машинное обучение</span><a href="../index.html">Все лекции</a></footer></div><script src="../lectures/02_linear_models/vendor/katex/katex.min.js"></script><script>document.querySelectorAll(".math-inline,.math-display").forEach(function(el){katex.render(el.textContent,el,{displayMode:el.classList.contains("math-display"),throwOnError:false,trust:false});});</script></body></html>

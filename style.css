@@ -26,3 +26,6 @@ select:focus-visible,button:focus-visible{outline:3px solid #c99b06;outline-offs
 
 @media(min-width:960px){.intro{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:center}.intro-copy{min-width:0}.channel-card{margin-top:0;gap:14px;padding:14px}.channel-card>div{min-width:0}}
 .resources{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+
+.lecture-head>div{min-width:0}
+.lecture h2{overflow-wrap:anywhere}

@@ -1,0 +1,218 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Снижение размерности: PCA · girafe.ai</title><meta name="description" content="Материалы курса машинного обучения: видео, слайды, ноутбуки и конспекты."><script src="../theme.js"></script><link rel="icon" href="../assets/logo.png"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../notebook-preview.css"><link rel="stylesheet" href="../reading.css"><script src="../mathjax-config.js?v=20261008-2"></script><script defer src="../vendor/mathjax/tex-svg.js"></script></head><body><a class="skip" href="#main">К содержанию</a><div class="wrap"><header class="top"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" width="40" height="40">girafe.ai</a><div class="top-tools"><span class="term">МФТИ · осень 2026</span><label class="theme-control" for="theme-choice">Тема<select id="theme-choice" aria-label="Цветовая тема"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div></header><main id="main" class="reading nb-page"><a class="back" href="../index.html">← Все лекции</a><div class="eyebrow">Ноутбук · статический просмотр</div><h1>Снижение размерности: PCA</h1><p class="nb-intro">Дополнительная практика из архива girafe-ai: сжатие изображений через SVD. Это архивная версия с упражнениями, не установленная копия показанного 28 сентября ноутбука. <a href="https://github.com/girafe-ai/ml-course/blob/25f_mipt/week0_04_svm_and_pca/week0_04_pictures_svd__completed.ipynb">Исходник</a>. Для запуска нужны NumPy, Matplotlib, Pillow, tqdm и картинки в папке ../dataset: <code>waiting.jpeg</code>, <code>mipt.jpg</code>, <code>simpsons.jpg</code> (исходные картинки в архиве отсутствуют; нужно подставить свои изображения и соответствующие пути). Сохранённых результатов выполнения нет; код здесь не запускается.</p><a class="nb-download" href="pictures_svd.ipynb" download>Скачать .ipynb ↓</a><div class="nb-content"><section class="nb-markdown"><h1 id="pictures-compression-using-svd">Pictures compression using SVD</h1>
+<p>In this exercise you are supposed to study how SVD could be used in image compression.</p>
+<p><em>Based on open course in <a href="https://github.com/oseledets/nla2018">Numerical Linear Algebra</a> by Ivan Oseledets</em></p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 2</div><pre><code># If you are using colab, uncomment this cell
+
+# ! wget https://raw.githubusercontent.com/girafe-ai/ml-mipt/a5bf18c/datasets/waiting.jpeg
+# ! wget https://raw.githubusercontent.com/girafe-ai/ml-mipt/a5bf18c/datasets/mipt.jpg
+# ! wget https://raw.githubusercontent.com/girafe-ai/ml-mipt/a5bf18c/datasets/simpsons.jpg
+
+# ! mkdir ../dataset
+# ! mv -t ../dataset waiting.jpeg mipt.jpg simpsons.jpg</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 3</div><pre><code>%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image</code></pre></div></section><section class="nb-markdown"><h2 id="section-1">1. Singular values</h2>
+<p>Compute the singular values of some predownloaded image (via the code provided below) and plot them. Do not forget to use logarithmic scale.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 5</div><pre><code>face_raw = Image.open(&quot;../dataset/waiting.jpeg&quot;)
+face = np.array(face_raw).astype(np.uint8)
+
+plt.imshow(face_raw)
+plt.xticks(())
+plt.yticks(())
+plt.title(&quot;Original Picture&quot;)
+plt.show()</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 6</div><pre><code># optional: zero mean the image
+face = face - np.mean(face, axis=1, keepdims=True)</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 7</div><pre><code># Image is saved as a 3-dimensional array with shape H x W x C (heigt x width x channels)
+Rf = face[:,:,0]
+Gf = face[:,:,1]
+Bf = face[:,:,2]
+
+# Compute SVD and plot the singular values for different image channels
+u, Rs, vh = np.linalg.svd(Rf, full_matrices=False)
+u, Gs, vh = np.linalg.svd(Gf, full_matrices=False)
+u, Bs, vh = np.linalg.svd(Bf, full_matrices=False)</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 8</div><pre><code>plt.figure(figsize=(12,7))
+plt.plot(Rs,&#x27;ro&#x27;)
+plt.plot(Gs,&#x27;g.&#x27;)
+plt.plot(Bs,&#x27;b:&#x27;)
+plt.yscale(&#x27;log&#x27;)
+plt.ylabel(&quot;Singular values&quot;)
+plt.xlabel(&quot;Singular value order&quot;)
+plt.show()</code></pre></div></section><section class="nb-markdown"><h2 id="section-2">2. Compress</h2>
+<p>Complete a function <code>compress</code>, that performs SVD and truncates it (using <span class="math-inline">\(k\)</span> singular values/vectors). See the prototype below.</p>
+<p>Note, that in case when your images are not grayscale you have to split your image to channels and work with matrices corresponding to different channels separately.</p>
+<p>Plot approximate reconstructed image <span class="math-inline">\(M_\varepsilon\)</span> of your favorite image such that <span class="math-inline">\(rank(M_\varepsilon) = 5, 20, 50\)</span> using <code>plt.subplots</code>.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 10</div><pre><code>def compress(image, k):
+    &quot;&quot;&quot;
+    Perform svd decomposition and truncate it (using k singular values/vectors)
+
+    Parameters:
+        image (np.array):        input image (probably, colourful)
+
+        k (int):                 approximation rank
+
+    --------
+    Returns:
+      reconst_matrix (np.array): reconstructed matrix (tensor in colourful case)
+
+      s (np.array):              array of singular values
+    &quot;&quot;&quot;
+    image2 = image.copy()
+
+    Rf = image2[:,:,0]# - image2[:,:,0].mean(axis=1, keepdims=True)
+    Gf = image2[:,:,1]# - image2[:,:,1].mean(axis=1, keepdims=True)
+    Bf = image2[:,:,2]# - image2[:,:,2].mean(axis=1, keepdims=True)
+
+    # compute per-channel SVD for input image
+    # &lt;your code here&gt;
+    u_r, Rs, vh_r = np.linalg.svd(Rf, full_matrices=False)
+    u_g, Gs, vh_g = np.linalg.svd(Gf, full_matrices=False)
+    u_b, Bs, vh_b = np.linalg.svd(Bf, full_matrices=False)
+    Rs = Rs[:k]
+    Gs = Gs[:k]
+    Bs = Bs[:k]
+
+    # reconstruct the input image with the given approximation rank
+    reduced_im = np.zeros((image.shape),np.uint8)
+    # &lt;your code here&gt;
+    red_channel = u_r[:, :k] @ np.diag(Rs) @ vh_r[:k, :]
+    green_channel = u_g[:, :k] @ np.diag(Gs) @ vh_g[:k, :]
+    blue_channel = u_b[:, :k] @ np.diag(Bs) @ vh_b[:k, :]
+
+    reduced_im[..., 0] = red_channel
+    reduced_im[..., 1] = green_channel
+    reduced_im[..., 2] = blue_channel
+
+    # save the array of top-k singular values
+    s = np.zeros((len(Gs), 3))
+    # &lt;your code here&gt;
+    s[:, 0] = Rs
+    s[:, 1] = Gs
+    s[:, 2] = Bs
+
+    return reduced_im.copy(), s</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 11</div><pre><code>plt.figure(figsize=(18,12))
+for i,k in enumerate([350,300,250,200,150,100,50,20,1]):
+    plt.subplot(3,3,i+1)
+    im,s = compress(face,k)
+    plt.imshow(Image.fromarray(im,&quot;RGB&quot;))
+    plt.xticks(())
+    plt.yticks(())
+    plt.title(&quot;{} greatest SV&quot;.format(k))</code></pre></div></section><section class="nb-markdown"><h2 id="section-3">3. Discover</h2>
+<p>Plot the following two figures for your favorite picture
+* How relative error of approximation depends on the rank of approximation?
+* How compression rate in terms of storing information ((singular vectors + singular numbers) / total size of image) depends on the rank of approximation?</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 13</div><pre><code>img, s = compress(face, k)</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 14</div><pre><code># fancy progress bar
+from tqdm.auto import tqdm
+
+k_list = range(5, face.shape[1], 1)
+rel_err = []
+info = []
+for k in tqdm(k_list, leave=False):
+    img, s = compress(face, k)
+
+    current_relative_error = np.linalg.norm(img.astype(np.float64) - face.astype(np.float64))# MSE(img, face) / l2_norm(face)
+    current_relative_error /= np.linalg.norm(face.astype(np.float64))
+    current_information = k * (385 + 498 + 1) # U(image_height x K) @ S(diag KxK) @ V^T(K x image_width)
+
+    rel_err.append(current_relative_error)
+    info.append(current_information)
+
+plt.figure(figsize=(12,7))
+
+plt.subplot(2,1,1)
+plt.title(&quot;Memory volume plot&quot;)
+plt.xlabel(&quot;Rank&quot;)
+plt.ylabel(&quot;Bytes&quot;)
+plt.plot(k_list, info)
+
+plt.subplot(2,1,2)
+plt.title(&quot;Relative error plot&quot;)
+plt.xlabel(&quot;Rank&quot;)
+plt.ylabel(&quot;Rel err value&quot;)
+plt.plot(k_list, rel_err)
+
+plt.tight_layout()
+plt.show()</code></pre></div></section><section class="nb-markdown"><h2 id="section-4">4. Compare</h2>
+<p>Consider the following two pictures. Compute their approximations (with the same rank, or relative error). What do you see? Explain results.</p></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 16</div><pre><code>image_raw1 = Image.open(&quot;../dataset/mipt.jpg&quot;)
+image_raw2 = Image.open(&quot;../dataset/simpsons.jpg&quot;)
+
+image1 = np.array(image_raw1).astype(np.uint8)
+image2 = np.array(image_raw2).astype(np.uint8)
+
+plt.figure(figsize=(18, 6))
+plt.subplot(1, 2, 1)
+plt.imshow(image_raw1)
+plt.title(&quot;One Picture&quot;)
+plt.xticks(())
+plt.yticks(())
+
+plt.subplot(1, 2, 2)
+plt.imshow(image_raw2)
+plt.title(&quot;Another Picture&quot;)
+plt.xticks(())
+plt.yticks(())
+
+plt.show()</code></pre></div></section><section class="nb-markdown"><h4 id="same">Same</h4></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 18</div><pre><code># Your code is here
+im1, s = compress(image1, 100)
+im2, s = compress(image2, 100)
+
+plt.figure(figsize=(18,6))
+
+plt.subplot(1,2,1)
+plt.imshow(Image.fromarray(im1, &quot;RGB&quot;))
+plt.xticks(())
+plt.yticks(())
+
+plt.subplot(1,2,2)
+plt.imshow(Image.fromarray(im2, &quot;RGB&quot;))
+plt.xticks(())
+plt.yticks(())
+
+plt.show()</code></pre></div></section><section class="nb-markdown"><h4 id="same-relative-error">Same relative error</h4></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 20</div><pre><code>k_list = range(5,500,10)
+rel_err1 = []
+rel_err2 = []
+relative_error_threshold = 0.15
+
+for k in tqdm(k_list):
+    image1_compressed, s = compress(image1, k)
+    image2_compressed, s = compress(image2, k)
+
+    relative_error_1 = np.linalg.norm(image1_compressed.astype(np.float64) - image1.astype(np.float64))
+    relative_error_1 /= np.linalg.norm(image1.astype(np.float64))
+
+    relative_error_2 = np.linalg.norm(image2_compressed.astype(np.float64) - image2.astype(np.float64))
+    relative_error_2 /= np.linalg.norm(image2.astype(np.float64))
+
+    rel_err1.append(relative_error_1)
+    rel_err2.append(relative_error_2)
+
+# find the indices
+idx1 = int(np.argwhere(np.diff(np.sign(np.array(rel_err1) - relative_error_threshold))).flatten())
+idx2 = int(np.argwhere(np.diff(np.sign(np.array(rel_err2) - relative_error_threshold))).flatten())
+print(&quot;K1 = {}; K2 = {}&quot;.format(k_list[idx1], k_list[idx2]))
+
+plt.figure(figsize=(12,7))
+
+plt.plot(k_list[idx1], rel_err1[idx1], &#x27;ro&#x27;)
+plt.plot(k_list[idx2], rel_err2[idx2], &#x27;ro&#x27;)
+plt.title(&quot;Rel err for 2 pics&quot;)
+plt.xlabel(&quot;Rank&quot;)
+plt.ylabel(&quot;Rel error val&quot;)
+
+plt.plot(k_list, rel_err1, label=&quot;Image 1&quot;)
+plt.plot(k_list, rel_err2, label=&quot;Image 2&quot;)
+plt.plot(k_list, [relative_error_threshold]*len(k_list),&quot;:&quot;,)
+
+plt.legend()
+plt.show()</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 21</div><pre><code>relative_error_threshold = 0.15
+
+idx1 = int(np.argwhere(np.diff(np.sign(np.array(rel_err1) - relative_error_threshold))).flatten())
+idx2 = int(np.argwhere(np.diff(np.sign(np.array(rel_err2) - relative_error_threshold))).flatten())</code></pre></div></section><section class="nb-cell"><div class="nb-code"><div class="nb-code-label">Python · ячейка 22</div><pre><code>image1_compressed, s = compress(image1, k_list[idx1])
+image2_compressed, s = compress(image2, k_list[idx2])
+
+plt.figure(figsize=(18,6))
+
+plt.subplot(1,2,1)
+plt.imshow(Image.fromarray(image1_compressed, &quot;RGB&quot;))
+plt.xticks(())
+plt.yticks(())
+
+plt.subplot(1,2,2)
+plt.imshow(Image.fromarray(image2_compressed, &quot;RGB&quot;))
+plt.xticks(())
+plt.yticks(())
+plt.show()</code></pre></div></section></div></main><footer class="footer"><span>Радослав Нейчев · Машинное обучение</span><a href="../index.html">Все лекции</a></footer></div></body></html>

@@ -1,0 +1,20 @@
+/* SVD and PCA slide layouts. Append after lecture04.css. */
+.svd-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:55px;align-items:center;width:100%}
+.svd-two img{display:block;max-width:100%;max-height:610px;object-fit:contain}
+.svd-word-table{border-top:5px solid var(--ink);font-size:30px}
+.svd-word-table>div{display:grid;grid-template-columns:230px 1fr;gap:20px;border-bottom:2px solid var(--line);padding:17px 10px}
+.svd-word-table>div:first-child{color:var(--blue);font-size:24px}
+.svd-word-table span:last-child{font-family:monospace;font-size:27px}
+.svd-main-equation{text-align:center}.svd-main-equation div[data-tex]{font-size:55px}.svd-main-equation p{margin-top:22px}
+.svd-vertical{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.svd-triple-labels{display:grid;grid-template-columns:repeat(3,1fr);width:100%;font-size:23px;font-weight:700;text-align:center;color:var(--blue)}
+.svd-centering-source{display:block;width:100%;max-height:425px;object-fit:contain}
+.svd-formula-row{display:flex;flex-direction:column;align-items:center;gap:12px}.svd-formula-row div[data-tex]{font-size:37px}.svd-formula-row p{text-align:center;font-size:27px}
+.svd-axis{grid-template-columns:620px 1fr}.svd-axis img{max-height:580px}.svd-axis div[data-tex]{font-size:34px;margin:28px 0}.svd-axis .svd-question{font-size:35px;font-weight:650}
+.svd-step{width:100%;display:flex;flex-direction:column;gap:28px;align-items:center}.svd-step p{text-align:center}.svd-step div[data-tex]{font-size:43px}.svd-step .svd-end{font-size:33px;font-weight:650;margin-top:15px}
+.svd-factor{display:flex;align-items:center;justify-content:center;gap:22px;width:100%}.svd-factor div[data-tex]{font-size:31px}.svd-equals{font-size:54px}.svd-check{text-align:center;font-size:31px!important;margin-top:12px!important}.svd-factor-legend{text-align:center;font-size:23px!important;margin-top:14px!important}.svd-factor-legend .katex{font-size:1em}
+.svd-metric-row{display:flex;gap:45px;justify-content:center;width:100%}.svd-metric-row>div{display:flex;flex-direction:column;gap:9px;border-top:5px solid var(--blue);padding-top:17px;min-width:230px;text-align:center;font-size:27px}.svd-metric-row>div:last-child{border-color:var(--red)}.svd-metric-row span{font-size:40px;font-weight:700}
+.svd-relations div[data-tex]{font-size:44px}.svd-relations p{margin-top:16px}
+.svd-spectrum{display:block;max-width:1200px;max-height:225px;object-fit:contain}.svd-vertical div[data-tex]{font-size:33px}.svd-vertical>.small{font-size:20px}.svd-vertical>p:last-child{font-size:27px}
+.svd-word-check{grid-template-columns:650px 1fr;gap:45px}.svd-word-check img{max-height:480px}.svd-word-check .small{font-size:21px;margin-top:12px}.svd-word-check>div:last-child{display:flex;flex-direction:column;gap:25px}.svd-word-check .svd-metric-row{gap:20px}.svd-word-check .svd-metric-row>div{min-width:0;flex:1;font-size:22px}.svd-word-check .svd-metric-row span{font-size:37px}.svd-word-check p{font-size:28px}
+.svd-counterexample{gap:26px}.svd-counterexample div[data-tex]{font-size:41px}.svd-counterexample>p:first-child{font-size:33px}

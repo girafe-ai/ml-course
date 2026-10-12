@@ -1,0 +1,11 @@
+/* Scoped visual repairs: preserve the full cover artwork and keep copy clear of it. */
+#cnn-001 h1 {background:transparent;box-shadow:none;}
+#cnn-001 .cover-composition {overflow:visible;}
+#cnn-001 .cover-copy {width:500px;padding-top:60px;}
+#cnn-001 .cover-sub {max-width:500px;margin:0;padding:0;background:transparent;}
+#cnn-001 .cover-author,#cnn-001 .caption {background:transparent;}
+#cnn-001 .cover-art {top:0;right:0;bottom:auto;width:900px;height:100%;object-fit:contain;object-position:right bottom;}
+/* Give the closing sentence its own breathing room above the footer. */
+#cnn-046 .body > .vertical,
+#cnn-047 .body > .vertical,
+#del-features-close .body > .vertical {padding-bottom:28px;}

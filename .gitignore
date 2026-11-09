@@ -110,3 +110,12 @@ venv.bak/
 *__solved*
 *__draft*
 testing/
+
+# experiment logs created by seminar notebooks
+runs.csv
+mlruns/
+
+# HTML pages (interactive demos, quizzes) and the classroom platform are kept outside this repo
+*.html
+interactive/
+quiz/

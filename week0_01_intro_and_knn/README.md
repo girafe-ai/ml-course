@@ -2,9 +2,11 @@
 
 Lecture slides: [`ml-basic_lect01_intro_knn.pdf`](ml-basic_lect01_intro_knn.pdf)
 
-The lecture covers what machine learning is and the types of learning, the ML workflow (splits,
-cross-validation, baselines, leakage), classic ML vs foundation models, tools for reproducible experiments, and
-kNN: distances, choosing k, feature scaling, the curse of dimensionality and search in embedding space.
+The lecture covers what machine learning is, the basic vocabulary on a small table of student marks (objects,
+features, target, model, loss, MSE and MAE), the types of learning, datasets and exploratory data analysis, the ML
+workflow (splits, cross-validation, baselines, leakage), classic ML vs foundation models, tools for reproducible
+experiments, and kNN: distances, choosing k, feature scaling, the curse of dimensionality and search in embedding
+space.
 
 Last year week 1 was Intro + Naive Bayes, and kNN came in lecture 4 (branch
 [`25f_ymls_uz`](https://github.com/girafe-ai/ml-course/tree/25f_ymls_uz)). This year kNN is the first model,

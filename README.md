@@ -6,6 +6,7 @@ weeks appear as the course goes.
 | Week | Topic | Materials |
 | --- | --- | --- |
 | 1 | Intro to ML + k Nearest Neighbors | [week0_01_intro_and_knn](week0_01_intro_and_knn) |
+| 2 | Maximum Likelihood + Linear Regression | [week0_02_mle_and_linear_regression](week0_02_mle_and_linear_regression) |
 
 Homeworks: [homeworks](homeworks)
 

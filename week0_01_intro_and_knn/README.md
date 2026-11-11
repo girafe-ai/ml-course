@@ -10,7 +10,7 @@ space.
 
 Last year week 1 was Intro + Naive Bayes, and kNN came in lecture 4 (branch
 [`25f_ymls_uz`](https://github.com/girafe-ai/ml-course/tree/25f_ymls_uz)). This year kNN is the first model,
-and Naive Bayes moves to week 2.
+and Naive Bayes comes later in the course.
 
 Interactive pages, the self-check quiz, the classroom quiz and the game: links in the course chat.
 

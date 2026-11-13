@@ -1,0 +1,247 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Практика: attention · girafe.ai</title><meta name="description" content="Материалы курса машинного обучения: видео, слайды, ноутбуки и конспекты."><script src="../theme.js"></script><link rel="icon" href="../assets/logo.png"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="../notebook-preview.css"><link rel="stylesheet" href="../reading.css"><script src="../mathjax-config.js?v=20261008-2"></script><script defer src="../vendor/mathjax/tex-svg.js"></script></head><body><a class="skip" href="#main">К содержанию</a><div class="wrap"><header class="top"><a class="brand" href="../index.html"><img src="../assets/logo.png" alt="" width="40" height="40">girafe.ai</a><div class="top-tools"><span class="term">МФТИ · осень 2026</span><label class="theme-control" for="theme-choice">Тема<select id="theme-choice" aria-label="Цветовая тема"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div></header><main id="main" class="reading"><a href="../index.html#lecture-09">← К занятию</a><h1>Практика: attention</h1><p><a download href="attention_basics_20261109.ipynb">Скачать проверенный ноутбук</a></p><h1 id="attention-seminar-of-9-november-2026">Attention: seminar of 9 November 2026</h1>
+<p>This executable edition follows the demonstrated attention material: dot-product scores, numerical stability and temperature, attention context, self-attention, permutation equivariance, and multiple heads.</p>
+<p><strong>Post-seminar correction:</strong> matrix softmax must normalize each row independently; its denominator retains the last axis (<code>keepdims=True</code>). The live coding version omitted this axis, so broadcasting could silently normalize columns when the score matrix was square. This edition fixes that issue and checks row sums and permutation equivariance.</p>
+<p>The deliberately unstable softmax examples remain: warnings and non-finite values there illustrate overflow. The appended, unfinished general/concat attention and historical Colab/RNN templates are outside this executed lesson; the original notebook is preserved in the preparation archive.</p>
+<p>Random matrices illustrate the operations; they are not trained model parameters. Run all cells in order. Dependencies: NumPy, Matplotlib, Seaborn.</p>
+<h2 id="practice-attention-basics">Practice: Attention Basics</h2>
+<p>Original notebook is provided by Udacity at <a href="https://github.com/udacity/deep-learning-v2-pytorch/blob/master/attention/Attention_Basics.ipynb">github</a>.</p>
+<p>In this notebook, we look at how attention is implemented. We will focus on implementing attention in isolation from a larger model. That's because when implementing attention in a real-world model, a lot of the focus goes into piping the data and juggling the various vectors rather than the concepts of attention themselves.</p>
+<p>We will implement attention scoring as well as calculating an attention context vector.</p>
+<h2 id="attention-scoring">Attention Scoring</h2>
+<h3 id="inputs-to-the-scoring-function">Inputs to the scoring function</h3>
+<p>Let's start by looking at the inputs we'll give to the scoring function. We will assume we're in the first step in the decoding phase. The first input to the scoring function is the hidden state of decoder (assuming a toy RNN with three hidden nodes -- not usable in real life, but easier to illustrate):</p>
+<pre><code class="language-python">dec_hidden_state = [5,1,20]
+</code></pre>
+<p>Let's visualize this vector:</p>
+<pre><code class="language-python">%matplotlib inline
+import numpy as np
+np.random.seed(20261109)
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Let's visualize our decoder hidden state
+plt.figure(figsize=(1.5, 4.5))
+sns.heatmap(np.transpose(np.matrix(dec_hidden_state)), annot=True, cmap=sns.light_palette(&quot;purple&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<p>Our first scoring function will score a single annotation (encoder hidden state), which looks like this:</p>
+<pre><code class="language-python">annotation = [3,12,45] #e.g. Encoder hidden state
+</code></pre>
+<pre><code class="language-python"># Let's visualize the single annotation
+plt.figure(figsize=(1.5, 4.5))
+sns.heatmap(np.transpose(np.matrix(annotation)), annot=True, cmap=sns.light_palette(&quot;orange&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<h3 id="implement-scoring-a-single-annotation">IMPLEMENT: Scoring a Single Annotation</h3>
+<p>Let's calculate the dot product of a single annotation. NumPy's <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html">dot()</a> is a good candidate for this operation</p>
+<pre><code class="language-python">def single_dot_attention_score(dec_hidden_state, enc_hidden_state):
+    # TODO: return the dot product of the two vectors
+    return np.asarray(dec_hidden_state).dot(enc_hidden_state)
+
+single_dot_attention_score(dec_hidden_state, annotation)
+</code></pre>
+<h3 id="annotations-matrix">Annotations Matrix</h3>
+<p>Let's now look at scoring all the annotations at once. To do that, here's our annotation matrix:</p>
+<pre><code class="language-python">annotations = np.transpose([[3,12,45], [59,2,5], [1,43,5], [4,3,45.3]])
+</code></pre>
+<p>And it can be visualized like this (each column is a hidden state of an encoder time step):</p>
+<pre><code class="language-python"># Let's visualize our annotation (each column is an annotation)
+annotations = np.transpose([[3,12,45], [59,2,5], [1,43,5], [4,3,45.3]])
+
+ax = sns.heatmap(annotations, annot=True, cmap=sns.light_palette(&quot;orange&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<h3 id="implement-scoring-all-annotations-at-once">IMPLEMENT: Scoring All Annotations at Once</h3>
+<p>Let's calculate the scores of all the annotations in one step using matrix multiplication. Let's continue to us the dot scoring method</p>
+<p><a href="https://github.com/neychev/made_nlp_course/blob/master/week05_machine_translation/img/scoring_functions.png?raw=1">Иллюстрация к примеру</a></p>
+<p>To do that, we'll have to transpose <code>dec_hidden_state</code> and <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matmul.html">matrix multiply</a> it with <code>annotations</code>.</p>
+<pre><code class="language-python">def dot_attention_score(dec_hidden_state, annotations):
+    dec_as_array = np.asarray(dec_hidden_state)
+    annotations_as_array = np.asarray(annotations)
+    # TODO: return the product of dec_hidden_state transpose and enc_hidden_states
+    return dec_as_array.dot(annotations_as_array)
+
+attention_weights_raw = dot_attention_score(dec_hidden_state, annotations)
+attention_weights_raw
+</code></pre>
+<pre><code class="language-python">def unstable_softmax(x, T=1.):
+  exps = np.exp(x)
+  return exps/exps.sum()
+</code></pre>
+<pre><code class="language-python">x = np.arange(4)
+</code></pre>
+<pre><code class="language-python">plt.plot(np.arange(-100, 100), np.exp(np.arange(-100, 100)/15))
+</code></pre>
+<pre><code class="language-python">T = 0.01
+plt.bar(x, unstable_softmax(x+10000))
+</code></pre>
+<pre><code class="language-python">np.allclose(unstable_softmax(x), unstable_softmax(x+2))
+</code></pre>
+<pre><code class="language-python">plt.bar(x, unstable_softmax(x/20))
+</code></pre>
+<p>Looking at these scores, can you guess which of the four vectors will get the most attention from the decoder at this time step?</p>
+<h2 id="softmax">Softmax</h2>
+<p>Now that we have our scores, let's apply softmax:
+<a href="https://github.com/neychev/made_nlp_course/blob/master/week05_machine_translation/img/softmax.png?raw=1">Иллюстрация к примеру</a></p>
+<pre><code class="language-python">attention_weights_raw[:, None].shape
+</code></pre>
+<pre><code class="language-python">def softmax(x, normalize=True):
+    x = np.array(np.asarray(x).squeeze(), dtype=np.float32)
+    if normalize:
+        x -= x.max(axis=-1)
+    e_x = np.exp(x)
+    return e_x / e_x.sum(axis=-1, keepdims=True)
+
+attention_weights = softmax(attention_weights_raw)
+attention_weights
+</code></pre>
+<pre><code class="language-python">np.array([10016], dtype=np.float16)
+</code></pre>
+<pre><code class="language-python">for mult in [1, 10, 100, 1000, 10000, 100000]:
+  print(f&quot;mult: {mult}\n{softmax(x+mult, normalize=True)}\n{softmax(x+mult, normalize=False)}\n\n&quot;)
+</code></pre>
+<p>Even when knowing which annotation will get the most focus, it's interesting to see how drastic softmax makes the end score become. The first and last annotation had the respective scores of 927 and 929. But after softmax, the attention they'll get is 0.12 and 0.88 respectively.</p>
+<h1 id="applying-the-scores-back-on-the-annotations">Applying the scores back on the annotations</h1>
+<p>Now that we have our scores, let's multiply each annotation by its score to proceed closer to the attention context vector. This is the multiplication part of this formula (we'll tackle the summation part in the latter cells)</p>
+<p><a href="https://github.com/neychev/made_nlp_course/blob/master/week05_machine_translation/img/Context_vector.png?raw=1">Иллюстрация к примеру</a></p>
+<pre><code class="language-python">def apply_attention_scores(attention_weights, annotations):
+
+    # TODO: Multiple the annotations by their weights
+    return annotations * attention_weights
+
+applied_attention = apply_attention_scores(attention_weights, annotations)
+applied_attention
+</code></pre>
+<p>Let's visualize how the context vector looks now that we've applied the attention scores back on it:</p>
+<pre><code class="language-python">attention_weights
+</code></pre>
+<pre><code class="language-python"># Let's visualize our annotations after applying attention to them
+ax = sns.heatmap(applied_attention, annot=True, cmap=sns.light_palette(&quot;orange&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<p>Contrast this with the raw annotations visualized earlier in the notebook, and we can see that the second and third annotations (columns) have been nearly wiped out. The first annotation maintains some of its value, and the fourth annotation is the most pronounced.</p>
+<h1 id="calculating-the-attention-context-vector">Calculating the Attention Context Vector</h1>
+<p>All that remains to produce our attention context vector now is to sum up the four columns to produce a single attention context vector</p>
+<pre><code class="language-python">def calculate_attention_vector(applied_attention):
+    return np.sum(applied_attention, axis=1)
+
+attention_vector = calculate_attention_vector(applied_attention)
+attention_vector
+</code></pre>
+<pre><code class="language-python"># Let's visualize the attention context vector
+plt.figure(figsize=(1.5, 4.5))
+sns.heatmap(np.transpose(np.matrix(attention_vector)), annot=True, cmap=sns.light_palette(&quot;Blue&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<p>Now that we have the context vector, we can concatenate it with the hidden state and pass it through a hidden layer to produce the the result of this decoding time step.</p>
+<pre><code class="language-python"># Let's visualize our annotation (each column is an annotation)
+x_sequence = np.random.randn(3, 4)
+
+ax = sns.heatmap(x_sequence, annot=True, cmap=sns.light_palette(&quot;orange&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<pre><code class="language-python">Wq = np.random.randn(3, 2)
+Wk = np.random.randn(3, 2)
+Wv = np.random.randn(3, 2)
+</code></pre>
+<pre><code class="language-python">Wq
+</code></pre>
+<pre><code class="language-python">query_vectors = x_sequence.T.dot(Wq)
+</code></pre>
+<pre><code class="language-python">key_vectors = x_sequence.T.dot(Wk)
+</code></pre>
+<pre><code class="language-python">value_vectors = x_sequence.T.dot(Wv)
+</code></pre>
+<pre><code class="language-python">raw_attention_scores = query_vectors.dot(key_vectors.T) / np.sqrt(2)
+</code></pre>
+<pre><code class="language-python">raw_attention_scores
+</code></pre>
+<pre><code class="language-python">ax = sns.heatmap(raw_attention_scores, annot=True, cmap=sns.light_palette(&quot;red&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<pre><code class="language-python">raw_attention_scores
+</code></pre>
+<pre><code class="language-python">raw_attention_scores.max(axis=1)
+</code></pre>
+<pre><code class="language-python">def softmax(x, normalize=True):
+    x = np.array(x, dtype=np.float64)
+    if normalize:
+        x -= x.max(axis=-1, keepdims=True)
+    e_x = np.exp(x)
+    return e_x / e_x.sum(axis=-1, keepdims=True)
+</code></pre>
+<pre><code class="language-python">attention_scores = softmax(raw_attention_scores, normalize=True)
+</code></pre>
+<pre><code class="language-python">ax = sns.heatmap(attention_scores, annot=True, cmap=sns.light_palette(&quot;blue&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<pre><code class="language-python">np.sum(value_vectors * attention_scores[1, :][:, None], axis=0)
+</code></pre>
+<pre><code class="language-python">z_out_1 = attention_scores.dot(value_vectors).T
+</code></pre>
+<pre><code class="language-python">z_out_1
+</code></pre>
+<pre><code class="language-python">x_sequence.shape
+</code></pre>
+<pre><code class="language-python">def compute_one_attention_head(x_sequence, Wq, Wk, Wv):
+    query_vectors = x_sequence.T.dot(Wq)
+    key_vectors = x_sequence.T.dot(Wk)
+    value_vectors = x_sequence.T.dot(Wv)
+
+    raw_attention_scores = query_vectors.dot(key_vectors.T) / np.sqrt(query_vectors.shape[-1])
+
+    attention_scores = softmax(raw_attention_scores, normalize=True)
+    z_out = attention_scores.dot(value_vectors).T
+
+    return z_out
+</code></pre>
+<pre><code class="language-python">compute_one_attention_head(x_sequence, Wq, Wk, Wv)
+</code></pre>
+<pre><code class="language-python">x_sequence[:, ::-1]
+</code></pre>
+<pre><code class="language-python">out_normal = compute_one_attention_head(x_sequence, Wq, Wk, Wv)
+</code></pre>
+<pre><code class="language-python">out_inverced = compute_one_attention_head(x_sequence[:, ::-1], Wq, Wk, Wv)
+</code></pre>
+<pre><code class="language-python">out_normal.shape
+</code></pre>
+<pre><code class="language-python">out_inverced.shape
+</code></pre>
+<pre><code class="language-python">np.allclose(out_normal, out_inverced[:, ::-1])
+</code></pre>
+<pre><code class="language-python">def compute_multihead_attention(x_sequence, hidden_dim=2, number_of_heads=5):
+  z_outs = []
+  input_dim = x_sequence.shape[0]
+  Wo = np.random.randn(input_dim, number_of_heads*hidden_dim)
+  # print(Wo.shape)
+  for head in range(number_of_heads):
+      Wq = np.random.randn(input_dim, hidden_dim)
+      Wk = np.random.randn(input_dim, hidden_dim)
+      Wv = np.random.randn(input_dim, hidden_dim)
+
+      z_outs.append(compute_one_attention_head(x_sequence, Wq, Wk, Wv))
+  out = np.concatenate(z_outs, axis=0)
+  # print(out.shape)
+  return Wo.dot(out)
+</code></pre>
+<pre><code class="language-python">x_sequence.shape # dim_size, seq_len
+
+</code></pre>
+<pre><code class="language-python">out = compute_multihead_attention(x_sequence, 2, 5)
+out2 = compute_multihead_attention(out, 4, 3)
+out3 = compute_multihead_attention(out2, 11, 2)
+
+for a in [out, out2, out3]:
+    print(a.shape)
+</code></pre>
+<pre><code class="language-python">out3[:, -1]
+</code></pre>
+<pre><code class="language-python">x_sequence.shape, out.shape, out2.shape, out3.shape
+</code></pre>
+<pre><code class="language-python">ax = sns.heatmap(out, annot=True, cmap=sns.light_palette(&quot;blue&quot;, as_cmap=True), linewidths=1)
+</code></pre>
+<h2 id="checks-for-the-implemented-operation">Checks for the implemented operation</h2>
+<p>The weights of every query sum to one. Reordering a sequence reorders its self-attention output in the same way, because no positional encoding has been added.</p>
+<pre><code class="language-python">scores = softmax(raw_attention_scores)
+np.testing.assert_allclose(scores.sum(axis=-1), np.ones(scores.shape[0]))
+np.testing.assert_allclose(out_normal, out_inverced[:, ::-1], rtol=1e-10, atol=1e-10)
+# A rectangular matrix also needs row-wise normalization, not column broadcasting.
+rectangular_scores = softmax(np.array([[1., 3., 2.], [-2., 0., 4.]]))
+np.testing.assert_allclose(rectangular_scores.sum(axis=-1), np.ones(2))
+np.testing.assert_allclose(softmax(raw_attention_scores + 10000), scores, rtol=1e-10, atol=1e-10)
+assert np.isfinite(out3).all()
+print(&quot;All attention checks passed.&quot;)
+
+</code></pre></main><footer class="footer"><span>Радослав Нейчев · Машинное обучение</span><a href="../index.html">Все лекции</a></footer></div></body></html>

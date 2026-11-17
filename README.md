@@ -9,6 +9,7 @@ weeks appear as the course goes.
 | 2 | Maximum Likelihood + Linear Regression | [week0_02_mle_and_linear_regression](week0_02_mle_and_linear_regression) |
 | 3 | Regularisation + Model Validation | [week0_03_regularisation_and_validation](week0_03_regularisation_and_validation) |
 | 4 | Linear Classification + Logistic Regression | [week0_04_logistic_regression](week0_04_logistic_regression) |
+| 5 | Classification Metrics + Optimisation Methods | [week0_05_metrics_and_optimisation](week0_05_metrics_and_optimisation) |
 
 Homeworks: [homeworks](homeworks)
 

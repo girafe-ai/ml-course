@@ -10,6 +10,7 @@ weeks appear as the course goes.
 | 3 | Regularisation + Model Validation | [week0_03_regularisation_and_validation](week0_03_regularisation_and_validation) |
 | 4 | Linear Classification + Logistic Regression | [week0_04_logistic_regression](week0_04_logistic_regression) |
 | 5 | Classification Metrics + Optimisation Methods | [week0_05_metrics_and_optimisation](week0_05_metrics_and_optimisation) |
+| 6 | Naive Bayes + Probabilistic Classifiers | [week0_06_naive_bayes](week0_06_naive_bayes) |
 
 Homeworks: [homeworks](homeworks)
 

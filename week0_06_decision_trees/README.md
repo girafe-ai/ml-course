@@ -1,6 +1,6 @@
-# Week 7: Decision Trees
+# Week 6: Decision Trees
 
-Lecture slides: [`ml-basic_lect07_decision_trees.pdf`](ml-basic_lect07_decision_trees.pdf)
+Lecture slides: [`ml-basic_lect06_decision_trees.pdf`](ml-basic_lect06_decision_trees.pdf)
 
 Every classifier so far draws one smooth boundary or measures distances. A decision tree asks questions one at
 a time and answers in a leaf. This lecture covers how to read a tree, how it cuts the plane into rectangles, and
@@ -16,4 +16,4 @@ Interactive pages, the self-check quiz, the classroom quiz and the game: links i
 
 | Notebook | Practice | Solved |
 | --- | --- | --- |
-| Decision trees: Gini and the best split by hand, depth and cross-validation, a regression tree, trees against logistic regression, unstable trees | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/26f_ymls_uz/week0_07_decision_trees/week0_07_01_decision_trees.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/26f_ymls_uz/week0_07_decision_trees/week0_07_01_decision_trees__completed.ipynb) |
+| Decision trees: Gini and the best split by hand, depth and cross-validation, a regression tree, trees against logistic regression, unstable trees | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/26f_ymls_uz/week0_06_decision_trees/week0_06_01_decision_trees.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/girafe-ai/ml-course/blob/26f_ymls_uz/week0_06_decision_trees/week0_06_01_decision_trees__completed.ipynb) |
